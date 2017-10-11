@@ -27,6 +27,11 @@ export const getPosts = () =>
     .then(res => res.json())
     .then(data => data)
 
+export const getComments = (postId) =>
+  fetch(`${api}/posts/${postId}/comments`, { headers })
+    .then(res => res.text())
+    .then(data => data)
+
 export const update = (book, shelf) =>
   fetch(`${api}/books/${book.id}`, {
     method: 'PUT',

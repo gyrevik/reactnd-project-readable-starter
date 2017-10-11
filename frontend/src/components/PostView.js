@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { createPost, clearPostCat, setPostCat } from '../actions/actions.js';
 import CatSet from '../components/CatSet.js';
+import * as utils from '../utils';
+import * as ReadableAPI from '../ReadableAPI';
 
 class PostView extends React.Component {
   constructor(props) {
@@ -26,11 +28,6 @@ class PostView extends React.Component {
   }
   
   render() {
-    const utcSeconds = this.props.post.timestamp/1000;
-    let readableTimeStamp = new Date(0); // The 0 there is the key, which sets the date to the epoch
-    readableTimeStamp.setUTCSeconds(utcSeconds);
-    console.log(readableTimeStamp);
-
     return (
       <div>  
       	<CatSet 
@@ -50,13 +47,13 @@ class PostView extends React.Component {
       		  maxLength="140" rows="7" value={ this.props.post.body } />
           </div>
       	  <div>Author: { this.props.post.author }</div>
-      	  <div>Time: { readableTimeStamp.toString() }</div>
-		  <div>Vote Score: { this.props.post.voteScore }</div>
+      	  <div>Time: { utils.niceDate(this.props.post.timestamp) }</div>
+		      <div>Vote Score: { this.props.post.voteScore }</div>
 
           <button onClick={() => 
-    		this.props.createPost({ title: this.state.title, body: this.state.body, category: this.props.postCat })} 
-  			type="button" id="submit" name="submit">Add Post
-		  </button>
+    		    this.props.createPost({ title: this.state.title, body: this.state.body, category: this.props.postCat })} 
+  			    type="button" id="submit" name="submit">Add Post
+		      </button>
         </form>
       </div>
     )
@@ -67,6 +64,10 @@ const mapStateToProps = (state, props) => {
   console.log('PostView.mapStateToProps.state.posts: ', state.posts);
   console.log('PostView.mapStateToProps.state.cats: ', state.cats);
   console.log('PostView.mapStateToProps.state.post: ', state.post);
+  ReadableAPI.getComments(state.post.id).then((comments) => {
+    console.log('comments: ', comments);
+  });
+
   return { posts: state.posts, cats: state.cats, postCat: state.post.category, post:state.post };
 }
   

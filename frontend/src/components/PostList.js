@@ -19,8 +19,8 @@ export default function PostList({ posts, deletePost, sortPostsField, category, 
             (post, i) =>
               <li key={i.toString()}>
                 Category: { post.category } {' - '} 
-				Title: <Link to="/post" onClick={() => setPostCurrent(post)}>{ post.title }</Link> {' - '} 
-				Vote Score: { post.voteScore } {' - '} Time: { utils.niceDate(post.timestamp) } <br/>
+				        Title: <Link to="/post" onClick={() => setPostCurrent(post)}>{ post.title }</Link> {' - '} 
+				        Vote Score: { post.voteScore } {' - '} Time: { utils.niceDate(post.timestamp) } <br/>
                   {'body: '} { post.body } {' - '}
                 <a href="javascript:void(0)" onClick={() => deletePost(post.id)}>delete</a><br/><br/>
               </li>
