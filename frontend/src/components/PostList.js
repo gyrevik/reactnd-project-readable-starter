@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import * as utils from '../utils';
 
 export default function PostList({ posts, deletePost, sortPostsField, category, setPostCurrent }) {
   console.log('number of posts: ', posts.length);
@@ -19,7 +20,7 @@ export default function PostList({ posts, deletePost, sortPostsField, category, 
               <li key={i.toString()}>
                 Category: { post.category } {' - '} 
 				Title: <Link to="/post" onClick={() => setPostCurrent(post)}>{ post.title }</Link> {' - '} 
-				Vote Score: { post.voteScore } {' - '} Time: { post.timestamp } <br/>
+				Vote Score: { post.voteScore } {' - '} Time: { utils.niceDate(post.timestamp) } <br/>
                   {'body: '} { post.body } {' - '}
                 <a href="javascript:void(0)" onClick={() => deletePost(post.id)}>delete</a><br/><br/>
               </li>
