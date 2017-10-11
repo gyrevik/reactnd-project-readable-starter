@@ -57,7 +57,7 @@ class App extends Component {
                 posts={this.props.posts}
                 sortPostsField={this.props.sortPostsField}
                 deletePost={this.props.deletePost}
-      			setPostCurrent={this.props.setPostCurrent} />
+      			    setPostCurrent={this.props.setPostCurrent} />
             </div>
           </div>
         )}/>
@@ -85,7 +85,8 @@ class App extends Component {
               <PostList 
                 posts={this.props.postsView}
                 sortPostsField={this.props.sortPostsField}
-                deletePost={this.props.deletePost} />
+                deletePost={this.props.deletePost} 
+                setPostCurrent={this.props.setPostCurrent} />
             </div>
           </div>
         )}/>

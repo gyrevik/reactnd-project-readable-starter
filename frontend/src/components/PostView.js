@@ -26,11 +26,10 @@ class PostView extends React.Component {
   }
   
   render() {
-    //const utcSeconds = Date.now()/1000;
     const utcSeconds = this.props.post.timestamp/1000;
-	let readableTimeStamp = new Date(0); // The 0 there is the key, which sets the date to the epoch
-	readableTimeStamp.setUTCSeconds(utcSeconds);
-	console.log(readableTimeStamp);
+    let readableTimeStamp = new Date(0); // The 0 there is the key, which sets the date to the epoch
+    readableTimeStamp.setUTCSeconds(utcSeconds);
+    console.log(readableTimeStamp);
 
     return (
       <div>  
@@ -65,8 +64,9 @@ class PostView extends React.Component {
 }
 
 const mapStateToProps = (state, props) => { 
-  console.log('CreatePost.mapStateToProps.state.posts: ', state.posts);
-  console.log('CreatePost.mapStateToProps.state.cats: ', state.cats);
+  console.log('PostView.mapStateToProps.state.posts: ', state.posts);
+  console.log('PostView.mapStateToProps.state.cats: ', state.cats);
+  console.log('PostView.mapStateToProps.state.post: ', state.post);
   return { posts: state.posts, cats: state.cats, postCat: state.post.category, post:state.post };
 }
   
