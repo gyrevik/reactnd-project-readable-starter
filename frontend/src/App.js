@@ -109,20 +109,20 @@ const LocationAwareComponent = ({ location, history, match }) => {
 }
 
 const mapStateToProps = (state, props) => {
-  console.log(`App.js -> mapStateToProps -> state.posts: ${state.posts}`);
-  console.log(`App.js -> mapStateToProps -> state.postCat: ${state.postCat}`);
-  console.log(`App.js -> mapStateToProps -> state.viewCat: ${state.viewCat}`);
+  //console.log(`App.js -> mapStateToProps -> state.posts: ${state.posts}`);
+  //console.log(`App.js -> mapStateToProps -> state.postCat: ${state.postCat}`);
+  //console.log(`App.js -> mapStateToProps -> state.viewCat: ${state.viewCat}`);
   const postCat = state.postCat;
   let viewCat = state.viewCat;
   if (createHistory().location.pathname === "/") viewCat = "all";
   
-  console.log(`App.js -> mapStateToProps -> typeof(state.postCat): ${typeof(state.postCat)}`);
+  //console.log(`App.js -> mapStateToProps -> typeof(state.postCat): ${typeof(state.postCat)}`);
 
-  console.log('state.post: ', state.post);
+  //console.log('state.post: ', state.post);
   
-  console.log('state.posts before filter: ', state.posts);
-  console.log('typeof(state.posts): ', typeof(state.posts));
-  console.log("typeof(state.posts) === 'object': ", typeof(state.posts) === 'object');
+  //console.log('state.posts before filter: ', state.posts);
+  //console.log('typeof(state.posts): ', typeof(state.posts));
+  //console.log("typeof(state.posts) === 'object': ", typeof(state.posts) === 'object');
   
   let posts;
   if (typeof(state.posts) === 'object')
@@ -131,27 +131,27 @@ const mapStateToProps = (state, props) => {
     posts = JSON.parse(state.posts);
   
   let postsView = posts.slice();
-  console.log('postsView.length before filter: ', postsView.length, ', filter viewCat: ', state.viewCat);
+  //console.log('postsView.length before filter: ', postsView.length, ', filter viewCat: ', state.viewCat);
   postsView = postsView.filter(post => {
     if (post.category === state.viewCat || state.viewCat === 'all') {
-      console.log(post.category, '===', state.viewCat, ' return true');
+      //console.log(post.category, '===', state.viewCat, ' return true');
       return true;
     }
     else {
-      console.log(post.category, '!==', state.viewCat, ' return false, typeof(post.category): ', typeof(post.category), ', typeof(state.viewCat): ', typeof(state.viewCat));
+      //console.log(post.category, '!==', state.viewCat, ' return false, typeof(post.category): ', typeof(post.category), ', typeof(state.viewCat): ', typeof(state.viewCat));
       return false;
     }
   });
-  console.log('postsView.length after filter: ', postsView.length);
+  //console.log('postsView.length after filter: ', postsView.length);
 
-  posts.map((post, i) => console.log('arrow function post category: ', post.category, " type: ", typeof(post.category)));
+  //posts.map((post, i) => console.log('arrow function post category: ', post.category, " type: ", typeof(post.category)));
   
   const cats = state.cats;
-  console.log('typeof(cats): ', typeof(cats));
+  //console.log('typeof(cats): ', typeof(cats));
   //debugger;
-  cats.map((cat, i) => console.log('map arrow function: ', cat.name));
+  //cats.map((cat, i) => console.log('map arrow function: ', cat.name));
 
-  console.log('state.sortPostsField: ', state.sortPostsField);
+  //console.log('state.sortPostsField: ', state.sortPostsField);
   // todo: order posts by field
   const sortByKey = key => (a, b) => a[state.sortPostsField] < b[state.sortPostsField];	// desc (number)
   posts.sort(sortByKey(state.sortPostsField));

@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import * as utils from '../utils';
 
 export default function PostList({ posts, deletePost, sortPostsField, category, setPostCurrent }) {
-  console.log('number of posts: ', posts.length);
+  //console.log('number of posts: ', posts.length);
   if (posts.length === 0) return <span>'no posts'</span>;
-  console.log('posts in PostList: ', JSON.stringify(posts));
+  //console.log('posts in PostList: ', JSON.stringify(posts));
   
   return (
     <div>
@@ -22,9 +22,8 @@ export default function PostList({ posts, deletePost, sortPostsField, category, 
 				        Title: <Link to="/post" onClick={() => setPostCurrent(post)}>{ post.title }</Link> {' - '} 
 				        Vote Score: { post.voteScore } {' - '} Time: { utils.niceDate(post.timestamp) } <br/>
                 Body: { post.body } {' - '} <br/>
-                id: {post.id}
-                <br/>
-                <a href="javascript:void(0)" onClick={() => deletePost(post.id)}>delete</a><br/><br/>
+                id: {post.id} <br/>
+                deleted: {post.deleted === true ? 'true' : 'false'}
               </li>
           )}
 		</ul>

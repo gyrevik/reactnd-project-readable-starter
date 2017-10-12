@@ -20,8 +20,8 @@ ReadableAPI.getCategories().then((cats) => {
     
     let store = createStore(reducer, {postCat: 'all', posts: postsAll, cats: cats});
   	console.log(`index.js: store.getState(): ${store.getState()}`);
-	console.log(`index.js: store.getState()['cats']: ${store.getState()['cats']}`);
-	console.log(`index.js: store.getState()['posts']: ${store.getState()['posts']}`);
+	  console.log(`index.js: store.getState()['cats']: ${store.getState()['cats']}`);
+	  console.log(`index.js: store.getState()['posts']: ${store.getState()['posts']}`);
 
     ReactDOM.render(<Provider store={store}><BrowserRouter><App /></BrowserRouter></Provider>, document.getElementById('root'));
   	registerServiceWorker();

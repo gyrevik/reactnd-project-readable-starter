@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Modal from 'react-modal';
-import { createComment } from '../actions/actions.js';
+import { createComment, deletePost } from '../actions/actions.js';
 import CatSet from '../components/CatSet.js';
 import * as utils from '../utils';
 import * as ReadableAPI from '../ReadableAPI';
@@ -42,11 +42,14 @@ class PostView extends React.Component {
 		      <div>Vote Score: { this.props.post.voteScore }</div>
           <div>Category: { this.props.post.category }</div>
           <div>id: { this.props.post.id }</div>
+          <div>deleted: { this.props.post.deleted  === true ? 'true' : 'false' }</div>
           
           <button onClick={() => this.setState({openCommentModal:true})} 
             type="button" id="openCommentModal" name="openCommentModal">
               Add Comment
-          </button> 
+          </button>
+          <br/><br/>
+          <a href="javascript:void(0)" onClick={() => this.props.deletePost(this.props.post.id)}>delete post</a>
         </form>
 
         <Modal
@@ -101,6 +104,7 @@ const mapStateToProps = (state, props) => {
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
       createComment: createComment,
+      deletePost: deletePost,
   	}, dispatch);
 }
 

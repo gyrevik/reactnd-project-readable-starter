@@ -120,6 +120,7 @@ export const editComment = (comment) => {
 }
 
 export const deletePost = (id) => {
+  console.log('in deletePost action with id: ', id);
   return {
     type: DELETE_POST,
     id,

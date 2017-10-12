@@ -89,10 +89,15 @@ export function postsReducer (state = [], action) {
       )
     }
     case DELETE_POST: {
-      const { type, post } = action;
-      return state.filter((post, index) =>
-        action.post.id !== index
-      )
+      console.log('postsReducer.DELETE_POST case with action.id: ', action.id);
+      console.log('state: ', state);
+      const newState = state.map((post, index) => {
+        if (action.id === post.id) 
+          post.deleted = true;
+        return post;
+      });
+      console.log('newState: ', newState);
+      return newState;
     }
     default:
       return state;
