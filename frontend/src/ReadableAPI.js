@@ -52,3 +52,14 @@ export const search = (query, maxResults) =>
     body: JSON.stringify({ query, maxResults })
   }).then(res => res.json())
     .then(data => data.books)
+
+export const postComment = (comment) =>
+  fetch(`${api}/comments`, {
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ comment })
+  }).then(res => res.json())
+    .then(data => data)

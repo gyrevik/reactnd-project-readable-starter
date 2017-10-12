@@ -1,3 +1,5 @@
+import * as ReadableAPI from '../ReadableAPI';
+
 export const FETCH_CATS = 'FETCH_CATS';
 export const SET_POST_CAT = 'SET_POST_CAT';
 export const SET_POST_CURRENT = 'SET_POST_CURRENT';
@@ -81,11 +83,19 @@ export const createComment = (comment) => {
     console.log('throwing error !body || !parentId in createComment action creater');
     throw new Error('invalid comment: parentId and body required');
   }
+  let timestamp = Date.now();
+  //comment = { id:timestamp, author:'alex', voteScore:1, deleted:false, parentDelted:false };
+  //console.log('comment.body after merge: ', comment.body);
+  comment.timestamp = timestamp;
+  
+  ReadableAPI.postComment(comment).then((data) => {
+    console.log('return data from ReadableAPI.postComment: ', data);
+  });
 
   console.log('returning from createComment action creater type: ', CREATE_COMMENT, ' and comment: ', comment);
   return {
     type: CREATE_COMMENT,
-    comment: { id:Date.now(), parentId, timestamp:Date.now(), body, author:'alex', voteScore:1, deleted:false, parentDelted:false },
+    comment: { id:timestamp, parentId, timestamp, body, author:'alex', voteScore:1, deleted:false, parentDelted:false },
   }
 }
 
