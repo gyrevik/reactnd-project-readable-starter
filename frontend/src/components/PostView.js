@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import Modal from 'react-modal';
 import { createPost, clearPostCat, setPostCat } from '../actions/actions.js';
 import CatSet from '../components/CatSet.js';
 import * as utils from '../utils';
@@ -49,12 +50,16 @@ class PostView extends React.Component {
       	  <div>Author: { this.props.post.author }</div>
       	  <div>Time: { utils.niceDate(this.props.post.timestamp) }</div>
 		      <div>Vote Score: { this.props.post.voteScore }</div>
-
-          <button onClick={() => 
-    		    this.props.createPost({ title: this.state.title, body: this.state.body, category: this.props.postCat })} 
-  			    type="button" id="submit" name="submit">Add Post
-		      </button>
         </form>
+
+        <Modal
+          isOpen={false}
+          closeTimeoutMS={1}
+          contentLabel="Modal"
+        >
+          <h1>Modal Content</h1>
+          <p>Etc.</p>
+        </Modal>
       </div>
     )
   }
