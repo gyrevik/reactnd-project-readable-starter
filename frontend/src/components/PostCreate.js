@@ -46,7 +46,8 @@ class PostCreate extends React.Component {
 
           <button onClick={() => 
             this.props.createPost({title: this.state.title, body: this.state.body, category: this.props.postCat})} 
-            type="button" id="submit" name="submit">Add Post
+            type="button" id="submit" name="submit">
+              Add Post
           </button>
         </form>
       </div>

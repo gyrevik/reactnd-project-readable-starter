@@ -77,7 +77,7 @@ export const createComment = (comment) => {
   console.log('entered createComment with comment: ', comment);
   let { parentId, body, author, voteScore, deleted, parentDeleted } = comment;
   console.log('action.createComment parentId: ', parentId, '\nbody: ', body, '\nauthor: ', author, '\nvoteScore: ', voteScore, '\ndeleted: ', deleted, '\nparentDeleted: ', parentDeleted);
-  if (!body || parentId) {
+  if (body.length === 0 || parentId.length === 0) {
     console.log('throwing error !body || !parentId in createComment action creater');
     throw new Error('invalid comment: parentId and body required');
   }

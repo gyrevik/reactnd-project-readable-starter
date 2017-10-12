@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Modal from 'react-modal';
-import { createPost, clearPostCat, setPostCat } from '../actions/actions.js';
+import { createComment } from '../actions/actions.js';
 import CatSet from '../components/CatSet.js';
 import * as utils from '../utils';
 import * as ReadableAPI from '../ReadableAPI';
@@ -10,47 +10,37 @@ import * as ReadableAPI from '../ReadableAPI';
 class PostView extends React.Component {
   constructor(props) {
     super(props);
-    this.handleTitleChange = this.handleTitleChange.bind(this);
-    this.handleBodyChange = this.handleBodyChange.bind(this);
+    
+    this.handleCommentChange = this.handleCommentChange.bind(this);
+    
     this.state = {
-      title:'',
-      body:'',
-      openCommentModal:false
+      comment:'',
+      openModal:false
     };
   }
   
-  handleTitleChange(e) {
-    this.setState({title:e.target.value});
-    console.log('in handleTitleChange: ', e.target.value);
-  }
-  
-  handleBodyChange(e) {
-    this.setState({body:e.target.value});
-    console.log('in handleBodyChange: ', e.target.value);
+  handleCommentChange(e) {
+    this.setState({comment:e.target.value});
+    console.log('handleCommentChange: ', e.target.value);
   }
   
   render() {
     return (
-      <div>  
-      	<CatSet 
-          cats={this.props.cats}
-          setPostCat={this.props.setPostCat} 
-          clearPostCat={this.props.clearPostCat} 
-          selectedCat={this.props.postCat} />
-      
+      <div>
         <form role="form">
           <br />
           <div>
-          	<input type="text" onChange={ this.handleTitleChange } id="title" 
-      		  name="title" placeholder="Title" required value={ this.props.post.title } />
+          	<input type="text" id="title" readOnly="true"
+      		    name="title" placeholder="Title" required value={ this.props.post.title } />
           </div>
           <div>
-          	<textarea onChange={ this.handleBodyChange } id="body" placeholder="Body" 
-      		  maxLength="140" rows="7" value={ this.props.post.body } />
+          	<textarea id="body" placeholder="Body" readOnly="true"
+      		    maxLength="140" rows="7" value={ this.props.post.body } />
           </div>
       	  <div>Author: { this.props.post.author }</div>
       	  <div>Time: { utils.niceDate(this.props.post.timestamp) }</div>
 		      <div>Vote Score: { this.props.post.voteScore }</div>
+          <div>Category: { this.props.post.category }</div>
           
           <button onClick={() => this.setState({openCommentModal:true})} 
             type="button" id="openCommentModal" name="openCommentModal">
@@ -63,8 +53,21 @@ class PostView extends React.Component {
           closeTimeoutMS={1}
           contentLabel="Modal"
         >
-          <h1>Modal Content</h1>
-          <p>Etc.</p>
+          <h1>Add Comment</h1>
+          <div>
+            <form role="form">
+              <div>
+                <textarea onChange={ this.handleCommentChange } id="body" placeholder="Body" 
+                  maxLength="140" rows="7" />
+              </div>
+              
+              <button onClick={() => 
+                this.props.createComment({body: this.state.comment, parentId:this.props.post.id})} 
+                type="button" id="submit" name="submit">
+                  Submit Comment
+              </button>
+            </form>
+          </div>
           <button onClick={() => this.setState({openCommentModal:false})} 
             type="button" id="closeCommentModal" name="closeCommentModal">
               Close
@@ -77,20 +80,18 @@ class PostView extends React.Component {
 
 const mapStateToProps = (state, props) => { 
   console.log('PostView.mapStateToProps.state.posts: ', state.posts);
-  console.log('PostView.mapStateToProps.state.cats: ', state.cats);
+  console.log('PostView.mapStateToProps.state.comments: ', state.comments);
   console.log('PostView.mapStateToProps.state.post: ', state.post);
   ReadableAPI.getComments(state.post.id).then((comments) => {
-    console.log('comments: ', comments);
+    console.log('comments from server for post.id {', state.post.id, '}: ', comments);
   });
 
-  return { posts: state.posts, cats: state.cats, postCat: state.post.category, post:state.post };
+  return { postCat:state.post.category, post:state.post, comment:state.comment };
 }
   
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-      createPost: createPost,
-      clearPostCat: clearPostCat,
-      setPostCat: setPostCat,
+      createComment: createComment,
   	}, dispatch);
 }
 
