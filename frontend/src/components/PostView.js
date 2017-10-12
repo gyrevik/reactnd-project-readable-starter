@@ -14,7 +14,8 @@ class PostView extends React.Component {
     this.handleBodyChange = this.handleBodyChange.bind(this);
     this.state = {
       title:'',
-      body:''
+      body:'',
+      openCommentModal:false
     };
   }
   
@@ -50,15 +51,24 @@ class PostView extends React.Component {
       	  <div>Author: { this.props.post.author }</div>
       	  <div>Time: { utils.niceDate(this.props.post.timestamp) }</div>
 		      <div>Vote Score: { this.props.post.voteScore }</div>
+          
+          <button onClick={() => this.setState({openCommentModal:true})} 
+            type="button" id="openCommentModal" name="openCommentModal">
+              Add Comment
+          </button> 
         </form>
 
         <Modal
-          isOpen={false}
+          isOpen={this.state.openCommentModal}
           closeTimeoutMS={1}
           contentLabel="Modal"
         >
           <h1>Modal Content</h1>
           <p>Etc.</p>
+          <button onClick={() => this.setState({openCommentModal:false})} 
+            type="button" id="closeCommentModal" name="closeCommentModal">
+              Close
+          </button> 
         </Modal>
       </div>
     )
