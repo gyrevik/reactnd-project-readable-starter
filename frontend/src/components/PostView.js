@@ -62,8 +62,16 @@ class PostView extends React.Component {
               </div>
               
               <button onClick={() => 
-                this.props.createComment({body: this.state.comment, parentId:this.props.post.id})} 
-                type="button" id="submit" name="submit">
+                this.props.createComment({
+                  body: this.state.comment, 
+                  id:Date.now(),
+                  parentId:this.props.post.id,
+                  voteScore:1,
+                  author:'alex',
+                  deleted:false,
+                  parentDeleted:false
+                  })} 
+                  type="button" id="submit" name="submit">
                   Submit Comment
               </button>
             </form>

@@ -90,6 +90,7 @@ export const createComment = (comment) => {
   
   ReadableAPI.postComment(comment).then((data) => {
     console.log('return data from ReadableAPI.postComment: ', data);
+    console.log('posted comment: ', comment);
   });
 
   console.log('returning from createComment action creater type: ', CREATE_COMMENT, ' and comment: ', comment);
