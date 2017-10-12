@@ -130,15 +130,15 @@ const mapStateToProps = (state, props) => {
   else
     posts = JSON.parse(state.posts);
   
+  posts = posts.filter(post => post.deleted ? false : true);  // filter out deleted posts
+
   let postsView = posts.slice();
   //console.log('postsView.length before filter: ', postsView.length, ', filter viewCat: ', state.viewCat);
   postsView = postsView.filter(post => {
     if (post.category === state.viewCat || state.viewCat === 'all') {
-      //console.log(post.category, '===', state.viewCat, ' return true');
       return true;
     }
     else {
-      //console.log(post.category, '!==', state.viewCat, ' return false, typeof(post.category): ', typeof(post.category), ', typeof(state.viewCat): ', typeof(state.viewCat));
       return false;
     }
   });
