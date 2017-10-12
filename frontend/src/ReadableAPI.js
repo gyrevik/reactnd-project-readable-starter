@@ -60,6 +60,9 @@ export const postComment = (comment) =>
       ...headers,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ comment })
+    body: JSON.stringify(comment)
   }).then(res => res.json())
     .then(data => data)
+    .catch(function(error) {
+      console.log('API postComment error: ', error);
+    })
