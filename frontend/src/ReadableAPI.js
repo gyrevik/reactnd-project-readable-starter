@@ -42,6 +42,17 @@ export const update = (book, shelf) =>
     body: JSON.stringify({ shelf })
   }).then(res => res.json())
 
+//DELETE /posts/:id
+export const deletePost = (id) =>
+fetch(`${api}/psots/${id}`, {
+  method: 'DELETE',
+  headers: {
+    ...headers,
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(id)
+}).then(res => res.json())
+
 export const search = (query, maxResults) =>
   fetch(`${api}/search`, {
     method: 'POST',
