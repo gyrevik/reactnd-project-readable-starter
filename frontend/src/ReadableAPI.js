@@ -44,7 +44,7 @@ export const update = (book, shelf) =>
 
 //DELETE /posts/:id
 export const deletePost = (id) =>
-fetch(`${api}/psots/${id}`, {
+fetch(`${api}/posts/${id}`, {
   method: 'DELETE',
   headers: {
     ...headers,

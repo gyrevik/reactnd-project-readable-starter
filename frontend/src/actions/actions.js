@@ -121,6 +121,10 @@ export const editComment = (comment) => {
 
 export const deletePost = (id) => {
   console.log('in deletePost action with id: ', id);
+  
+  ReadableAPI.deletePost(id).then((data) => {
+    console.log('API deleting post id (', id, '), data: ', data);
+  })
   return {
     type: DELETE_POST,
     id,
