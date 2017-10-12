@@ -68,6 +68,11 @@ export const createPost = (post) => {
     throw new Error('invalid post: category, title and body required');
   }
 
+  ReadableAPI.postPost(post).then((data) => {
+    console.log('return data from ReadableAPI.postPost: ', data);
+    console.log('posted post: ', post);
+  });
+
   console.log('returning from createPost action creater type: ', CREATE_POST, ' and post: ', post);
   return {
     type: CREATE_POST,

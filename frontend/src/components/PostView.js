@@ -41,6 +41,7 @@ class PostView extends React.Component {
       	  <div>Time: { utils.niceDate(this.props.post.timestamp) }</div>
 		      <div>Vote Score: { this.props.post.voteScore }</div>
           <div>Category: { this.props.post.category }</div>
+          <div>id: { this.props.post.id }</div>
           
           <button onClick={() => this.setState({openCommentModal:true})} 
             type="button" id="openCommentModal" name="openCommentModal">
@@ -64,8 +65,8 @@ class PostView extends React.Component {
               <button onClick={() => 
                 this.props.createComment({
                   body: this.state.comment, 
-                  id:Date.now(),
-                  parentId:this.props.post.id,
+                  id:Date.now().toString(),
+                  parentId:this.props.post.id.toString(),
                   voteScore:1,
                   author:'alex',
                   deleted:false,

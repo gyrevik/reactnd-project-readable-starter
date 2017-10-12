@@ -45,7 +45,16 @@ class PostCreate extends React.Component {
           </div>
 
           <button onClick={() => 
-            this.props.createPost({title: this.state.title, body: this.state.body, category: this.props.postCat})} 
+            this.props.createPost({
+              id: Date.now().toString(), 
+              timestamp: Date.now(),
+              title: this.state.title, 
+              body: this.state.body, 
+              author: 'alex',
+              category: this.props.postCat,
+              voteScore: 1,
+              deleted: false
+            })} 
             type="button" id="submit" name="submit">
               Add Post
           </button>
