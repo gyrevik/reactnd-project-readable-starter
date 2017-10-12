@@ -66,3 +66,17 @@ export const postComment = (comment) =>
     .catch(function(error) {
       console.log('API postComment error: ', error);
     })
+
+export const postPost = (post) =>
+  fetch(`${api}/posts`, {
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(post)
+  }).then(res => res.json())
+    .then(data => data)
+    .catch(function(error) {
+      console.log('API postPost error: ', error);
+    })
