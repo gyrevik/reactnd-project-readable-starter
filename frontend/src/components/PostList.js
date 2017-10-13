@@ -15,8 +15,7 @@ export default function PostList({ posts, deletePost, sortPostsField, category, 
             Sort by <a href="javascript:void(0)" onClick={() => sortPostsField('voteScore')}>Vote Score</a>
             {' - '} <a href="javascript:void(0)" onClick={() => sortPostsField('timestamp')}>Time</a>
           </li>
-          {posts.map(
-            (post, i) =>
+          {posts.map((post, i) =>
               <li key={i.toString()}>
                 Category: { post.category } {' - '} 
 				        Title: <Link to="/post" onClick={() => setPostCurrent(post)}>{ post.title }</Link> {' - '} 

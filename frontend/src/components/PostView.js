@@ -70,7 +70,19 @@ class PostView extends React.Component {
         </a>
         <br/><br/>
         <Link to="/">Home</Link>
-        <br/>
+        <br/><br/>
+        <div>Comments: {JSON.stringify(this.props.comments)}</div>
+        <div>
+          Comments:<br/>
+          <ul>
+          {console.log('typeof(this.props.comments): ', typeof(this.props.comments))}
+          {console.log('typeof([this.props.comments]): ', typeof([this.props.comments]))}
+          {console.log('[this.props.comments].length): ', [this.props.comments].length)}
+            {this.props.comments.map((c, i) => 
+              <li key={i.toString()}>Body: {c.body}</li>
+            )}
+          </ul>
+        </div>
         <div>Comments: {JSON.stringify(this.props.comments)}</div>
 
         <Modal
