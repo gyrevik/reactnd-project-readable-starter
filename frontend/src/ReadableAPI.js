@@ -44,7 +44,18 @@ export const update = (book, shelf) =>
 
 //DELETE /posts/:id
 export const deletePost = (id) =>
-fetch(`${api}/posts/${id}`, {
+  fetch(`${api}/posts/${id}`, {
+    method: 'DELETE',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(id)
+  }).then(res => res.json())
+
+// DELETE /comments/:id
+export const deleteComment = (id) =>
+fetch(`${api}/comments/${id}`, {
   method: 'DELETE',
   headers: {
     ...headers,
@@ -52,6 +63,39 @@ fetch(`${api}/posts/${id}`, {
   },
   body: JSON.stringify(id)
 }).then(res => res.json())
+
+// POST /posts/:id	Used for voting on a post.	option - [String]: Either "upVote" or "downVote"
+export const votePost = (id, vote) =>
+  fetch(`${api}/posts/${id}`, {
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(id),
+    option: vote
+  }).then(res => res.json())
+    .then(data => data)
+    .catch(function(error) {
+      console.log('API votePost error: ', error);
+    })
+
+// POST /comments/:id	Used for voting on a comment. option - [String]: Either "upVote" or "downVote"
+export const voteComment = (id, vote) =>
+  fetch(`${api}/comments/${id}`, {
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(id),
+    option: vote
+  }).then(res => res.json())
+    .then(data => data)
+    .catch(function(error) {
+      console.log('API voteComment error: ', error);
+    })
+
 
 export const search = (query, maxResults) =>
   fetch(`${api}/search`, {

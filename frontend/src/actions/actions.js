@@ -9,10 +9,12 @@ export const CLEAR_POST_CAT = 'CLEAR_POST_CAT';
 export const CREATE_POST = 'CREATE_POST';
 export const EDIT_POST = 'EDIT_POST';
 export const DELETE_POST = 'DELETE_POST';
+export const VOTE_POST = 'VOTE_POST';
 
 export const CREATE_COMMENT = 'CREATE_COMMENT';
 export const EDIT_COMMENT = 'EDIT_COMMENT';
 export const DELETE_COMMENT = 'DELETE_COMMENT';
+export const VOTE_COMMENT = 'VOTE_COMMENT';
 
 export const SORT_POSTS_FIELD = 'SORT_POSTS_FIELD';
 export const SORT_POSTS_DIRECTION = 'SORT_POSTS_DIRECTION';
@@ -132,9 +134,28 @@ export const deletePost = (id) => {
   }
 }
 
+export const votePost = (id) => {
+  console.log('in votePost action with id: ', id);
+  
+  ReadableAPI.votePost(id).then((data) => {
+    console.log('API votePost post id (', id, '), data: ', data);
+  })
+  return {
+    type: VOTE_POST,
+    id,
+  }
+}
+
 export const deleteComment = (id) => {
   return {
     type: DELETE_COMMENT,
+    id,
+  }
+}
+
+export const voteComment = (id) => {
+  return {
+    type: VOTE_COMMENT,
     id,
   }
 }
