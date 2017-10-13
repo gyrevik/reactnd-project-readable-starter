@@ -3,7 +3,7 @@ import { combineReducers } from 'redux';
 import {
   SET_POST_CAT, SET_POST_CURRENT, SET_VIEW_CAT, CLEAR_POST_CAT, 
   CREATE_POST, EDIT_POST, DELETE_POST, SORT_POSTS_FIELD,
-  CREATE_COMMENT, EDIT_COMMENT, DELETE_COMMENT
+  CREATE_COMMENT, EDIT_COMMENT, DELETE_COMMENT, VOTE_COMMENT, VOTE_POST
 } from '../actions/actions.js'
 
 export function catReducer (state = 'all', action) {
@@ -84,22 +84,28 @@ export function postsReducer (state = [], action) {
     }
     case EDIT_POST: {
       console.log('entered EDIT_POST case in postsReducer');
-      const { type, post } = action
-      return state.map((oldPost, index) =>
-        action.post.id === index
-          ? {
-            ...oldPost,
-            ...post
-          }
-          : oldPost
+      return state.map((oldPost) =>
+        action.post.id === oldPost.id ? { ...oldPost, ...action.post } : oldPost
       )
     }
     case DELETE_POST: {
       console.log('postsReducer.DELETE_POST case with action.id: ', action.id);
       console.log('state: ', state);
-      const newState = state.map((post, index) => {
+      const newState = state.map((post) => {
         if (action.id === post.id) 
           post.deleted = true;
+        return post;
+      });
+      console.log('newState: ', newState);
+      return newState;
+    }
+    case VOTE_POST: {
+      console.log('postsReducer.VOTE_POST case with action.id: ', action.id);
+      console.log('state: ', state);
+      const newState = state.map((post, index) => {
+        if (action.id === post.id) 
+          post.voteScore++;
+        
         return post;
       });
       console.log('newState: ', newState);
@@ -135,21 +141,27 @@ export function commentsReducer (state = [], action) {
     }
     case EDIT_COMMENT: {
       console.log('entered EDIT_COMMENT case in commentsReducer');
-      const { type, comment } = action
-      return state.map((oldComment, index) =>
-        action.comment.id === index
-          ? {
-            ...oldComment,
-            ...comment,
-          }
-          : oldComment
+      return state.map((oldComment) =>
+        action.comment.id === oldComment.id ? { ...oldComment, ...action.comment } : oldComment
       )
     }
     case DELETE_COMMENT: {
-      const { type, comment } = action;
-      return state.filter((comment, index) =>
-        action.comment.id !== index
-      )
+      const { comment } = action;
+      return state.map(c => {
+        if (c.id === comment.id)
+          c.deleted = true;
+        
+        return c;
+      })
+    }
+    case VOTE_COMMENT: {
+      const { comment } = action;
+      return state.map(c => {
+        if (c.id === comment.id)
+          c.voteSore++;
+        
+        return c;
+      })
     }
     default:
       return state;
