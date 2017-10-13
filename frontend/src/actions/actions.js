@@ -109,6 +109,10 @@ export const createComment = (comment) => {
 }
 
 export const editPost = (post) => {
+  ReadableAPI.putPost(post).then((data) => {
+    console.log('return data from ReadableAPI.putPost: ', data);
+    console.log('put post: ', post);
+  });
   return {
     type: EDIT_POST,
     post,
@@ -116,6 +120,9 @@ export const editPost = (post) => {
 }
 
 export const editComment = (comment) => {
+  ReadableAPI.putComment(comment).then((data) => {
+    console.log('API edit comment (', comment, '), data: ', data);
+  })
   return {
     type: EDIT_COMMENT,
     comment,
