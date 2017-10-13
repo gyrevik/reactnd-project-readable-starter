@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Link } from 'react-router-dom';
 import Modal from 'react-modal';
 import { createComment, deletePost } from '../actions/actions.js';
 import CatSet from '../components/CatSet.js';
@@ -27,10 +28,6 @@ class PostView extends React.Component {
   
   componentDidMount() {
     console.log(`PostView.js.componentDidMount state: ${JSON.stringify(this.state)}`);
-    //this.props.posts.map((post) => {
-      //if (this.props.post.id == post.id && post.deleted===true)
-      //if (this.props.post.deleted === true) window.location.replace("/");
-    //})
   }
 
   render() {
@@ -63,6 +60,8 @@ class PostView extends React.Component {
           }>
             delete post
           </a>
+          <br/><br/>
+          <Link to="/">Home</Link>
         </form>
 
         <Modal
@@ -116,7 +115,8 @@ const mapStateToProps = (state, props) => {
     console.log('comments from server for post.id {', state.post.id, '}: ', comments);
   });
 
-  if (state.post.deleted) window.location.replace("/");
+  //if (state.post.deleted) window.location.replace("/");
+  
 
   return { posts: state.posts, postCat: state.post.category, post: state.post, comment: state.comment };
 }

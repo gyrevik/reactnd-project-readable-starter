@@ -46,6 +46,7 @@ export const sortPostsField = (field) => {
     field,
   }
 }
+
 export const sortPostsDirection = (direction) => {
   return {
     type: SORT_POSTS_DIRECTION,
