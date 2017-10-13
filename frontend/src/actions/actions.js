@@ -124,7 +124,6 @@ export const editComment = (comment) => {
 
 export const deletePost = (id) => {
   console.log('in deletePost action with id: ', id);
-  
   ReadableAPI.deletePost(id).then((data) => {
     console.log('API deleting post id (', id, '), data: ', data);
   })
@@ -134,30 +133,40 @@ export const deletePost = (id) => {
   }
 }
 
-export const votePost = (id) => {
-  console.log('in votePost action with id: ', id);
-  
-  ReadableAPI.votePost(id).then((data) => {
-    console.log('API votePost post id (', id, '), data: ', data);
+export const votePost = (id, option) => {
+  console.log('in votePost action with id: ', id, ' option: ', option);
+  ReadableAPI.votePost(id, option).then((data) => {
+    console.log('API votePost post id (', id, '), option: ', option, ' data: ', data);
   })
   return {
     type: VOTE_POST,
     id,
+    option
+  }
+}
+
+export const voteComment = (id, option) => {
+  console.log('in voteComment action with id: ', id, ' option: ', option);
+  ReadableAPI.voteComment(id, option).then((data) => {
+    console.log('API voteComment comment id (', id, '), option: ', option, ' data: ', data);
+  })
+  return {
+    type: VOTE_COMMENT,
+    id,
+    option
   }
 }
 
 export const deleteComment = (id) => {
+  ReadableAPI.deleteComment(id).then((data) => {
+    console.log('API deleteComment id (', id, '), data: ', data);
+  })
   return {
     type: DELETE_COMMENT,
     id,
   }
 }
 
-export const voteComment = (id) => {
-  return {
-    type: VOTE_COMMENT,
-    id,
-  }
-}
+
 
 

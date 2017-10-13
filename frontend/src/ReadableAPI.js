@@ -1,21 +1,10 @@
 
 const api = "http://localhost:3001"
 
-
-// Generate a unique token for storing your bookshelf data on the backend server.
-//let token = localStorage.token
-//if (!token)
-//  token = localStorage.token = Math.random().toString(36).substr(-8)
-
 const headers = {
   'Accept': 'application/json',
   'Authorization': 'whatever-you-want'
 }
-
-export const get = (bookId) =>
-  fetch(`${api}/books/${bookId}`, { headers })
-    .then(res => res.json())
-    .then(data => data.book)
 
 export const getCategories = () =>
   fetch(`${api}/categories`, { headers })
@@ -31,16 +20,6 @@ export const getComments = (postId) =>
   fetch(`${api}/posts/${postId}/comments`, { headers })
     .then(res => res.text())
     .then(data => data)
-
-export const update = (book, shelf) =>
-  fetch(`${api}/books/${book.id}`, {
-    method: 'PUT',
-    headers: {
-      ...headers,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ shelf })
-  }).then(res => res.json())
 
 //DELETE /posts/:id
 export const deletePost = (id) =>
@@ -65,7 +44,7 @@ fetch(`${api}/comments/${id}`, {
 }).then(res => res.json())
 
 // POST /posts/:id	Used for voting on a post.	option - [String]: Either "upVote" or "downVote"
-export const votePost = (id, vote) =>
+export const votePost = (id, option) =>
   fetch(`${api}/posts/${id}`, {
     method: 'POST',
     headers: {
@@ -73,7 +52,7 @@ export const votePost = (id, vote) =>
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(id),
-    option: vote
+    option: option
   }).then(res => res.json())
     .then(data => data)
     .catch(function(error) {
@@ -81,7 +60,7 @@ export const votePost = (id, vote) =>
     })
 
 // POST /comments/:id	Used for voting on a comment. option - [String]: Either "upVote" or "downVote"
-export const voteComment = (id, vote) =>
+export const voteComment = (id, option) =>
   fetch(`${api}/comments/${id}`, {
     method: 'POST',
     headers: {
@@ -89,24 +68,29 @@ export const voteComment = (id, vote) =>
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(id),
-    option: vote
+    option: option
   }).then(res => res.json())
     .then(data => data)
     .catch(function(error) {
       console.log('API voteComment error: ', error);
     })
 
-
-export const search = (query, maxResults) =>
-  fetch(`${api}/search`, {
-    method: 'POST',
+// PUT /comments/:id	Edit the details of an existing comment.	
+// timestamp - timestamp. Get this however you want. 
+// body - [String]
+export const putComment = (comment) =>
+  fetch(`${api}/comments/${comment.id}`, {
+    method: 'PUT',
     headers: {
       ...headers,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ query, maxResults })
+    body: JSON.stringify(comment)
   }).then(res => res.json())
-    .then(data => data.books)
+    .then(data => data)
+    .catch(function(error) {
+      console.log('API putComment error: ', error);
+    })
 
 export const postComment = (comment) =>
   fetch(`${api}/comments`, {
@@ -134,4 +118,20 @@ export const postPost = (post) =>
     .then(data => data)
     .catch(function(error) {
       console.log('API postPost error: ', error);
+    })
+
+// PUT /posts/:id	Edit the details of an existing post.	title - [String] 
+// body - [String]
+export const putPost = (post) =>
+  fetch(`${api}/posts/${post.id}`, {
+    method: 'PUT',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(post)
+  }).then(res => res.json())
+    .then(data => data)
+    .catch(function(error) {
+      console.log('API putPost error: ', error);
     })
