@@ -14,6 +14,7 @@ class PostView extends React.Component {
     super(props);
     
     this.handleCommentChange = this.handleCommentChange.bind(this);
+    this.handleComment = this.handleComment.bind(this);
     
     this.state = {
       comment:'',
@@ -25,7 +26,22 @@ class PostView extends React.Component {
     this.setState({comment:e.target.value});
     console.log('handleCommentChange: ', e.target.value);
   }
-  
+
+  handleComment() {
+    this.props.createComment({
+      body: this.state.comment, 
+      id:Date.now().toString(),
+      parentId:this.props.post.id.toString(),
+      voteScore:1,
+      author:'alex',
+      deleted:false,
+      parentDeleted:false
+    })
+
+    this.setState({openCommentModal:false});
+    console.log('handleComment executed');
+  }
+
   componentDidMount() {
     console.log(`PostView.js.componentDidMount state: ${JSON.stringify(this.state)}`);
   }
@@ -55,9 +71,7 @@ class PostView extends React.Component {
               Add Comment
           </button>
           <br/><br/>
-          <a href="javascript:void(0)" onClick={
-            () => this.props.deletePost(this.props.post.id)
-          }>
+          <a href="javascript:void(0)" onClick={() => this.props.deletePost(this.props.post.id)}>
             delete post
           </a>
           <br/><br/>
@@ -77,17 +91,7 @@ class PostView extends React.Component {
                   maxLength="140" rows="7" />
               </div>
               
-              <button onClick={() => 
-                this.props.createComment({
-                  body: this.state.comment, 
-                  id:Date.now().toString(),
-                  parentId:this.props.post.id.toString(),
-                  voteScore:1,
-                  author:'alex',
-                  deleted:false,
-                  parentDeleted:false
-                  })} 
-                  type="button" id="submit" name="submit">
+              <button onClick={ this.handleComment } type="button" id="submit" name="submit">
                   Submit Comment
               </button>
             </form>
