@@ -114,7 +114,7 @@ const mapStateToProps = (state, props) => {
   //console.log(`App.js -> mapStateToProps -> state.viewCat: ${state.viewCat}`);
   const postCat = state.postCat;
   let viewCat = state.viewCat;
-  if (createHistory().location.pathname === "/") viewCat = "all";
+  if (createHistory().location.pathname === "/") viewCat = "react";
   
   //console.log(`App.js -> mapStateToProps -> typeof(state.postCat): ${typeof(state.postCat)}`);
 

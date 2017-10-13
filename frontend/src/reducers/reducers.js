@@ -18,9 +18,15 @@ export function catReducer (state = 'all', action) {
 }
 
 export function postReducer (state = {}, action) {
+  console.log('state in postReducer: ', state);
   switch (action.type) {
     case SET_POST_CURRENT:
       return action.post;
+    case DELETE_POST:
+      let post = Object.assign({}, state);
+      post.deleted = true;
+      console.log('post after mod in postReducer: ', post);
+      return post;
     default:
       return state;
   }

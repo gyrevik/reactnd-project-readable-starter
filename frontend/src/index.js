@@ -18,7 +18,7 @@ ReadableAPI.getCategories().then((cats) => {
     //sessionStorage.setItem('booksAll', JSON.stringify(booksAll));
     console.log(`index.js: got all posts from API (${postsAll.length} posts)`);   
     
-    let store = createStore(reducer, {postCat: 'all', posts: postsAll, cats: cats});
+    let store = createStore(reducer, {postCat: 'react', posts: postsAll, cats: cats});
   	console.log(`index.js: store.getState(): ${store.getState()}`);
 	  console.log(`index.js: store.getState()['cats']: ${store.getState()['cats']}`);
 	  console.log(`index.js: store.getState()['posts']: ${store.getState()['posts']}`);

@@ -6,6 +6,7 @@ import { createComment, deletePost } from '../actions/actions.js';
 import CatSet from '../components/CatSet.js';
 import * as utils from '../utils';
 import * as ReadableAPI from '../ReadableAPI';
+import createHistory from 'history/createBrowserHistory';
 
 class PostView extends React.Component {
   constructor(props) {
@@ -24,6 +25,14 @@ class PostView extends React.Component {
     console.log('handleCommentChange: ', e.target.value);
   }
   
+  componentDidMount() {
+    console.log(`PostView.js.componentDidMount state: ${JSON.stringify(this.state)}`);
+    //this.props.posts.map((post) => {
+      //if (this.props.post.id == post.id && post.deleted===true)
+      //if (this.props.post.deleted === true) window.location.replace("/");
+    //})
+  }
+
   render() {
     return (
       <div>
@@ -49,7 +58,11 @@ class PostView extends React.Component {
               Add Comment
           </button>
           <br/><br/>
-          <a href="javascript:void(0)" onClick={() => this.props.deletePost(this.props.post.id)}>delete post</a>
+          <a href="javascript:void(0)" onClick={
+            () => this.props.deletePost(this.props.post.id)
+          }>
+            delete post
+          </a>
         </form>
 
         <Modal
@@ -84,6 +97,11 @@ class PostView extends React.Component {
             type="button" id="closeCommentModal" name="closeCommentModal">
               Close
           </button> 
+          <button
+            type="button" onClick={() => window.location.replace("/")}>
+            Home
+          </button>
+          
         </Modal>
       </div>
     )
@@ -98,7 +116,9 @@ const mapStateToProps = (state, props) => {
     console.log('comments from server for post.id {', state.post.id, '}: ', comments);
   });
 
-  return { postCat:state.post.category, post:state.post, comment:state.comment };
+  if (state.post.deleted) window.location.replace("/");
+
+  return { posts: state.posts, postCat: state.post.category, post: state.post, comment: state.comment };
 }
   
 const mapDispatchToProps = (dispatch) => {
