@@ -44,39 +44,34 @@ class PostView extends React.Component {
 
   componentDidMount() {
     console.log(`PostView.js.componentDidMount state: ${JSON.stringify(this.state)}`);
+    // todo: get comments
   }
 
   render() {
     return (
       <div>
-        <form role="form">
-          <br />
-          <div>
-          	<input type="text" id="title" readOnly="true"
-      		    name="title" placeholder="Title" required value={ this.props.post.title } />
-          </div>
-          <div>
-          	<textarea id="body" placeholder="Body" readOnly="true"
-      		    maxLength="140" rows="7" value={ this.props.post.body } />
-          </div>
-      	  <div>Author: { this.props.post.author }</div>
-      	  <div>Time: { utils.niceDate(this.props.post.timestamp) }</div>
-		      <div>Vote Score: { this.props.post.voteScore }</div>
-          <div>Category: { this.props.post.category }</div>
-          <div>id: { this.props.post.id }</div>
-          <div>deleted: { this.props.post.deleted  === true ? 'true' : 'false' }</div>
-          
-          <button onClick={() => this.setState({openCommentModal:true})} 
-            type="button" id="openCommentModal" name="openCommentModal">
-              Add Comment
-          </button>
-          <br/><br/>
-          <a href="javascript:void(0)" onClick={() => this.props.deletePost(this.props.post.id)}>
-            delete post
-          </a>
-          <br/><br/>
-          <Link to="/">Home</Link>
-        </form>
+        <br />
+        <div>Title: { this.props.post.title }</div>
+        <div>Body: { this.props.post.body }</div>
+        <div>Author: { this.props.post.author }</div>
+        <div>Time: { utils.niceDate(this.props.post.timestamp) }</div>
+        <div>Vote Score: { this.props.post.voteScore }</div>
+        <div>Category: { this.props.post.category }</div>
+        <div>id: { this.props.post.id }</div>
+        <div>deleted: { this.props.post.deleted  === true ? 'true' : 'false' }</div>
+        
+        <button onClick={() => this.setState({openCommentModal:true})} 
+          type="button" id="openCommentModal" name="openCommentModal">
+            Add Comment
+        </button>
+        <br/><br/>
+        <a href="javascript:void(0)" onClick={() => this.props.deletePost(this.props.post.id)}>
+          Delete Post
+        </a>
+        <br/><br/>
+        <Link to="/">Home</Link>
+        <br/>
+        <div>Comments: {JSON.stringify(this.props.comments)}</div>
 
         <Modal
           isOpen={this.state.openCommentModal}
@@ -115,14 +110,15 @@ const mapStateToProps = (state, props) => {
   console.log('PostView.mapStateToProps.state.posts: ', state.posts);
   console.log('PostView.mapStateToProps.state.comments: ', state.comments);
   console.log('PostView.mapStateToProps.state.post: ', state.post);
-  ReadableAPI.getComments(state.post.id).then((comments) => {
-    console.log('comments from server for post.id {', state.post.id, '}: ', comments);
-  });
+  //let comments;
+  //ReadableAPI.getComments(state.post.id).then((comments) => {
+  //  console.log('comments from server for post.id {', state.post.id, '}: ', comments);
+  //});
 
   //if (state.post.deleted) window.location.replace("/");
   
 
-  return { posts: state.posts, postCat: state.post.category, post: state.post, comment: state.comment };
+  return { posts: state.posts, post: state.post, comment: state.comment, comments: state.comments };
 }
   
 const mapDispatchToProps = (dispatch) => {
