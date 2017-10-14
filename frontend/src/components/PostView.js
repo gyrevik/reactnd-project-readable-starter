@@ -16,8 +16,11 @@ class PostView extends React.Component {
     this.handleCommentChange = this.handleCommentChange.bind(this);
     this.handleComment = this.handleComment.bind(this);
     
+    console.log('initializing local state in constructor');
+
     this.state = {
       comment:'',
+      comments: [],
       openModal:false
     };
   }
@@ -45,10 +48,20 @@ class PostView extends React.Component {
 
   componentDidMount() {
     console.log(`PostView.js.componentDidMount state: ${JSON.stringify(this.state)}`);
-    // todo: get comments
+    console.log('getting comments from server in componentDidMount');
+    let cfs;
+    ReadableAPI.getComments(this.props.post.id).then((cfs) => {
+      console.log('componentDidMount - comments from server (cfs): ', cfs);
+      console.log('componentDidMount typeof(JSON.parse(cfs)): ', typeof(JSON.parse(cfs)));
+      this.setState({comments: JSON.parse(cfs)});
+    })
   }
 
   render() {
+    // merge component state comments pulled from server with state.comments 
+    // which is had newly added comments going thru redux
+    //const comments = [ ...this.state.comments, ...this.props.comments ];
+
     return (
       <div>
         <br />
@@ -74,7 +87,7 @@ class PostView extends React.Component {
         <br/><br/>
         Comments:<br/>
         <ul>
-          {this.props.comments.map((comment, i) => 
+          {[ ...this.state.comments, ...this.props.comments ].map((comment, i) => 
             <li key={i.toString()}>
               id: {comment.id}<br/>
               {comment.body}<br/>
@@ -123,7 +136,16 @@ const mapStateToProps = (state, props) => {
   console.log('PostView.mapStateToProps.state.posts: ', state.posts);
   console.log('PostView.mapStateToProps.state.comments: ', state.comments);
   console.log('PostView.mapStateToProps.state.post: ', state.post);
-  
+
+  //let cfs;
+  //ReadableAPI.getComments(state.post.id).then((cfs) => {
+  //  console.log('comments from server cfs: ', cfs);
+  //  console.log('typeof(cfs): ', typeof(JSON.parse(cfs)));
+  //})
+
+  //console.log('typeof(this.state.comments): ', typeof(this.state.comments));
+  console.log('typeof(state.comments): ', typeof(state.comments));
+
   return { posts: state.posts, post: state.post, comment: state.comment, comments: state.comments };
 }
   
