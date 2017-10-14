@@ -64,14 +64,16 @@ export const votePost = (id, option) => {
 
 // POST /comments/:id	Used for voting on a comment. option - [String]: Either "upVote" or "downVote"
 export const voteComment = (id, option) => {
+  console.log(`in ReadableAPI.voteComment(${id}, ${option})`);
   const params = JSON.stringify({ option: option });
+  
   return fetch(`${api}/comments/${id}`, {
     method: 'POST',
     headers: {
       ...headers,
       'Content-Type': 'application/json'
     },
-    body: params
+    body: params,
   }).then(res => res.json())
     .then(data => data)
     .catch(function(error) {

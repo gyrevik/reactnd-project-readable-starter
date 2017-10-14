@@ -97,7 +97,7 @@ class App extends Component {
             <br />
             <div>Post Detail View</div>
             <br />
-            <div><PostView /></div>
+            <div><PostView voteComment={this.props.voteComment} /></div>
           </div>
         )}/>
       </div>

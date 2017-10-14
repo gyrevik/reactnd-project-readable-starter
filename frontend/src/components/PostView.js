@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
 import Modal from 'react-modal';
-import { createComment, deletePost } from '../actions/actions.js';
+import { createComment, deletePost, voteComment } from '../actions/actions.js';
 import CatSet from '../components/CatSet.js';
 import * as utils from '../utils';
 import * as ReadableAPI from '../ReadableAPI';
@@ -32,6 +32,7 @@ class PostView extends React.Component {
       body: this.state.comment, 
       id:Date.now().toString(),
       parentId:this.props.post.id.toString(),
+      timestamp: Date.now(),
       voteScore:1,
       author:'alex',
       deleted:false,
@@ -75,8 +76,12 @@ class PostView extends React.Component {
         <ul>
           {this.props.comments.map((comment, i) => 
             <li key={i.toString()}>
+              id: {comment.id}<br/>
               {comment.body}<br/>
-              Vote Score: {comment.voteScore}<br/><br/>
+              Vote Score: {comment.voteScore} {' - '} 
+                <a href="javascript:void(0)" onClick={() => this.props.voteComment(comment.id, 'upVote')}>upVote</a>
+                {' - '}
+                <a href="javascript:void(0)" onClick={() => this.props.voteComment(comment.id, 'downVote')}>downVote</a><br/>
             </li>
           )}
         </ul>
@@ -118,14 +123,7 @@ const mapStateToProps = (state, props) => {
   console.log('PostView.mapStateToProps.state.posts: ', state.posts);
   console.log('PostView.mapStateToProps.state.comments: ', state.comments);
   console.log('PostView.mapStateToProps.state.post: ', state.post);
-  //let comments;
-  //ReadableAPI.getComments(state.post.id).then((comments) => {
-  //  console.log('comments from server for post.id {', state.post.id, '}: ', comments);
-  //});
-
-  //if (state.post.deleted) window.location.replace("/");
   
-
   return { posts: state.posts, post: state.post, comment: state.comment, comments: state.comments };
 }
   
@@ -133,6 +131,7 @@ const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
       createComment: createComment,
       deletePost: deletePost,
+      voteComment: voteComment
   	}, dispatch);
 }
 

@@ -85,16 +85,12 @@ export const createPost = (post) => {
 
 export const createComment = (comment) => {
   console.log('entered createComment with comment: ', comment);
-  let { parentId, body, author, voteScore, deleted, parentDeleted } = comment;
+  let { id, parentId, timestamp, body, author, voteScore, deleted, parentDeleted } = comment;
   console.log('action.createComment parentId: ', parentId, '\nbody: ', body, '\nauthor: ', author, '\nvoteScore: ', voteScore, '\ndeleted: ', deleted, '\nparentDeleted: ', parentDeleted);
   if (body.length === 0 || parentId.length === 0) {
     console.log('throwing error !body || !parentId in createComment action creater');
     throw new Error('invalid comment: parentId and body required');
   }
-  let timestamp = Date.now();
-  //comment = { id:timestamp, author:'alex', voteScore:1, deleted:false, parentDelted:false };
-  //console.log('comment.body after merge: ', comment.body);
-  comment.timestamp = timestamp;
   
   ReadableAPI.postComment(comment).then((data) => {
     console.log('return data from ReadableAPI.postComment: ', data);
@@ -104,7 +100,7 @@ export const createComment = (comment) => {
   console.log('returning from createComment action creater type: ', CREATE_COMMENT, ' and comment: ', comment);
   return {
     type: CREATE_COMMENT,
-    comment: { id:timestamp, parentId, timestamp, body, author:'alex', voteScore:1, deleted:false, parentDelted:false },
+    comment: { id, parentId, timestamp, body, author:'alex', voteScore:1, deleted:false, parentDelted:false },
   }
 }
 

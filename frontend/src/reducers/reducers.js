@@ -155,10 +155,12 @@ export function commentsReducer (state = [], action) {
       })
     }
     case VOTE_COMMENT: {
-      const { comment } = action;
+      console.log('in VOTE_COMMENT case with action.option: ', action.option);
       return state.map(c => {
-        if (c.id === comment.id)
-          c.voteSore++;
+        if (c.id === action.id) {
+          console.log('found c.id: ', c.id);
+          action.option === 'upVote' ? c.voteScore++ : c.voteScore--;
+        }
         
         return c;
       })
