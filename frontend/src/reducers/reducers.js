@@ -104,7 +104,7 @@ export function postsReducer (state = [], action) {
       console.log('state: ', state);
       const newState = state.map((post, index) => {
         if (action.id === post.id) 
-          post.voteScore++;
+          action.option === 'upVote' ? post.voteScore++ : post.voteScore--;
         
         return post;
       });
