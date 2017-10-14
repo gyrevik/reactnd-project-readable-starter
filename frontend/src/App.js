@@ -4,7 +4,7 @@ import { Route } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { setPostCat, setPostCurrent, setViewCat, clearPostCat, sortPostsField } from './actions/actions.js';
+import { voteComment, votePost, setPostCat, setPostCurrent, setViewCat, clearPostCat, sortPostsField } from './actions/actions.js';
 import CatSet from './components/CatSet.js';
 import CatViewLinks from './components/CatViewLinks.js';
 import PostList from './components/PostList.js';
@@ -57,7 +57,8 @@ class App extends Component {
                 posts={this.props.posts}
                 sortPostsField={this.props.sortPostsField}
                 deletePost={this.props.deletePost}
-      			    setPostCurrent={this.props.setPostCurrent} />
+      			    setPostCurrent={this.props.setPostCurrent} 
+                votePost={this.props.votePost} />
             </div>
           </div>
         )}/>
@@ -86,7 +87,8 @@ class App extends Component {
                 posts={this.props.postsView}
                 sortPostsField={this.props.sortPostsField}
                 deletePost={this.props.deletePost} 
-                setPostCurrent={this.props.setPostCurrent} />
+                setPostCurrent={this.props.setPostCurrent}
+                votePost={this.props.votePost} />
             </div>
           </div>
         )}/>
@@ -103,26 +105,10 @@ class App extends Component {
   }
 }
 
-const LocationAwareComponent = ({ location, history, match }) => {
-  // can use location, history, or match
-  console.log('LocationAwareComponent, location: ', location);
-}
-
 const mapStateToProps = (state, props) => {
-  //console.log(`App.js -> mapStateToProps -> state.posts: ${state.posts}`);
-  //console.log(`App.js -> mapStateToProps -> state.postCat: ${state.postCat}`);
-  //console.log(`App.js -> mapStateToProps -> state.viewCat: ${state.viewCat}`);
   const postCat = state.postCat;
   let viewCat = state.viewCat;
   if (createHistory().location.pathname === "/") viewCat = "react";
-  
-  //console.log(`App.js -> mapStateToProps -> typeof(state.postCat): ${typeof(state.postCat)}`);
-
-  //console.log('state.post: ', state.post);
-  
-  //console.log('state.posts before filter: ', state.posts);
-  //console.log('typeof(state.posts): ', typeof(state.posts));
-  //console.log("typeof(state.posts) === 'object': ", typeof(state.posts) === 'object');
   
   let posts;
   if (typeof(state.posts) === 'object')
@@ -133,7 +119,6 @@ const mapStateToProps = (state, props) => {
   posts = posts.filter(post => post.deleted ? false : true);  // filter out deleted posts
 
   let postsView = posts.slice();
-  //console.log('postsView.length before filter: ', postsView.length, ', filter viewCat: ', state.viewCat);
   postsView = postsView.filter(post => {
     if (post.category === state.viewCat || state.viewCat === 'all') {
       return true;
@@ -142,17 +127,8 @@ const mapStateToProps = (state, props) => {
       return false;
     }
   });
-  //console.log('postsView.length after filter: ', postsView.length);
-
-  //posts.map((post, i) => console.log('arrow function post category: ', post.category, " type: ", typeof(post.category)));
   
   const cats = state.cats;
-  //console.log('typeof(cats): ', typeof(cats));
-  //debugger;
-  //cats.map((cat, i) => console.log('map arrow function: ', cat.name));
-
-  //console.log('state.sortPostsField: ', state.sortPostsField);
-  // todo: order posts by field
   const sortByKey = key => (a, b) => a[state.sortPostsField] < b[state.sortPostsField];	// desc (number)
   posts.sort(sortByKey(state.sortPostsField));
   
@@ -160,6 +136,6 @@ const mapStateToProps = (state, props) => {
 }
 
 const mapDispatchToProps = (dispatch, props) =>
-  bindActionCreators({ setPostCat, setPostCurrent, setViewCat, clearPostCat, sortPostsField }, dispatch)
+  bindActionCreators({ voteComment, votePost, setPostCat, setPostCurrent, setViewCat, clearPostCat, sortPostsField }, dispatch)
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App))
