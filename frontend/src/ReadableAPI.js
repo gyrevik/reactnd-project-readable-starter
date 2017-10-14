@@ -44,20 +44,23 @@ fetch(`${api}/comments/${id}`, {
 }).then(res => res.json())
 
 // POST /posts/:id	Used for voting on a post.	option - [String]: Either "upVote" or "downVote"
-export const votePost = (id, option) =>
-  fetch(`${api}/posts/${id}`, {
+export const votePost = (id, option) => {
+  console.log(`in ReadableAPI.votePost(${id}, ${option})`);
+  const params = JSON.stringify({ option: option });
+
+  return fetch(`${api}/posts/${id}`, {
     method: 'POST',
     headers: {
       ...headers,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(id),
-    option: option
+    body: params,
   }).then(res => res.json())
     .then(data => data)
     .catch(function(error) {
       console.log('API votePost error: ', error);
     })
+}
 
 // POST /comments/:id	Used for voting on a comment. option - [String]: Either "upVote" or "downVote"
 export const voteComment = (id, option) =>
