@@ -63,20 +63,21 @@ export const votePost = (id, option) => {
 }
 
 // POST /comments/:id	Used for voting on a comment. option - [String]: Either "upVote" or "downVote"
-export const voteComment = (id, option) =>
-  fetch(`${api}/comments/${id}`, {
+export const voteComment = (id, option) => {
+  const params = JSON.stringify({ option: option });
+  return fetch(`${api}/comments/${id}`, {
     method: 'POST',
     headers: {
       ...headers,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(id),
-    option: option
+    body: params
   }).then(res => res.json())
     .then(data => data)
     .catch(function(error) {
       console.log('API voteComment error: ', error);
     })
+}
 
 // PUT /comments/:id	Edit the details of an existing comment.	
 // timestamp - timestamp. Get this however you want. 
