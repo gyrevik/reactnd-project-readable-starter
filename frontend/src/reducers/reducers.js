@@ -3,7 +3,7 @@ import { combineReducers } from 'redux';
 import {
   SET_POST_CAT, SET_POST_CURRENT, SET_VIEW_CAT, CLEAR_POST_CAT, 
   CREATE_POST, EDIT_POST, DELETE_POST, SORT_POSTS_FIELD,
-  CREATE_COMMENT, EDIT_COMMENT, DELETE_COMMENT, VOTE_COMMENT, VOTE_POST
+  CREATE_COMMENT, EDIT_COMMENT, DELETE_COMMENT, CREATE_COMMENTS, VOTE_COMMENT, VOTE_POST
 } from '../actions/actions.js'
 
 export function catReducer (state = 'all', action) {
@@ -119,6 +119,10 @@ export function postsReducer (state = [], action) {
 export function commentsReducer (state = [], action) {
   console.log('top of commentsReducer');
   switch (action.type) {
+    case CREATE_COMMENTS: {
+      const comments = state.slice();
+      return comments;
+    }
     case CREATE_COMMENT: {
       const { type, comment } = action;
       console.log('in commentsReducer CREATE_COMMENT case with comment: ', comment);

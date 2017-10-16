@@ -15,6 +15,7 @@ export const CREATE_COMMENT = 'CREATE_COMMENT';
 export const EDIT_COMMENT = 'EDIT_COMMENT';
 export const DELETE_COMMENT = 'DELETE_COMMENT';
 export const VOTE_COMMENT = 'VOTE_COMMENT';
+export const CREATE_COMMENTS = 'CREATE_COMMENTS';
 
 export const SORT_POSTS_FIELD = 'SORT_POSTS_FIELD';
 export const SORT_POSTS_DIRECTION = 'SORT_POSTS_DIRECTION';
@@ -80,6 +81,13 @@ export const createPost = (post) => {
   return {
     type: CREATE_POST,
     post: { id:Date.now(), timestamp:Date.now(), title, body, author:'alex', category, voteScore:1, deleted:false },
+  }
+}
+
+export const createComments = (comments) => {
+  return {
+    type: CREATE_COMMENTS,
+    comments
   }
 }
 
@@ -172,7 +180,3 @@ export const deleteComment = (id) => {
     id,
   }
 }
-
-
-
-

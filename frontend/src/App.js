@@ -129,6 +129,7 @@ const mapStateToProps = (state, props) => {
   });
   
   const cats = state.cats;
+  
   const sortByKey = key => (a, b) => a[state.sortPostsField] < b[state.sortPostsField];	// desc (number)
   posts.sort(sortByKey(state.sortPostsField));
   

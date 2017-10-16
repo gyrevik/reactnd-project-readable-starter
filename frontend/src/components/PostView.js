@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
 import Modal from 'react-modal';
-import { createComment, deletePost, voteComment } from '../actions/actions.js';
+import { createComments, createComment, deletePost, voteComment } from '../actions/actions.js';
 import CatSet from '../components/CatSet.js';
 import * as utils from '../utils';
 import * as ReadableAPI from '../ReadableAPI';
@@ -48,19 +48,10 @@ class PostView extends React.Component {
 
   componentDidMount() {
     console.log(`PostView.js.componentDidMount state: ${JSON.stringify(this.state)}`);
-    console.log('getting comments from server in componentDidMount');
-    let cfs;
-    ReadableAPI.getComments(this.props.post.id).then((cfs) => {
-      console.log('componentDidMount - comments from server (cfs): ', cfs);
-      console.log('componentDidMount typeof(JSON.parse(cfs)): ', typeof(JSON.parse(cfs)));
-      this.setState({comments: JSON.parse(cfs)});
-    })
   }
 
   render() {
-    // merge component state comments pulled from server with state.comments 
-    // which is had newly added comments going thru redux
-    //const comments = [ ...this.state.comments, ...this.props.comments ];
+    const sortByKey = key => (a, b) => a['voteScore'] < b['voteScore'];	// desc (number)
 
     return (
       <div>
@@ -87,7 +78,8 @@ class PostView extends React.Component {
         <br/><br/>
         Comments:<br/>
         <ul>
-          {[ ...this.state.comments, ...this.props.comments ].map((comment, i) => 
+          {//[ ...this.state.comments, ...this.props.comments ].sort(sortByKey('voteScore')).map((comment, i) => 
+            this.props.comments.sort(sortByKey('voteScore')).map((comment, i) => 
             <li key={i.toString()}>
               id: {comment.id}<br/>
               {comment.body}<br/>
@@ -136,21 +128,25 @@ const mapStateToProps = (state, props) => {
   console.log('PostView.mapStateToProps.state.posts: ', state.posts);
   console.log('PostView.mapStateToProps.state.comments: ', state.comments);
   console.log('PostView.mapStateToProps.state.post: ', state.post);
-
-  //let cfs;
-  //ReadableAPI.getComments(state.post.id).then((cfs) => {
-  //  console.log('comments from server cfs: ', cfs);
-  //  console.log('typeof(cfs): ', typeof(JSON.parse(cfs)));
-  //})
-
-  //console.log('typeof(this.state.comments): ', typeof(this.state.comments));
   console.log('typeof(state.comments): ', typeof(state.comments));
 
-  return { posts: state.posts, post: state.post, comment: state.comment, comments: state.comments };
+  console.log('getting comments from server in mapStateToProps');
+  let cfs, comments;
+  let propsObj = ReadableAPI.getComments(state.post.id).then((cfs) => {
+    //console.log('componentDidMount typeof(JSON.parse(cfs)): ', typeof(JSON.parse(cfs)));
+    comments = JSON.parse(cfs);
+    //this.setState({comments});
+    createComments(comments);  // put comments from server into redux store
+
+    return { posts: state.posts, post: state.post, comment: state.comment, comments: state.comments };
+  })
+
+  return propsObj;
 }
   
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
+      createComments: createComments,
       createComment: createComment,
       deletePost: deletePost,
       voteComment: voteComment
