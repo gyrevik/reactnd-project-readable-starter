@@ -1,4 +1,4 @@
-import * as ReadableAPI from '../ReadableAPI';
+import * as apiCalls from '../apiCalls';
 
 export const FETCH_CATS = 'FETCH_CATS';
 export const SET_POST_CAT = 'SET_POST_CAT';
@@ -15,7 +15,9 @@ export const CREATE_COMMENT = 'CREATE_COMMENT';
 export const EDIT_COMMENT = 'EDIT_COMMENT';
 export const DELETE_COMMENT = 'DELETE_COMMENT';
 export const VOTE_COMMENT = 'VOTE_COMMENT';
+
 export const CREATE_COMMENTS = 'CREATE_COMMENTS';
+export const ERROR_COMMENTS = 'ERROR_COMMENTS';
 
 export const SORT_POSTS_FIELD = 'SORT_POSTS_FIELD';
 export const SORT_POSTS_DIRECTION = 'SORT_POSTS_DIRECTION';
@@ -72,7 +74,7 @@ export const createPost = (post) => {
     throw new Error('invalid post: category, title and body required');
   }
 
-  ReadableAPI.postPost(post).then((data) => {
+  apiCalls.postPost(post).then((data) => {
     console.log('return data from ReadableAPI.postPost: ', data);
     console.log('posted post: ', post);
   });
@@ -84,12 +86,45 @@ export const createPost = (post) => {
   }
 }
 
-export const createComments = (comments) => {
+export const commentsActionErrored = (bool) => {
+  return {
+    type: ERROR_COMMENTS,
+    error: bool
+  }
+}
+
+export const commentsAction = (comments) => {
+  console.log('entered commentsAction with comments: ', comments);
   return {
     type: CREATE_COMMENTS,
     comments
   }
 }
+
+export function commentsActionFetch(postId) {
+  console.log('entered commentsActionFetch(', postId, ')');
+  const headers = apiCalls.headers;
+  return (dispatch) => {
+    //dispatch(itemsIsLoading(true));
+
+    fetch(`${apiCalls.api}/posts/${postId}/comments`, { headers })
+      .then((response) => {
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+
+        //dispatch(itemsIsLoading(false));
+        return response;
+      })
+      .then((response) => response.json())
+      .then((comments) => dispatch(commentsAction(comments)))
+      .catch(() => dispatch(commentsActionErrored(true)));
+  };
+}
+
+/*fetch(`${api}/posts/${postId}/comments`, { headers })
+  .then(res => res.text())
+  .then(data => data)*/
 
 export const createComment = (comment) => {
   console.log('entered createComment with comment: ', comment);
@@ -100,8 +135,8 @@ export const createComment = (comment) => {
     throw new Error('invalid comment: parentId and body required');
   }
   
-  ReadableAPI.postComment(comment).then((data) => {
-    console.log('return data from ReadableAPI.postComment: ', data);
+  apiCalls.postComment(comment).then((data) => {
+    console.log('return data from apiCalls.postComment: ', data);
     console.log('posted comment: ', comment);
     /*ReadableAPI.getComments(comment.parentId).then((data) => {
       console.log('comments on server: ', data);
@@ -116,8 +151,8 @@ export const createComment = (comment) => {
 }
 
 export const editPost = (post) => {
-  ReadableAPI.putPost(post).then((data) => {
-    console.log('return data from ReadableAPI.putPost: ', data);
+  apiCalls.putPost(post).then((data) => {
+    console.log('return data from apiCalls.putPost: ', data);
     console.log('put post: ', post);
   });
   return {
@@ -127,7 +162,7 @@ export const editPost = (post) => {
 }
 
 export const editComment = (comment) => {
-  ReadableAPI.putComment(comment).then((data) => {
+  apiCalls.putComment(comment).then((data) => {
     console.log('API edit comment (', comment, '), data: ', data);
   })
   return {
@@ -138,7 +173,7 @@ export const editComment = (comment) => {
 
 export const deletePost = (id) => {
   console.log('in deletePost action with id: ', id);
-  ReadableAPI.deletePost(id).then((data) => {
+  apiCalls.deletePost(id).then((data) => {
     console.log('API deleting post id (', id, '), data: ', data);
   })
   return {
@@ -149,7 +184,7 @@ export const deletePost = (id) => {
 
 export const votePost = (id, option) => {
   console.log('in votePost action with id: ', id, ' option: ', option);
-  ReadableAPI.votePost(id, option).then((data) => {
+  apiCalls.votePost(id, option).then((data) => {
     console.log('API votePost post id (', id, '), option: ', option, ' data: ', data);
   })
   return {
@@ -161,7 +196,7 @@ export const votePost = (id, option) => {
 
 export const voteComment = (id, option) => {
   console.log('in voteComment action with id: ', id, ' option: ', option);
-  ReadableAPI.voteComment(id, option).then((data) => {
+  apiCalls.voteComment(id, option).then((data) => {
     console.log('API voteComment comment id (', id, '), option: ', option, ' data: ', data);
   })
   return {
@@ -172,7 +207,7 @@ export const voteComment = (id, option) => {
 }
 
 export const deleteComment = (id) => {
-  ReadableAPI.deleteComment(id).then((data) => {
+  apiCalls.deleteComment(id).then((data) => {
     console.log('API deleteComment id (', id, '), data: ', data);
   })
   return {

@@ -1,7 +1,7 @@
 
-const api = "http://localhost:3001"
+export const api = "http://localhost:3001"
 
-const headers = {
+export const headers = {
   'Accept': 'application/json',
   'Authorization': 'whatever-you-want'
 }
@@ -45,7 +45,7 @@ fetch(`${api}/comments/${id}`, {
 
 // POST /posts/:id	Used for voting on a post.	option - [String]: Either "upVote" or "downVote"
 export const votePost = (id, option) => {
-  console.log(`in ReadableAPI.votePost(${id}, ${option})`);
+  console.log(`in apiCalls.votePost(${id}, ${option})`);
   const params = JSON.stringify({ option: option });
 
   return fetch(`${api}/posts/${id}`, {
@@ -64,7 +64,7 @@ export const votePost = (id, option) => {
 
 // POST /comments/:id	Used for voting on a comment. option - [String]: Either "upVote" or "downVote"
 export const voteComment = (id, option) => {
-  console.log(`in ReadableAPI.voteComment(${id}, ${option})`);
+  console.log(`in apiCalls.voteComment(${id}, ${option})`);
   const params = JSON.stringify({ option: option });
   
   return fetch(`${api}/comments/${id}`, {

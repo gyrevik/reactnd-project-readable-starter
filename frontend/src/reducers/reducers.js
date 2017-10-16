@@ -3,7 +3,7 @@ import { combineReducers } from 'redux';
 import {
   SET_POST_CAT, SET_POST_CURRENT, SET_VIEW_CAT, CLEAR_POST_CAT, 
   CREATE_POST, EDIT_POST, DELETE_POST, SORT_POSTS_FIELD,
-  CREATE_COMMENT, EDIT_COMMENT, DELETE_COMMENT, CREATE_COMMENTS, VOTE_COMMENT, VOTE_POST
+  CREATE_COMMENT, EDIT_COMMENT, DELETE_COMMENT, CREATE_COMMENTS, ERROR_COMMENTS, VOTE_COMMENT, VOTE_POST
 } from '../actions/actions.js'
 
 export function catReducer (state = 'all', action) {
@@ -116,12 +116,25 @@ export function postsReducer (state = [], action) {
   }
 }
 
+export function commentReducer (state = false, action) {
+  switch (action.type) {
+    case ERROR_COMMENTS: {
+      return action.error;
+    }
+    default:
+      return state;
+  }
+}
+
 export function commentsReducer (state = [], action) {
-  console.log('top of commentsReducer');
+  console.log('top of commentsReducer with action.type: ', action.type);
   switch (action.type) {
     case CREATE_COMMENTS: {
-      const comments = state.slice();
-      return comments;
+      //const comments = state.slice();
+      //return comments;
+      console.log('in CREATE_COMMENTS case with state: ', state);
+      console.log('in CREATE_COMMENTS case with action.comments: ', action.comments);
+      return action.comments;
     }
     case CREATE_COMMENT: {
       const { type, comment } = action;
@@ -175,11 +188,12 @@ export function commentsReducer (state = [], action) {
 }
 
 export default combineReducers({
-  postCat: catReducer,
   post: postReducer,
-  viewCat: viewReducer,
-  cats: catsReducer,
+  postCat: catReducer,
   posts: postsReducer,
-  comments: commentsReducer,
   sortPostsField: sortPostsReducer,
+  cats: catsReducer,
+  viewCat: viewReducer,
+  comments: commentsReducer,
+  commentsError: commentReducer
 })

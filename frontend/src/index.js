@@ -8,13 +8,13 @@ import { createStore, applyMiddleware  } from 'redux';
 import reducer from './reducers/reducers.js';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import * as ReadableAPI from './ReadableAPI';
+import * as apiCalls from './apiCalls';
 
-ReadableAPI.getCategories().then((cats) => {
+apiCalls.getCategories().then((cats) => {
   //sessionStorage.setItem('booksAll', JSON.stringify(booksAll));
   console.log(`index.js: got all categories from API (${cats.length} categories)`);  
 
-  ReadableAPI.getPosts().then((postsAll) => { 
+  apiCalls.getPosts().then((postsAll) => { 
     //this.setState({ posts:postsAll });
     //sessionStorage.setItem('booksAll', JSON.stringify(booksAll));
     console.log(`index.js: got all posts from API (${postsAll.length} posts)`);   
@@ -22,7 +22,7 @@ ReadableAPI.getCategories().then((cats) => {
     let store = createStore(reducer, 
       {postCat: 'react', posts: postsAll, cats: cats},
       applyMiddleware(thunk));
-      
+
   	console.log(`index.js: store.getState(): ${store.getState()}`);
 	  console.log(`index.js: store.getState()['cats']: ${store.getState()['cats']}`);
 	  console.log(`index.js: store.getState()['posts']: ${store.getState()['posts']}`);

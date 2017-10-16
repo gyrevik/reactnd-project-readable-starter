@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
 import Modal from 'react-modal';
-import { createComments, createComment, deletePost, voteComment } from '../actions/actions.js';
+import { commentsActionFetch, createComment, deletePost, voteComment } from '../actions/actions.js';
 import CatSet from '../components/CatSet.js';
 import * as utils from '../utils';
-import * as ReadableAPI from '../ReadableAPI';
+import * as apiCalls from '../apiCalls';
 import createHistory from 'history/createBrowserHistory';
 
 class PostView extends React.Component {
@@ -47,6 +47,10 @@ class PostView extends React.Component {
   }
 
   componentDidMount() {
+    console.log(`PostView.js.componentDidMount state: ${JSON.stringify(this.state)}`);
+    console.log('about to run fetchComments in componentDidMount for post.id: ', this.props.post.id);
+    this.props.fetchComments(this.props.post.id);
+    console.log('ran fetchComments in componentDidMount');
     console.log(`PostView.js.componentDidMount state: ${JSON.stringify(this.state)}`);
   }
 
@@ -117,7 +121,6 @@ class PostView extends React.Component {
             type="button" onClick={() => window.location.replace("/")}>
             Home
           </button>
-          
         </Modal>
       </div>
     )
@@ -131,26 +134,32 @@ const mapStateToProps = (state, props) => {
   console.log('typeof(state.comments): ', typeof(state.comments));
 
   console.log('getting comments from server in mapStateToProps');
-  let cfs, comments;
-  let propsObj = ReadableAPI.getComments(state.post.id).then((cfs) => {
+  //let cfs, comments;
+  //let propsObj = apiCalls.getComments(state.post.id).then((cfs) => {
     //console.log('componentDidMount typeof(JSON.parse(cfs)): ', typeof(JSON.parse(cfs)));
-    comments = JSON.parse(cfs);
+    //comments = JSON.parse(cfs);
     //this.setState({comments});
-    createComments(comments);  // put comments from server into redux store
+    //commentsAction(comments);  // put comments from server into redux store
+  //})
 
-    return { posts: state.posts, post: state.post, comment: state.comment, comments: state.comments };
-  })
-
-  return propsObj;
+  return { posts: state.posts, post: state.post, comment: state.comment, comments: state.comments };
+  //return propsObj;
 }
   
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({
-      createComments: createComments,
+    /*return bindActionCreators({
       createComment: createComment,
       deletePost: deletePost,
-      voteComment: voteComment
-  	}, dispatch);
+      voteComment: voteComment,
+      fetchComments: (postId) => dispatch(commentsActionFetch(postId))
+    }, dispatch);*/
+    
+    return {
+      createComment: (comment) => dispatch(createComment(comment)),
+      deletePost: (postId) => dispatch(deletePost(postId)),
+      voteComment: (vote) => dispatch(voteComment(vote)),
+      fetchComments: (postId) => dispatch(commentsActionFetch(postId))
+  };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostView)
