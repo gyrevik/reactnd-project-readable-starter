@@ -88,7 +88,7 @@ class PostView extends React.Component {
               id: {comment.id}<br/>
               {comment.body}<br/>
               Vote Score: {comment.voteScore} {' - '} 
-                <a href="javascript:void(0)" onClick={() => this.props.voteComment(comment.id, 'upVote')}>upVote</a>
+                <a href="javascript:void(0)" onClick={() => this.props.voteComment(comment.id, 'upVote')}>upVote alex</a>
                 {' - '}
                 <a href="javascript:void(0)" onClick={() => this.props.voteComment(comment.id, 'downVote')}>downVote</a><br/>
             </li>
@@ -132,32 +132,16 @@ const mapStateToProps = (state, props) => {
   console.log('PostView.mapStateToProps.state.comments: ', state.comments);
   console.log('PostView.mapStateToProps.state.post: ', state.post);
   console.log('typeof(state.comments): ', typeof(state.comments));
-
   console.log('getting comments from server in mapStateToProps');
-  //let cfs, comments;
-  //let propsObj = apiCalls.getComments(state.post.id).then((cfs) => {
-    //console.log('componentDidMount typeof(JSON.parse(cfs)): ', typeof(JSON.parse(cfs)));
-    //comments = JSON.parse(cfs);
-    //this.setState({comments});
-    //commentsAction(comments);  // put comments from server into redux store
-  //})
 
   return { posts: state.posts, post: state.post, comment: state.comment, comments: state.comments };
-  //return propsObj;
 }
   
 const mapDispatchToProps = (dispatch) => {
-    /*return bindActionCreators({
-      createComment: createComment,
-      deletePost: deletePost,
-      voteComment: voteComment,
-      fetchComments: (postId) => dispatch(commentsActionFetch(postId))
-    }, dispatch);*/
-    
     return {
       createComment: (comment) => dispatch(createComment(comment)),
       deletePost: (postId) => dispatch(deletePost(postId)),
-      voteComment: (vote) => dispatch(voteComment(vote)),
+      voteComment: (commentId, option) => dispatch(voteComment(commentId, option)),
       fetchComments: (postId) => dispatch(commentsActionFetch(postId))
   };
 }

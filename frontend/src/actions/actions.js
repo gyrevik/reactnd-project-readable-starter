@@ -195,10 +195,10 @@ export const votePost = (id, option) => {
 }
 
 export const voteComment = (id, option) => {
-  console.log('in voteComment action with id: ', id, ' option: ', option);
-  apiCalls.voteComment(id, option).then((data) => {
-    console.log('API voteComment comment id (', id, '), option: ', option, ' data: ', data);
-  })
+  console.log('alex in voteComment action with id: ', id, ' option: ', option);
+  //apiCalls.voteComment(id, option).then((data) => {
+  //console.log('API voteComment comment id (', id, '), option: ', option, ' data: ', data);
+  //})
   return {
     type: VOTE_COMMENT,
     id,
