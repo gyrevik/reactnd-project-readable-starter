@@ -1,5 +1,5 @@
 
-const api = "http://localhost:3001"
+const url = "http://localhost:3001"
 
 const headers = {
   'Accept': 'application/json',
@@ -7,18 +7,18 @@ const headers = {
 }
 
 export const getCategories = () =>
-  fetch(`${api}/categories`, { headers })
+  fetch(`${url}/categories`, { headers })
     .then(res => res.json())
     .then(data => data.categories)
       
 export const getPosts = () =>
-  fetch(`${api}/posts`, { headers })
+  fetch(`${url}/posts`, { headers })
     .then(res => res.json())
     .then(data => data)
 
 //DELETE /posts/:id
 export const deletePost = (id) =>
-  fetch(`${api}/posts/${id}`, {
+  fetch(`${url}/posts/${id}`, {
     method: 'DELETE',
     headers: {
       ...headers,
@@ -29,7 +29,7 @@ export const deletePost = (id) =>
 
 // DELETE /comments/:id
 export const deleteComment = (id) =>
-fetch(`${api}/comments/${id}`, {
+fetch(`${url}/comments/${id}`, {
   method: 'DELETE',
   headers: {
     ...headers,
@@ -43,7 +43,7 @@ export const votePost = (id, option) => {
   console.log(`in apiCalls.votePost(${id}, ${option})`);
   const params = JSON.stringify({ option: option });
 
-  return fetch(`${api}/posts/${id}`, {
+  return fetch(`${url}/posts/${id}`, {
     method: 'POST',
     headers: {
       ...headers,
@@ -62,7 +62,7 @@ export const voteComment = (id, option) => {
   console.log(`in apiCalls.voteComment(${id}, ${option})`);
   const params = JSON.stringify({ option: option });
   
-  return fetch(`${api}/comments/${id}`, {
+  return fetch(`${url}/comments/${id}`, {
     method: 'POST',
     headers: {
       ...headers,
@@ -80,7 +80,7 @@ export const voteComment = (id, option) => {
 // timestamp - timestamp. Get this however you want. 
 // body - [String]
 export const putComment = (comment) =>
-  fetch(`${api}/comments/${comment.id}`, {
+  fetch(`${url}/comments/${comment.id}`, {
     method: 'PUT',
     headers: {
       ...headers,
@@ -94,7 +94,7 @@ export const putComment = (comment) =>
     })
 
 export const postComment = (comment) =>
-  fetch(`${api}/comments`, {
+  fetch(`${url}/comments`, {
     method: 'POST',
     headers: {
       ...headers,
@@ -108,7 +108,7 @@ export const postComment = (comment) =>
     })
 
 export const postPost = (post) =>
-  fetch(`${api}/posts`, {
+  fetch(`${url}/posts`, {
     method: 'POST',
     headers: {
       ...headers,
@@ -124,7 +124,7 @@ export const postPost = (post) =>
 // PUT /posts/:id	Edit the details of an existing post.	title - [String] 
 // body - [String]
 export const putPost = (post) =>
-  fetch(`${api}/posts/${post.id}`, {
+  fetch(`${url}/posts/${post.id}`, {
     method: 'PUT',
     headers: {
       ...headers,

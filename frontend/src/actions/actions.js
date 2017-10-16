@@ -15,6 +15,7 @@ export const CREATE_COMMENT = 'CREATE_COMMENT';
 export const EDIT_COMMENT = 'EDIT_COMMENT';
 export const DELETE_COMMENT = 'DELETE_COMMENT';
 export const VOTE_COMMENT = 'VOTE_COMMENT';
+export const ERROR_VOTE_COMMENT = 'ERROR_VOTE_COMMENT';
 
 export const CREATE_COMMENTS = 'CREATE_COMMENTS';
 export const ERROR_COMMENTS = 'ERROR_COMMENTS';
@@ -134,9 +135,74 @@ export function commentsActionFetch(postId) {
   };
 }
 
-/*fetch(`${api}/posts/${postId}/comments`, { headers })
-  .then(res => res.text())
-  .then(data => data)*/
+
+// implement vote comment thunk actions:
+export const voteCommentActionErrored = (bool) => {
+  return {
+    type: ERROR_VOTE_COMMENT,
+    error: bool
+  }
+}
+
+export const voteCommentAction = (id, option) => {
+  console.log('entered voteCommentAction with option: ', option);
+  return {
+    type: VOTE_COMMENT,
+    id,
+    option
+  }
+}
+
+export function voteCommentActionFetch(id, option) {
+  console.log('entered voteCommentActionFetch(', id, ', ', option, ')');
+  return (dispatch) => {
+    console.log(`running fetch with url: ${url}/comments/${id}`);
+    console.log('and headers: ', headers);
+    const params = JSON.stringify({ option: option });
+    fetch(`${url}/comments/${id}`, { 
+      method: 'POST',
+      headers: {
+        ...headers,
+        'Content-Type': 'application/json'
+      },
+      body: params, })
+      .then((response) => {
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+        //dispatch(itemsIsLoading(false));
+        return response;
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('voteCommentActionFetch, (', id, ', ', option, ') fetched data: ', data);
+        dispatch(voteCommentAction(id, option));
+        console.log('dispatched comment vote to store');
+      })
+      .catch(() => dispatch(voteCommentActionErrored(true)));
+  };
+}
+// end implement vote comment thunk actions
+
+
+
+
+/*
+export const voteComment = (id, option) => {
+  console.log('alex in voteComment action with id: ', id, ' option: ', option);
+  
+  // todo: migrate to thunk
+  apiCalls.voteComment(id, option).then((data) => {
+    console.log('API voteComment comment id (', id, '), option: ', option, ' data: ', data);
+  });
+
+  return {
+    type: VOTE_COMMENT,
+    id,
+    option
+  }
+}
+*/
 
 export const createComment = (comment) => {
   console.log('entered createComment with comment: ', comment);
@@ -201,18 +267,6 @@ export const votePost = (id, option) => {
   })
   return {
     type: VOTE_POST,
-    id,
-    option
-  }
-}
-
-export const voteComment = (id, option) => {
-  console.log('alex in voteComment action with id: ', id, ' option: ', option);
-  //apiCalls.voteComment(id, option).then((data) => {
-  //console.log('API voteComment comment id (', id, '), option: ', option, ' data: ', data);
-  //})
-  return {
-    type: VOTE_COMMENT,
     id,
     option
   }
