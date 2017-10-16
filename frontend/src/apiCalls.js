@@ -58,7 +58,7 @@ export const votePost = (id, option) => {
 }
 
 // POST /comments/:id	Used for voting on a comment. option - [String]: Either "upVote" or "downVote"
-export const voteComment = (id, option) => {
+/*export const voteComment = (id, option) => {
   console.log(`in apiCalls.voteComment(${id}, ${option})`);
   const params = JSON.stringify({ option: option });
   
@@ -74,7 +74,7 @@ export const voteComment = (id, option) => {
     .catch(function(error) {
       console.log('API voteComment error: ', error);
     })
-}
+}*/
 
 // PUT /comments/:id	Edit the details of an existing comment.	
 // timestamp - timestamp. Get this however you want. 
