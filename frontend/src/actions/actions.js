@@ -22,6 +22,13 @@ export const ERROR_COMMENTS = 'ERROR_COMMENTS';
 export const SORT_POSTS_FIELD = 'SORT_POSTS_FIELD';
 export const SORT_POSTS_DIRECTION = 'SORT_POSTS_DIRECTION';
 
+const url = "http://localhost:3001"
+
+const headers = {
+  'Accept': 'application/json',
+  'Authorization': 'whatever-you-want'
+}
+
 export const setPostCat = (postCat) => {
   return {
     type: SET_POST_CAT,
@@ -103,12 +110,12 @@ export const commentsAction = (comments) => {
 
 export function commentsActionFetch(postId) {
   console.log('entered commentsActionFetch(', postId, ')');
-  const headers = apiCalls.headers;
+  //const headers = apiCalls.headers;
   return (dispatch) => {
     //dispatch(itemsIsLoading(true));
-    console.log(`running fetch with url: ${apiCalls.api}/posts/${postId}/comments`);
+    console.log(`running fetch with url: ${url}/posts/${postId}/comments`);
     console.log('and headers: ', headers);
-    fetch(`${apiCalls.api}/posts/${postId}/comments`, { headers })
+    fetch(`${url}/posts/${postId}/comments`, { headers })
       .then((response) => {
         if (!response.ok) {
           throw Error(response.statusText);

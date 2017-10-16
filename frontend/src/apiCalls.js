@@ -1,7 +1,7 @@
 
-export const api = "http://localhost:3001"
+const api = "http://localhost:3001"
 
-export const headers = {
+const headers = {
   'Accept': 'application/json',
   'Authorization': 'whatever-you-want'
 }
@@ -14,11 +14,6 @@ export const getCategories = () =>
 export const getPosts = () =>
   fetch(`${api}/posts`, { headers })
     .then(res => res.json())
-    .then(data => data)
-
-export const getComments = (postId) =>
-  fetch(`${api}/posts/${postId}/comments`, { headers })
-    .then(res => res.text())
     .then(data => data)
 
 //DELETE /posts/:id
