@@ -9,6 +9,7 @@ export const CLEAR_POST_CAT = 'CLEAR_POST_CAT';
 export const CREATE_POST = 'CREATE_POST';
 export const EDIT_POST = 'EDIT_POST';
 export const DELETE_POST = 'DELETE_POST';
+export const ERROR_DELETE_POST = 'ERROR_DELETE_POST';
 export const VOTE_POST = 'VOTE_POST';
 
 export const CREATE_COMMENT = 'CREATE_COMMENT';
@@ -184,26 +185,6 @@ export function voteCommentActionFetch(id, option) {
 }
 // end implement vote comment thunk actions
 
-
-
-
-/*
-export const voteComment = (id, option) => {
-  console.log('alex in voteComment action with id: ', id, ' option: ', option);
-  
-  // todo: migrate to thunk
-  apiCalls.voteComment(id, option).then((data) => {
-    console.log('API voteComment comment id (', id, '), option: ', option, ' data: ', data);
-  });
-
-  return {
-    type: VOTE_COMMENT,
-    id,
-    option
-  }
-}
-*/
-
 export const createComment = (comment) => {
   console.log('entered createComment with comment: ', comment);
   let { id, parentId, timestamp, body, author, voteScore, deleted, parentDeleted } = comment;
@@ -216,9 +197,6 @@ export const createComment = (comment) => {
   apiCalls.postComment(comment).then((data) => {
     console.log('return data from apiCalls.postComment: ', data);
     console.log('posted comment: ', comment);
-    /*ReadableAPI.getComments(comment.parentId).then((data) => {
-      console.log('comments on server: ', data);
-    })*/
   });
 
   console.log('returning from createComment action creater type: ', CREATE_COMMENT, ' and comment: ', comment);
@@ -259,6 +237,56 @@ export const deletePost = (id) => {
     id,
   }
 }
+
+// implement deletePost with thunk
+export const deletePostActionErrored = (bool) => {
+  return {
+    type: ERROR_DELETE_POST,
+    error: bool
+  }
+}
+
+export const deletePostAction = (id) => {
+  console.log('entered deletePostAction with id: ', id);
+  return {
+    type: DELETE_POST,
+    id
+  }
+}
+
+export function deletePostActionFetch(id) {
+  console.log('entered deletePostActionFetch(', id, ')');
+  return (dispatch) => {
+    console.log(`running fetch with url: ${url}/posts/${id}`);
+    console.log('and headers: ', headers);
+    fetch(`${url}/comments/${id}`, { 
+      method: 'DELETE',
+      headers: {
+        ...headers,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(id) })
+      .then((response) => {
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+        //dispatch(itemsIsLoading(false));
+        return response;
+      })
+      //.then((response) => response.json())
+      .then((data) => {
+        console.log('deletePostActionFetch, (', id, ') fetched data: ', data);
+        dispatch(deletePostAction(id));
+        console.log('dispatched deletePostAction to store');
+      })
+      .catch(() => dispatch(deletePostActionErrored(true)));
+  };
+}
+// end implement delete post with thunk
+
+
+
+
 
 export const votePost = (id, option) => {
   console.log('in votePost action with id: ', id, ' option: ', option);

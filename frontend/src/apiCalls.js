@@ -17,6 +17,7 @@ export const getPosts = () =>
     .then(data => data)
 
 //DELETE /posts/:id
+// todo: migrate to thunk
 export const deletePost = (id) =>
   fetch(`${url}/posts/${id}`, {
     method: 'DELETE',
@@ -56,25 +57,6 @@ export const votePost = (id, option) => {
       console.log('API votePost error: ', error);
     })
 }
-
-// POST /comments/:id	Used for voting on a comment. option - [String]: Either "upVote" or "downVote"
-/*export const voteComment = (id, option) => {
-  console.log(`in apiCalls.voteComment(${id}, ${option})`);
-  const params = JSON.stringify({ option: option });
-  
-  return fetch(`${url}/comments/${id}`, {
-    method: 'POST',
-    headers: {
-      ...headers,
-      'Content-Type': 'application/json'
-    },
-    body: params,
-  }).then(res => res.json())
-    .then(data => data)
-    .catch(function(error) {
-      console.log('API voteComment error: ', error);
-    })
-}*/
 
 // PUT /comments/:id	Edit the details of an existing comment.	
 // timestamp - timestamp. Get this however you want. 
