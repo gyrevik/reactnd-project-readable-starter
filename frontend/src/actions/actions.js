@@ -106,7 +106,8 @@ export function commentsActionFetch(postId) {
   const headers = apiCalls.headers;
   return (dispatch) => {
     //dispatch(itemsIsLoading(true));
-
+    console.log(`running fetch with url: ${apiCalls.api}/posts/${postId}/comments`);
+    console.log('and headers: ', headers);
     fetch(`${apiCalls.api}/posts/${postId}/comments`, { headers })
       .then((response) => {
         if (!response.ok) {
@@ -117,7 +118,11 @@ export function commentsActionFetch(postId) {
         return response;
       })
       .then((response) => response.json())
-      .then((comments) => dispatch(commentsAction(comments)))
+      .then((comments) => {
+        console.log('commentsActionFetch, (', postId, ') fetched comments: ', comments);
+        dispatch(commentsAction(comments));
+        console.log('dispatched comments to store');
+      })
       .catch(() => dispatch(commentsActionErrored(true)));
   };
 }
