@@ -227,7 +227,7 @@ export const editComment = (comment) => {
   }
 }
 
-export const deletePost = (id) => {
+/*export const deletePost = (id) => {
   console.log('in deletePost action with id: ', id);
   apiCalls.deletePost(id).then((data) => {
     console.log('API deleting post id (', id, '), data: ', data);
@@ -236,7 +236,7 @@ export const deletePost = (id) => {
     type: DELETE_POST,
     id,
   }
-}
+}*/
 
 // implement deletePost with thunk
 export const deletePostActionErrored = (bool) => {
@@ -259,7 +259,7 @@ export function deletePostActionFetch(id) {
   return (dispatch) => {
     console.log(`running fetch with url: ${url}/posts/${id}`);
     console.log('and headers: ', headers);
-    fetch(`${url}/comments/${id}`, { 
+    fetch(`${url}/posts/${id}`, { 
       method: 'DELETE',
       headers: {
         ...headers,

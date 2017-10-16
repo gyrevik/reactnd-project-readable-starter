@@ -16,18 +16,6 @@ export const getPosts = () =>
     .then(res => res.json())
     .then(data => data)
 
-//DELETE /posts/:id
-// todo: migrate to thunk
-export const deletePost = (id) =>
-  fetch(`${url}/posts/${id}`, {
-    method: 'DELETE',
-    headers: {
-      ...headers,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(id)
-  }).then(res => res.json())
-
 // DELETE /comments/:id
 export const deleteComment = (id) =>
 fetch(`${url}/comments/${id}`, {
