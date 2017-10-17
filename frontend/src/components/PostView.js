@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
 import Modal from 'react-modal';
-import { voteCommentActionFetch, commentsActionFetch, createComment, deletePostActionFetch } from '../actions/actions.js';
+import { voteCommentActionFetch, commentsActionFetch, 
+  createComment, deletePostActionFetch } from '../actions/actions.js';
 import CatSet from '../components/CatSet.js';
 import * as utils from '../utils';
 import * as apiCalls from '../apiCalls';
@@ -20,7 +20,7 @@ class PostView extends React.Component {
 
     this.state = {
       comment:'',
-      comments: [],
+      //comments: [],
       openModal:false
     };
   }

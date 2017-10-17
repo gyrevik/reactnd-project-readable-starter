@@ -1,16 +1,23 @@
 import * as apiCalls from '../apiCalls';
 
 export const FETCH_CATS = 'FETCH_CATS';
+
 export const SET_POST_CAT = 'SET_POST_CAT';
-export const SET_POST_CURRENT = 'SET_POST_CURRENT';
 export const SET_VIEW_CAT = 'SET_VIEW_CAT';
 export const CLEAR_POST_CAT = 'CLEAR_POST_CAT';
 
+export const SET_POST_CURRENT = 'SET_POST_CURRENT';
 export const CREATE_POST = 'CREATE_POST';
 export const EDIT_POST = 'EDIT_POST';
 export const DELETE_POST = 'DELETE_POST';
 export const ERROR_DELETE_POST = 'ERROR_DELETE_POST';
 export const VOTE_POST = 'VOTE_POST';
+export const ERROR_VOTE_POST = 'ERROR_VOTE_POST';
+
+export const ERROR_POSTS = 'ERROR_POSTS';
+export const CREATE_POSTS = 'CREATE_POSTS';
+export const SORT_POSTS_FIELD = 'SORT_POSTS_FIELD';
+export const SORT_POSTS_DIRECTION = 'SORT_POSTS_DIRECTION';
 
 export const CREATE_COMMENT = 'CREATE_COMMENT';
 export const EDIT_COMMENT = 'EDIT_COMMENT';
@@ -20,9 +27,6 @@ export const ERROR_VOTE_COMMENT = 'ERROR_VOTE_COMMENT';
 
 export const CREATE_COMMENTS = 'CREATE_COMMENTS';
 export const ERROR_COMMENTS = 'ERROR_COMMENTS';
-
-export const SORT_POSTS_FIELD = 'SORT_POSTS_FIELD';
-export const SORT_POSTS_DIRECTION = 'SORT_POSTS_DIRECTION';
 
 const url = "http://localhost:3001"
 
@@ -136,6 +140,55 @@ export function commentsActionFetch(postId) {
   };
 }
 
+// thunk for getting posts
+export const postsActionErrored = (bool) => {
+  return {
+    type: ERROR_POSTS,
+    error: bool
+  }
+}
+
+export const postsAction = (posts) => {
+  console.log('entered postsAction with posts: ', posts);
+  return {
+    type: CREATE_POSTS,
+    posts
+  }
+}
+
+// working on posts thunk:
+export function postsActionFetch() {
+  console.log('entered postsActionFetch()');
+  //const headers = apiCalls.headers;
+  return (dispatch) => {
+    //dispatch(itemsIsLoading(true));
+    console.log(`running fetch with url: ${url}/posts`);
+    console.log('and headers: ', headers);
+    fetch(`${url}/posts`, { headers })
+      .then((response) => {
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+
+        //dispatch(itemsIsLoading(false));
+        return response;
+      })
+      .then((response) => response.json())
+      .then((posts) => {
+        console.log('postsActionFetch posts: ', posts);
+        dispatch(postsAction(posts));
+        console.log('dispatched posts to store');
+      })
+      .catch(() => dispatch(postsActionErrored(true)));
+  };
+}
+
+/*export const getPosts = () =>
+  fetch(`${url}/posts`, { headers })
+    .then(res => res.json())
+    .then(data => data)*/
+
+// end thunk for getting posts
 
 // implement vote comment thunk actions:
 export const voteCommentActionErrored = (bool) => {
@@ -227,17 +280,6 @@ export const editComment = (comment) => {
   }
 }
 
-/*export const deletePost = (id) => {
-  console.log('in deletePost action with id: ', id);
-  apiCalls.deletePost(id).then((data) => {
-    console.log('API deleting post id (', id, '), data: ', data);
-  })
-  return {
-    type: DELETE_POST,
-    id,
-  }
-}*/
-
 // implement deletePost with thunk
 export const deletePostActionErrored = (bool) => {
   return {
@@ -288,7 +330,7 @@ export function deletePostActionFetch(id) {
 
 
 
-export const votePost = (id, option) => {
+/*export const votePost = (id, option) => {
   console.log('in votePost action with id: ', id, ' option: ', option);
   apiCalls.votePost(id, option).then((data) => {
     console.log('API votePost post id (', id, '), option: ', option, ' data: ', data);
@@ -298,10 +340,58 @@ export const votePost = (id, option) => {
     id,
     option
   }
+}*/
+
+// migrate votePost to thunk
+export const votePostActionErrored = (bool) => {
+  return {
+    type: ERROR_VOTE_POST,
+    error: bool
+  }
 }
 
+export const votePostAction = (id, option) => {
+  console.log('entered votePostAction with id: ', id, ' and option: ', option);
+  return {
+    type: VOTE_POST,
+    id,
+    option
+  }
+}
+
+export function votePostActionFetch(id, option) {
+  console.log('entered votePostActionFetch(', id, ', ', option, ')');
+  return (dispatch) => {
+    console.log(`running fetch with url: ${url}/posts/${id}`);
+    console.log('and headers: ', headers);
+    const params = JSON.stringify({ option: option });
+    fetch(`${url}/posts/${id}`, { 
+      method: 'POST',
+      headers: {
+        ...headers,
+        'Content-Type': 'application/json'
+      },
+      body: params, })
+      .then((response) => {
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+        //dispatch(itemsIsLoading(false));
+        return response;
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('votePostActionFetch, (', id, ', ', option, ') fetched data: ', data);
+        dispatch(votePostActionFetch(id, option));
+        console.log('dispatched post vote to store');
+      })
+      .catch(() => dispatch(votePostActionErrored(true)));
+  };
+}
+// end migrate votePost to thunk
+
 export const deleteComment = (id) => {
-  apiCalls.deleteComment(id).then((data) => {
+  deleteCommentFetch(id).then((data) => {
     console.log('API deleteComment id (', id, '), data: ', data);
   })
   return {
@@ -309,3 +399,14 @@ export const deleteComment = (id) => {
     id,
   }
 }
+
+// DELETE /comments/:id
+const deleteCommentFetch = (id) =>
+  fetch(`${url}/comments/${id}`, {
+    method: 'DELETE',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(id)
+  }).then(res => res.json())

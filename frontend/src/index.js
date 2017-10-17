@@ -13,21 +13,15 @@ import * as apiCalls from './apiCalls';
 apiCalls.getCategories().then((cats) => {
   //sessionStorage.setItem('booksAll', JSON.stringify(booksAll));
   console.log(`index.js: got all categories from API (${cats.length} categories)`);  
-
-  apiCalls.getPosts().then((postsAll) => { 
-    //this.setState({ posts:postsAll });
-    //sessionStorage.setItem('booksAll', JSON.stringify(booksAll));
-    console.log(`index.js: got all posts from API (${postsAll.length} posts)`);   
     
-    let store = createStore(reducer, 
-      {postCat: 'react', posts: postsAll, cats: cats},
-      applyMiddleware(thunk));
+  let store = createStore(reducer, 
+    {postCat: 'react', cats: cats, posts: []},
+    applyMiddleware(thunk));
 
-  	console.log(`index.js: store.getState(): ${store.getState()}`);
-	  console.log(`index.js: store.getState()['cats']: ${store.getState()['cats']}`);
-	  console.log(`index.js: store.getState()['posts']: ${store.getState()['posts']}`);
+  console.log(`index.js: store.getState(): ${store.getState()}`);
+  console.log(`index.js: store.getState()['cats']: ${store.getState()['cats']}`);
+  console.log(`index.js: store.getState()['posts']: ${store.getState()['posts']}`);
 
-    ReactDOM.render(<Provider store={store}><BrowserRouter><App /></BrowserRouter></Provider>, document.getElementById('root'));
-  	registerServiceWorker();
-  });
+  ReactDOM.render(<Provider store={store}><BrowserRouter><App /></BrowserRouter></Provider>, document.getElementById('root'));
+  registerServiceWorker();
 });
