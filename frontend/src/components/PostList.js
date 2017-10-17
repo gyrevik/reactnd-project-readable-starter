@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { votePostActionFetch, postsActionFetch, createPostActionFetch } from '../actions/actions.js';
+import { setPostCurrent, votePostActionFetch, postsActionFetch, createPostActionFetch } from '../actions/actions.js';
 import * as utils from '../utils';
 
 class PostList extends React.Component {
@@ -56,7 +56,8 @@ const mapStateToProps = (state, props) => {
 const mapDispatchToProps = (dispatch) => {
     return {
       fetchPosts: () => dispatch(postsActionFetch()),
-      votePost: (postId, option) => dispatch(votePostActionFetch(postId, option))
+      votePost: (postId, option) => dispatch(votePostActionFetch(postId, option)),
+      setPostCurrent: (postId) => dispatch(setPostCurrent(postId))
   };
 }
 

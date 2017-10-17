@@ -42,12 +42,14 @@ export const setPostCat = (postCat) => {
   }
 }
 
+// no thunk because no server call
 export const setPostCurrent = (post) => {
   return {
     type: SET_POST_CURRENT,
     post,
   }
 }
+// end no thunk because no server call
 
 export const setViewCat = (viewCat) => {
   console.log('entered setViewCat action creater with viewCat: ', viewCat);
@@ -182,9 +184,6 @@ export function postsActionFetch() {
       .catch(() => dispatch(postsActionErrored(true)));
   };
 }
-
-
-
 // end thunk for getting posts
 
 // implement vote comment thunk actions:
