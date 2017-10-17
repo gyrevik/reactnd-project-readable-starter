@@ -15,7 +15,7 @@ apiCalls.getCategories().then((cats) => {
   console.log(`index.js: got all categories from API (${cats.length} categories)`);  
     
   let store = createStore(reducer, 
-    {postCat: 'react', cats: cats, posts: []},
+    {postCat: 'react', cats: cats, posts: [], sortPostsField: 'voteScore'},
     applyMiddleware(thunk));
 
   console.log(`index.js: store.getState(): ${store.getState()}`);

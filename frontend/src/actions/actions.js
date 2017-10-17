@@ -4,7 +4,6 @@ export const FETCH_CATS = 'FETCH_CATS';
 
 export const SET_POST_CAT = 'SET_POST_CAT';
 export const SET_VIEW_CAT = 'SET_VIEW_CAT';
-export const CLEAR_POST_CAT = 'CLEAR_POST_CAT';
 
 export const SET_POST_CURRENT = 'SET_POST_CURRENT';
 export const CREATE_POST = 'CREATE_POST';
@@ -71,12 +70,6 @@ export const sortPostsDirection = (direction) => {
   return {
     type: SORT_POSTS_DIRECTION,
     direction,
-  }
-}
-
-export const clearPostCat = () => {
-  return {
-    type: CLEAR_POST_CAT,
   }
 }
 

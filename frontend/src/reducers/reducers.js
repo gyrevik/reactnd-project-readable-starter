@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 
 import {
-  SET_POST_CAT, SET_POST_CURRENT, SET_VIEW_CAT, CLEAR_POST_CAT, 
+  SET_POST_CAT, SET_POST_CURRENT, SET_VIEW_CAT, 
   CREATE_POST, EDIT_POST, DELETE_POST, SORT_POSTS_FIELD,
   CREATE_COMMENT, EDIT_COMMENT, DELETE_COMMENT, CREATE_COMMENTS, 
   ERROR_COMMENTS, VOTE_COMMENT, VOTE_POST, CREATE_POSTS
@@ -11,8 +11,6 @@ export function catReducer (state = 'all', action) {
   switch (action.type) {
     case SET_POST_CAT:
       return action.postCat;
-    case CLEAR_POST_CAT:
-      return 'all';
     default:
       return state;
   }
