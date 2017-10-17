@@ -183,10 +183,7 @@ export function postsActionFetch() {
   };
 }
 
-/*export const getPosts = () =>
-  fetch(`${url}/posts`, { headers })
-    .then(res => res.json())
-    .then(data => data)*/
+
 
 // end thunk for getting posts
 
@@ -382,7 +379,8 @@ export function votePostActionFetch(id, option) {
       .then((response) => response.json())
       .then((data) => {
         console.log('votePostActionFetch, (', id, ', ', option, ') fetched data: ', data);
-        dispatch(votePostActionFetch(id, option));
+        console.log(`dispatch(votePostAction(${id}, ${option})`);
+        dispatch(votePostAction(id, option));
         console.log('dispatched post vote to store');
       })
       .catch(() => dispatch(votePostActionErrored(true)));
