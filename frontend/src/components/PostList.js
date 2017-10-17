@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { setPostCurrent, votePostActionFetch, postsActionFetch, createPostActionFetch } from '../actions/actions.js';
+import { sortPostsField, setPostCurrent, votePostActionFetch, 
+  postsActionFetch, createPostActionFetch } from '../actions/actions.js';
 import * as utils from '../utils';
 
 class PostList extends React.Component {
@@ -49,15 +50,20 @@ const mapStateToProps = (state, props) => {
   console.log('PostList.mapStateToProps.state.post: ', state.post);
   console.log('typeof(state.posts): ', typeof(state.posts));
   console.log('getting comments from server in mapStateToProps');
+  
+  let posts = state.posts.slice();
+  const sortByKey = key => (a, b) => a[state.sortPostsField] < b[state.sortPostsField];	// desc (number)
+  posts.sort(sortByKey(state.sortPostsField));
 
-  return { posts: state.posts, sortPostsField: state.sortPostsField };
+  return { posts, sortPostsField: state.sortPostsField };
 }
   
 const mapDispatchToProps = (dispatch) => {
     return {
       fetchPosts: () => dispatch(postsActionFetch()),
       votePost: (postId, option) => dispatch(votePostActionFetch(postId, option)),
-      setPostCurrent: (postId) => dispatch(setPostCurrent(postId))
+      setPostCurrent: (postId) => dispatch(setPostCurrent(postId)),
+      sortPostsField: (field) => dispatch(sortPostsField(field))
   };
 }
 
