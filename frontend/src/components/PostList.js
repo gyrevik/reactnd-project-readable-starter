@@ -49,7 +49,6 @@ const mapStateToProps = (state, props) => {
   console.log('PostList.mapStateToProps.state.posts: ', state.posts);
   console.log('PostList.mapStateToProps.state.post: ', state.post);
   console.log('typeof(state.posts): ', typeof(state.posts));
-  console.log('getting comments from server in mapStateToProps');
   
   let posts = state.posts.slice();
   const sortByKey = key => (a, b) => a[state.sortPostsField] < b[state.sortPostsField];	// desc (number)

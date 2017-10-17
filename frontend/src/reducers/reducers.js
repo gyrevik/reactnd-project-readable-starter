@@ -4,7 +4,7 @@ import {
   SET_POST_CAT, SET_POST_CURRENT, SET_VIEW_CAT, 
   CREATE_POST, EDIT_POST, DELETE_POST, SORT_POSTS_FIELD,
   CREATE_COMMENT, EDIT_COMMENT, DELETE_COMMENT, CREATE_COMMENTS, 
-  ERROR_COMMENTS, VOTE_COMMENT, VOTE_POST, CREATE_POSTS
+  ERROR_COMMENTS, VOTE_COMMENT, VOTE_POST, CREATE_POSTS, CREATE_CATS
 } from '../actions/actions.js'
 
 export function catReducer (state = 'all', action) {
@@ -43,7 +43,7 @@ export function viewReducer (state = 'all', action) {
 }
 
 export function sortPostsReducer (state = '', action) {
-  switch(action.type) {
+  switch (action.type) {
     case SORT_POSTS_FIELD: {
       console.log('sortPostsReducer.SORT_POSTS_FIELD.action.field: ', action.field);
       return action.field;
@@ -54,7 +54,12 @@ export function sortPostsReducer (state = '', action) {
 }
 
 function catsReducer (state = [], action) {
-  return state; 
+  switch (action.type) {
+    case CREATE_CATS:
+      return action.cats;
+    default:
+      return state;
+  }
 }
 
 export function postsReducer (state = [], action) {

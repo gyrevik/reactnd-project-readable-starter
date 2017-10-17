@@ -131,8 +131,6 @@ const mapStateToProps = (state, props) => {
   console.log('PostView.mapStateToProps.state.posts: ', state.posts);
   console.log('PostView.mapStateToProps.state.comments: ', state.comments);
   console.log('PostView.mapStateToProps.state.post: ', state.post);
-  console.log('typeof(state.comments): ', typeof(state.comments));
-  console.log('getting comments from server in mapStateToProps');
 
   return { posts: state.posts, post: state.post, comment: state.comment, comments: state.comments };
 }

@@ -5,11 +5,6 @@ const headers = {
   'Authorization': 'whatever-you-want'
 }
 
-export const getCategories = () =>
-  fetch(`${url}/categories`, { headers })
-    .then(res => res.json())
-    .then(data => data.categories)
-
 // PUT /comments/:id	Edit the details of an existing comment.	
 // timestamp - timestamp. Get this however you want. 
 // body - [String]

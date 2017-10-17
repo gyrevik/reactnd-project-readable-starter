@@ -1,7 +1,8 @@
 import * as apiCalls from '../apiCalls';
 
 export const FETCH_CATS = 'FETCH_CATS';
-
+export const CREATE_CATS = 'CREATE_CATS';
+export const ERROR_CATS = 'ERROR_CATS';
 export const SET_POST_CAT = 'SET_POST_CAT';
 export const SET_VIEW_CAT = 'SET_VIEW_CAT';
 
@@ -133,20 +134,6 @@ export function createPostActionFetch(post) {
     .catch(() => dispatch(createPostActionErrored(true)));
   };
 }
-
-/*const postPost = (post) =>
-  fetch(`${url}/posts`, {
-    method: 'POST',
-    headers: {
-      ...headers,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(post)
-  }).then(res => res.json())
-    .then(data => data)
-    .catch(function(error) {
-      console.log('API postPost error: ', error);
-    })*/
 // end thunk post
 
 export const commentsActionErrored = (bool) => {
@@ -232,6 +219,53 @@ export function postsActionFetch() {
   };
 }
 // end thunk for getting posts
+
+// thunk for categories
+export const catsActionErrored = (bool) => {
+  return {
+    type: ERROR_CATS,
+    error: bool
+  }
+}
+
+export const catsAction = (cats) => {
+  console.log('entered catsAction with cats: ', cats);
+  return {
+    type: CREATE_CATS,
+    cats
+  }
+}
+
+export function catsActionFetch() {
+  console.log('entered catsActionFetch()');
+  //const headers = apiCalls.headers;
+  return (dispatch) => {
+    //dispatch(itemsIsLoading(true));
+    console.log(`running fetch with url: ${url}/categories`);
+    console.log('and headers: ', headers);
+    fetch(`${url}/categories`, { headers })
+      .then((response) => {
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+        //dispatch(itemsIsLoading(false));
+        return response;
+      })
+      .then((response) => response.json())
+      .then((cats) => {
+        console.log('catsActionFetch cats.categories: ', cats.categories);
+        dispatch(catsAction(cats.categories));
+        console.log('dispatched cats.categories to store');
+      })
+      .catch(() => dispatch(catsActionErrored(true)));
+  };
+}
+
+/*export const getCategories = () =>
+  fetch(`${url}/categories`, { headers })
+    .then(res => res.json())
+    .then(data => data.categories)*/
+// end thunk for categories
 
 // implement vote comment thunk actions:
 export const voteCommentActionErrored = (bool) => {
