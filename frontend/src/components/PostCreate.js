@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { createPost, clearPostCat, setPostCat } from '../actions/actions.js';
+import { createPostActionFetch, clearPostCat, setPostCat } from '../actions/actions.js';
 import CatSet from '../components/CatSet.js';
 
 class PostCreate extends React.Component {
@@ -31,7 +31,6 @@ class PostCreate extends React.Component {
       	<CatSet 
           cats={this.props.cats}
           setPostCat={this.props.setPostCat} 
-          clearPostCat={this.props.clearPostCat} 
           selectedCat={this.props.postCat} />
       
         <form role="form">
@@ -70,12 +69,18 @@ const mapStateToProps = (state, props) => {
   return { posts: state.posts, cats: state.cats, postCat: state.postCat };
 }
   
-const mapDispatchToProps = (dispatch) => {
+/*const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-      createPost: createPost,
-      clearPostCat: clearPostCat,
+      createPost: createPostAction,
       setPostCat: setPostCat,
   	}, dispatch);
+}*/
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    createPost: (post) => dispatch(createPostActionFetch(post)),
+    setPostCat: (cat) => dispatch(setPostCat(cat))
+  };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostCreate)

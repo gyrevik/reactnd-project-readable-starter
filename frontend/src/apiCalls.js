@@ -41,20 +41,6 @@ export const postComment = (comment) =>
       console.log('API postComment error: ', error);
     })
 
-export const postPost = (post) =>
-  fetch(`${url}/posts`, {
-    method: 'POST',
-    headers: {
-      ...headers,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(post)
-  }).then(res => res.json())
-    .then(data => data)
-    .catch(function(error) {
-      console.log('API postPost error: ', error);
-    })
-
 // PUT /posts/:id	Edit the details of an existing post.	title - [String] 
 // body - [String]
 export const putPost = (post) =>

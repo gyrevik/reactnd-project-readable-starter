@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function CatSet({ cats, setPostCat, clearPostCat, selectedCat }) {
+export default function CatSet({ cats, setPostCat, selectedCat }) {
   const spanBold = { fontWeight:'bold' };
   const spanNormal = { fontWeight:'normal' };
   console.log('cats in CategorySet: ', cats);

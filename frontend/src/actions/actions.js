@@ -80,26 +80,81 @@ export const clearPostCat = () => {
   }
 }
 
-export const createPost = (post) => {
-  console.log('entered createPost with post: ', post);
+// todo: thunk postAction
+export const createPostAction = (post) => {
+  console.log('entered createPostAction with post: ', post);
   let { title, body, author, category, voteScore, deleted } = post;
-  console.log('action.createPost title: ', title, '\nbody: ', body, '\nauthor: ', author, '\ncategory: ', category, '\nvoteScore: ', voteScore, '\ndeleted: ', deleted);
+  console.log('action.createPostAction title: ', title, '\nbody: ', body, '\nauthor: ', author, '\ncategory: ', category, '\nvoteScore: ', voteScore, '\ndeleted: ', deleted);
   if (!title || !body || !category || category==='all') {
-    console.log('throwing error !title || !body || !category || category===\'all\' in createPost action creater');
+    console.log('throwing error !title || !body || !category || category===\'all\' in createPostAction action creater');
     throw new Error('invalid post: category, title and body required');
   }
 
-  apiCalls.postPost(post).then((data) => {
-    console.log('return data from ReadableAPI.postPost: ', data);
+  /*apiCalls.postPost(post).then((data) => {
+    console.log('return data from apiCalls.postPost: ', data);
     console.log('posted post: ', post);
-  });
+  });*/
 
-  console.log('returning from createPost action creater type: ', CREATE_POST, ' and post: ', post);
+  console.log('returning from createPostAction action creater type: ', CREATE_POST, ' and post: ', post);
   return {
     type: CREATE_POST,
     post: { id:Date.now(), timestamp:Date.now(), title, body, author:'alex', category, voteScore:1, deleted:false },
   }
 }
+
+export const createPostActionErrored = (bool) => {
+  return {
+    type: ERROR_POSTS,
+    error: bool
+  }
+}
+
+export function createPostActionFetch(post) {
+  console.log('entered createPostActionFetch()');
+  return (dispatch) => {
+    //dispatch(itemsIsLoading(true));
+    console.log(`running fetch with url: ${url}/posts`);
+    console.log('and headers: ', headers);
+    fetch(`${url}/posts`, { 
+      method: 'POST', 
+      headers: {
+        ...headers,
+        'Content-Type': 'application/json'
+      }, 
+      body: JSON.stringify(post) 
+    })
+    .then((response) => {
+      if (!response.ok) {
+        throw Error(response.statusText);
+      }
+
+      //dispatch(itemsIsLoading(false));
+      return response;
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log('createPostActionFetch data: ', data);
+      dispatch(createPostAction(post));
+      console.log('dispatched post to store');
+    })
+    .catch(() => dispatch(createPostActionErrored(true)));
+  };
+}
+
+/*const postPost = (post) =>
+  fetch(`${url}/posts`, {
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(post)
+  }).then(res => res.json())
+    .then(data => data)
+    .catch(function(error) {
+      console.log('API postPost error: ', error);
+    })*/
+// end thunk post
 
 export const commentsActionErrored = (bool) => {
   return {
@@ -158,7 +213,6 @@ export const postsAction = (posts) => {
   }
 }
 
-// working on posts thunk:
 export function postsActionFetch() {
   console.log('entered postsActionFetch()');
   //const headers = apiCalls.headers;
