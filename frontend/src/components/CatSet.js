@@ -24,7 +24,7 @@ class CatSet extends React.Component {  //({ cats, setPostCat, selectedCat }) {
       {this.props.cats.map (
           (cat, i) =>
             <span key={i.toString()} style={this.props.selectedCat===cat.name ? spanBold : spanNormal}>
-              <a href="javascript:void(0)" onClick={() => setPostCat(cat.name)}>{cat.name}</a>
+              <a href="javascript:void(0)" onClick={() => this.props.setPostCat(cat.name)}>{cat.name}</a>
               <span style={spanNormal}>{ i < this.props.cats.length-1 ? ' - ' : '' }</span>
             </span>
         )}
@@ -36,6 +36,7 @@ class CatSet extends React.Component {  //({ cats, setPostCat, selectedCat }) {
 const mapStateToProps = (state, props) => { 
   console.log('CatSet.mapStateToProps.state.cats: ', state.cats);
   //const selectedCat = 'react';
+  console.log('state.postCat: ', state.postCat);
 
   return { cats: state.cats, selectedCat: state.postCat };
 }

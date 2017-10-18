@@ -36,6 +36,7 @@ const headers = {
 }
 
 export const setPostCat = (postCat) => {
+  console.log(`in setPostCat(${postCat}) action creater`);
   return {
     type: SET_POST_CAT,
     postCat,
