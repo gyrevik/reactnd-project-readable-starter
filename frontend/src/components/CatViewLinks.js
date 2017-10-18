@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { setViewCat, catsFetch } from '../actions/actions.js';
 
-class CatViewLinks extends React.Component {  //({ cats, setViewCat, selectedCat }) {
+class CatViewLinks extends React.Component {
   render () {
     const spanBold = { fontWeight:'bold' };
     const spanNormal = { fontWeight:'normal' };

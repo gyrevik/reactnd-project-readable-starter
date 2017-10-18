@@ -30,11 +30,21 @@ export const ERROR_VOTE_COMMENT = 'ERROR_VOTE_COMMENT';
 export const GET_COMMENTS = 'GET_COMMENTS';
 export const ERROR_COMMENTS = 'ERROR_COMMENTS';
 
+export const SET_MODE = 'SET_MODE';
+
 const url = "http://localhost:3001"
 
 const headers = {
   'Accept': 'application/json',
   'Authorization': 'whatever-you-want'
+}
+
+export const setMode = (mode) => {
+  console.log(`in setMode(${mode}) action creater`);
+  return {
+    type: SET_MODE,
+    mode,
+  }
 }
 
 export const setPostCat = (postCat) => {

@@ -1,11 +1,20 @@
 import { combineReducers } from 'redux';
 
 import {
-  SET_POST_CAT, SET_POST_CURRENT, SET_VIEW_CAT, 
+  SET_POST_CAT, SET_POST_CURRENT, SET_VIEW_CAT, SET_MODE,
   CREATE_POST, EDIT_POST, DELETE_POST, SORT_POSTS_FIELD,
   CREATE_COMMENT, EDIT_COMMENT, DELETE_COMMENT, GET_COMMENTS, 
   ERROR_COMMENTS, VOTE_COMMENT, VOTE_POST, GET_POSTS, GET_CATS
 } from '../actions/actions.js'
+
+export function modeReducer (state = 'none', action) {
+  switch (action.type) {
+    case SET_MODE:
+      return action.mode;
+    default:
+      return state;
+  }
+}
 
 export function catReducer (state = 'all', action) {
   console.log(`in catReducer with action.type: ${action.type} and action.postCat: ${action.postCat}`);
@@ -201,6 +210,7 @@ export default combineReducers({
   sortPostsField: sortPostsReducer,
   cats: catsReducer,
   viewCat: viewReducer,
+  mode: modeReducer,
   comments: commentsReducer,
   commentsError: commentReducer
 })

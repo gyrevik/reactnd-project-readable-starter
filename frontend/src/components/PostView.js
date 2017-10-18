@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Modal from 'react-modal';
-import { voteCommentFetch, commentsFetch, createCommentFetch, deletePostFetch, deleteCommentFetch } from '../actions/actions.js';
+import { setMode, voteCommentFetch, commentsFetch, createCommentFetch, deletePostFetch, deleteCommentFetch } from '../actions/actions.js';
 import CatSet from '../components/CatSet.js';
 import * as utils from '../utils';
 import createHistory from 'history/createBrowserHistory';
@@ -74,7 +74,7 @@ class PostView extends React.Component {
         <a href="javascript:void(0)" onClick={() => this.props.deletePost(this.props.post.id)}>
           Delete Post
         </a>
-        {' - '} <Link to="/postCreateEdit">Edit Post</Link>
+        {' - '} <Link to="/postCreateEdit" onClick={() => this.props.setMode('edit')}>Edit Post</Link>
         <br/><br/>
         <Link to="/">Home</Link>
         <br/><br/>
@@ -142,7 +142,8 @@ const mapDispatchToProps = (dispatch) => {
       deletePost: (postId) => dispatch(deletePostFetch(postId)),
       deleteComment: (commentId) => dispatch(deleteCommentFetch(commentId)),
       voteComment: (commentId, option) => dispatch(voteCommentFetch(commentId, option)),
-      fetchComments: (postId) => dispatch(commentsFetch(postId))
+      fetchComments: (postId) => dispatch(commentsFetch(postId)),
+      setMode: (mode) => dispatch(setMode(mode))
   };
 }
 

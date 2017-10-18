@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { createPostFetch, clearPostCat, setPostCat } from '../actions/actions.js';
 import CatSet from '../components/CatSet.js';
+import createHistory from 'history/createBrowserHistory';
 
 class PostCreate extends React.Component {
   constructor(props) {
@@ -26,10 +27,12 @@ class PostCreate extends React.Component {
   }
   
   render() {
+    const path = createHistory().location.pathname;
+
     return (
       <div>  
-      	<CatSet />
-      
+      	<p><CatSet /></p>
+        Mode: { path !== "/" ? this.props.mode : "add" }
         <form role="form">
           <br />
           <div>
@@ -63,7 +66,7 @@ class PostCreate extends React.Component {
 const mapStateToProps = (state, props) => { 
   console.log('CreatePost.mapStateToProps.state.posts: ', state.posts);
   console.log('CreatePost.mapStateToProps.state.cats: ', state.cats);
-  return { posts: state.posts, cats: state.cats, postCat: state.postCat };
+  return { mode: state.mode, posts: state.posts, cats: state.cats, postCat: state.postCat };
 }
 
 const mapDispatchToProps = (dispatch) => {
