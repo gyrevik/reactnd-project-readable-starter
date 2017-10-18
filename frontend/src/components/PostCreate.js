@@ -31,6 +31,17 @@ class PostCreate extends React.Component {
     let mode;
     if (path === "/") mode = "add"; else mode = "edit";
 
+    const createPostObj = {
+      id: Date.now().toString(), 
+      timestamp: Date.now(),
+      title: this.state.title, 
+      body: this.state.body, 
+      author: 'alex',
+      category: this.props.postCat,
+      voteScore: 1,
+      deleted: false
+    }
+
     return (
       <div>  
       	<p><CatSet /></p>
@@ -44,22 +55,14 @@ class PostCreate extends React.Component {
           </div>
 
           <div>
-          	<textarea onChange={this.handleBodyChange} id="body" placeholder="Body" maxLength="140" rows="7" />
+          	<textarea onChange={this.handleBodyChange} id="body"
+              defaultValue={ mode === "edit" ? this.props.post.body : "" } placeholder="Body" maxLength="140" rows="7" />
           </div>
 
           <button onClick={() => 
-            this.props.createPost({
-              id: Date.now().toString(), 
-              timestamp: Date.now(),
-              title: this.state.title, 
-              body: this.state.body, 
-              author: 'alex',
-              category: this.props.postCat,
-              voteScore: 1,
-              deleted: false
-            })} 
+            this.props.createPost( createPostObj )} 
             type="button" id="submit" name="submit">
-              Add Post
+              { mode === "edit" ? "Edit Post" : "Add Post" }
           </button>
         </form>
       </div>
