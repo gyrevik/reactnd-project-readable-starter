@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { sortPostsField, setPostCurrent, votePostActionFetch, 
-  postsActionFetch, createPostActionFetch } from '../actions/actions.js';
+import { sortPostsField, setPostCurrent, votePostFetch, postsFetch, createPostFetch } from '../actions/actions.js';
 import * as utils from '../utils';
 
 class PostList extends React.Component {
@@ -69,8 +68,8 @@ const mapStateToProps = (state, props) => {
   
 const mapDispatchToProps = (dispatch) => {
     return {
-      fetchPosts: () => dispatch(postsActionFetch()),
-      votePost: (postId, option) => dispatch(votePostActionFetch(postId, option)),
+      fetchPosts: () => dispatch(postsFetch()),
+      votePost: (postId, option) => dispatch(votePostFetch(postId, option)),
       setPostCurrent: (postId) => dispatch(setPostCurrent(postId)),
       sortPostsField: (field) => dispatch(sortPostsField(field))
   };

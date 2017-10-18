@@ -3,8 +3,8 @@ import { combineReducers } from 'redux';
 import {
   SET_POST_CAT, SET_POST_CURRENT, SET_VIEW_CAT, 
   CREATE_POST, EDIT_POST, DELETE_POST, SORT_POSTS_FIELD,
-  CREATE_COMMENT, EDIT_COMMENT, DELETE_COMMENT, CREATE_COMMENTS, 
-  ERROR_COMMENTS, VOTE_COMMENT, VOTE_POST, CREATE_POSTS, CREATE_CATS
+  CREATE_COMMENT, EDIT_COMMENT, DELETE_COMMENT, GET_COMMENTS, 
+  ERROR_COMMENTS, VOTE_COMMENT, VOTE_POST, GET_POSTS, GET_CATS
 } from '../actions/actions.js'
 
 export function catReducer (state = 'all', action) {
@@ -57,7 +57,7 @@ export function sortPostsReducer (state = '', action) {
 
 function catsReducer (state = [], action) {
   switch (action.type) {
-    case CREATE_CATS:
+    case GET_CATS:
       return action.cats;
     default:
       return state;
@@ -67,7 +67,7 @@ function catsReducer (state = [], action) {
 export function postsReducer (state = [], action) {
   console.log('top of postsReducer state: ', state, ', action.type: ', action.type);
   switch (action.type) {
-    case CREATE_POSTS: {
+    case GET_POSTS: {
       return action.posts;
     }
     case CREATE_POST: {
@@ -138,7 +138,7 @@ export function commentReducer (state = false, action) {
 export function commentsReducer (state = [], action) {
   console.log('top of commentsReducer with action.type: ', action.type);
   switch (action.type) {
-    case CREATE_COMMENTS: {
+    case GET_COMMENTS: {
       //const comments = state.slice();
       //return comments;
       console.log('in CREATE_COMMENTS case with state: ', state);

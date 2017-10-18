@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { setViewCat, catsActionFetch } from '../actions/actions.js';
+import { setViewCat, catsFetch } from '../actions/actions.js';
 
 class CatViewLinks extends React.Component {  //({ cats, setViewCat, selectedCat }) {
   render () {
@@ -35,7 +35,7 @@ const mapStateToProps = (state, props) => {
   
 const mapDispatchToProps = (dispatch) => {
     return {
-      fetchCats: () => dispatch(catsActionFetch()),
+      fetchCats: () => dispatch(catsFetch()),
       setViewCat: (cat) => dispatch(setViewCat(cat))
   };
 }

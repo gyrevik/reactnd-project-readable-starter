@@ -1,7 +1,5 @@
-import * as apiCalls from '../apiCalls';
-
 export const FETCH_CATS = 'FETCH_CATS';
-export const CREATE_CATS = 'CREATE_CATS';
+export const GET_CATS = 'GET_CATS';
 export const ERROR_CATS = 'ERROR_CATS';
 export const SET_POST_CAT = 'SET_POST_CAT';
 export const SET_VIEW_CAT = 'SET_VIEW_CAT';
@@ -15,7 +13,7 @@ export const VOTE_POST = 'VOTE_POST';
 export const ERROR_VOTE_POST = 'ERROR_VOTE_POST';
 
 export const ERROR_POSTS = 'ERROR_POSTS';
-export const CREATE_POSTS = 'CREATE_POSTS';
+export const GET_POSTS = 'GET_POSTS';
 export const SORT_POSTS_FIELD = 'SORT_POSTS_FIELD';
 export const SORT_POSTS_DIRECTION = 'SORT_POSTS_DIRECTION';
 
@@ -26,7 +24,7 @@ export const DELETE_COMMENT = 'DELETE_COMMENT';
 export const VOTE_COMMENT = 'VOTE_COMMENT';
 export const ERROR_VOTE_COMMENT = 'ERROR_VOTE_COMMENT';
 
-export const CREATE_COMMENTS = 'CREATE_COMMENTS';
+export const GET_COMMENTS = 'GET_COMMENTS';
 export const ERROR_COMMENTS = 'ERROR_COMMENTS';
 
 const url = "http://localhost:3001"
@@ -77,36 +75,31 @@ export const sortPostsDirection = (direction) => {
 }
 
 // todo: thunk postAction
-export const createPostAction = (post) => {
-  console.log('entered createPostAction with post: ', post);
+export const createPost = (post) => {
+  console.log('entered createPost with post: ', post);
   let { title, body, author, category, voteScore, deleted } = post;
-  console.log('action.createPostAction title: ', title, '\nbody: ', body, '\nauthor: ', author, '\ncategory: ', category, '\nvoteScore: ', voteScore, '\ndeleted: ', deleted);
+  console.log('action.createPost title: ', title, '\nbody: ', body, '\nauthor: ', author, '\ncategory: ', category, '\nvoteScore: ', voteScore, '\ndeleted: ', deleted);
   if (!title || !body || !category || category==='all') {
-    console.log('throwing error !title || !body || !category || category===\'all\' in createPostAction action creater');
+    console.log('throwing error !title || !body || !category || category===\'all\' in createPost action creater');
     throw new Error('invalid post: category, title and body required');
   }
 
-  /*apiCalls.postPost(post).then((data) => {
-    console.log('return data from apiCalls.postPost: ', data);
-    console.log('posted post: ', post);
-  });*/
-
-  console.log('returning from createPostAction action creater type: ', CREATE_POST, ' and post: ', post);
+  console.log('returning from createPost action creater type: ', CREATE_POST, ' and post: ', post);
   return {
     type: CREATE_POST,
     post: { id:Date.now(), timestamp:Date.now(), title, body, author:'alex', category, voteScore:1, deleted:false },
   }
 }
 
-export const createPostActionErrored = (bool) => {
+export const createPostErrored = (bool) => {
   return {
     type: ERROR_POSTS,
     error: bool
   }
 }
 
-export function createPostActionFetch(post) {
-  console.log('entered createPostActionFetch()');
+export function createPostFetch(post) {
+  console.log('entered createPostFetch()');
   return (dispatch) => {
     //dispatch(itemsIsLoading(true));
     console.log(`running fetch with url: ${url}/posts`);
@@ -129,32 +122,32 @@ export function createPostActionFetch(post) {
     })
     .then((response) => response.json())
     .then((data) => {
-      console.log('createPostActionFetch data: ', data);
-      dispatch(createPostAction(post));
+      console.log('createPostFetch data: ', data);
+      dispatch(createPost(post));
       console.log('dispatched post to store');
     })
-    .catch(() => dispatch(createPostActionErrored(true)));
+    .catch(() => dispatch(createPostErrored(true)));
   };
 }
 // end thunk post
 
-export const commentsActionErrored = (bool) => {
+export const commentsErrored = (bool) => {
   return {
     type: ERROR_COMMENTS,
     error: bool
   }
 }
 
-export const commentsAction = (comments) => {
-  console.log('entered commentsAction with comments: ', comments);
+export const getComments = (comments) => {
+  console.log('entered comments with comments: ', comments);
   return {
-    type: CREATE_COMMENTS,
+    type: GET_COMMENTS,
     comments
   }
 }
 
-export function commentsActionFetch(postId) {
-  console.log('entered commentsActionFetch(', postId, ')');
+export function commentsFetch(postId) {
+  console.log('entered commentsFetch(', postId, ')');
   //const headers = apiCalls.headers;
   return (dispatch) => {
     //dispatch(itemsIsLoading(true));
@@ -171,32 +164,32 @@ export function commentsActionFetch(postId) {
       })
       .then((response) => response.json())
       .then((comments) => {
-        console.log('commentsActionFetch, (', postId, ') fetched comments: ', comments);
-        dispatch(commentsAction(comments));
+        console.log('commentsFetch, (', postId, ') fetched comments: ', comments);
+        dispatch(getComments(comments));
         console.log('dispatched comments to store');
       })
-      .catch(() => dispatch(commentsActionErrored(true)));
+      .catch(() => dispatch(commentsErrored(true)));
   };
 }
 
 // thunk for getting posts
-export const postsActionErrored = (bool) => {
+export const postsErrored = (bool) => {
   return {
     type: ERROR_POSTS,
     error: bool
   }
 }
 
-export const postsAction = (posts) => {
-  console.log('entered postsAction with posts: ', posts);
+export const getPosts = (posts) => {
+  console.log('entered getPosts action with posts: ', posts);
   return {
-    type: CREATE_POSTS,
+    type: GET_POSTS,
     posts
   }
 }
 
-export function postsActionFetch() {
-  console.log('entered postsActionFetch()');
+export function postsFetch() {
+  console.log('entered postsFetch()');
   //const headers = apiCalls.headers;
   return (dispatch) => {
     //dispatch(itemsIsLoading(true));
@@ -213,33 +206,33 @@ export function postsActionFetch() {
       })
       .then((response) => response.json())
       .then((posts) => {
-        console.log('postsActionFetch posts: ', posts);
-        dispatch(postsAction(posts));
+        console.log('postsFetch posts: ', posts);
+        dispatch(getPosts(posts));
         console.log('dispatched posts to store');
       })
-      .catch(() => dispatch(postsActionErrored(true)));
+      .catch(() => dispatch(postsErrored(true)));
   };
 }
 // end thunk for getting posts
 
 // thunk for categories
-export const catsActionErrored = (bool) => {
+export const catsErrored = (bool) => {
   return {
     type: ERROR_CATS,
     error: bool
   }
 }
 
-export const catsAction = (cats) => {
-  console.log('entered catsAction with cats: ', cats);
+export const getCats = (cats) => {
+  console.log('entered getCats action with cats: ', cats);
   return {
-    type: CREATE_CATS,
+    type: GET_CATS,
     cats
   }
 }
 
-export function catsActionFetch() {
-  console.log('entered catsActionFetch()');
+export function catsFetch() {
+  console.log('entered catsFetch()');
   //const headers = apiCalls.headers;
   return (dispatch) => {
     //dispatch(itemsIsLoading(true));
@@ -255,24 +248,24 @@ export function catsActionFetch() {
       })
       .then((response) => response.json())
       .then((cats) => {
-        console.log('catsActionFetch cats.categories: ', cats.categories);
-        dispatch(catsAction(cats.categories));
+        console.log('catsFetch cats.categories: ', cats.categories);
+        dispatch(getCats(cats.categories));
         console.log('dispatched cats.categories to store');
       })
-      .catch(() => dispatch(catsActionErrored(true)));
+      .catch(() => dispatch(catsErrored(true)));
   };
 }
 
 // implement vote comment thunk actions:
-export const voteCommentActionErrored = (bool) => {
+export const voteCommentErrored = (bool) => {
   return {
     type: ERROR_VOTE_COMMENT,
     error: bool
   }
 }
 
-export const voteCommentAction = (id, option) => {
-  console.log('entered voteCommentAction with option: ', option);
+export const voteComment = (id, option) => {
+  console.log(`entered voteComment(${id}, ${option})`);
   return {
     type: VOTE_COMMENT,
     id,
@@ -280,8 +273,8 @@ export const voteCommentAction = (id, option) => {
   }
 }
 
-export function voteCommentActionFetch(id, option) {
-  console.log('entered voteCommentActionFetch(', id, ', ', option, ')');
+export function voteCommentFetch(id, option) {
+  console.log('entered voteCommentFetch(', id, ', ', option, ')');
   return (dispatch) => {
     console.log(`running fetch with url: ${url}/comments/${id}`);
     console.log('and headers: ', headers);
@@ -302,24 +295,24 @@ export function voteCommentActionFetch(id, option) {
       })
       .then((response) => response.json())
       .then((data) => {
-        console.log('voteCommentActionFetch, (', id, ', ', option, ') fetched data: ', data);
-        dispatch(voteCommentAction(id, option));
+        console.log('voteCommentFetch, (', id, ', ', option, ') fetched data: ', data);
+        dispatch(voteComment(id, option));
         console.log('dispatched comment vote to store');
       })
-      .catch(() => dispatch(voteCommentActionErrored(true)));
+      .catch(() => dispatch(voteCommentErrored(true)));
   };
 }
 // end implement vote comment thunk actions
 
-// todo: thunk createComment
-export const createCommentActionErrored = (bool) => {
+// thunk createComment
+export const createCommentErrored = (bool) => {
   return {
     type: ERROR_CREATE_COMMENT,
     error: bool
   }
 }
 
-export const createCommentAction = (comment) => {
+export const createComment = (comment) => {
   console.log('entered createComment with comment: ', comment);
   let { id, parentId, timestamp, body, author, voteScore, deleted, parentDeleted } = comment;
   console.log('action.createComment parentId: ', parentId, '\nbody: ', body, '\nauthor: ', author, '\nvoteScore: ', voteScore, '\ndeleted: ', deleted, '\nparentDeleted: ', parentDeleted);
@@ -327,11 +320,6 @@ export const createCommentAction = (comment) => {
     console.log('throwing error !body || !parentId in createComment action creater');
     throw new Error('invalid comment: parentId and body required');
   }
-  
-  /*apiCalls.postComment(comment).then((data) => {
-    console.log('return data from apiCalls.postComment: ', data);
-    console.log('posted comment: ', comment);
-  });*/
 
   console.log('returning from createComment action creater type: ', CREATE_COMMENT, ' and comment: ', comment);
   return {
@@ -340,8 +328,8 @@ export const createCommentAction = (comment) => {
   }
 }
 
-export function createCommentActionFetch(comment) {
-  console.log('entered createCommentActionFetch with comment: ', comment);
+export function createCommentFetch(comment) {
+  console.log('entered createCommentFetch with comment: ', comment);
   return (dispatch) => {
     console.log(`running fetch with url: ${url}/comments`);
     fetch(`${url}/comments`, { 
@@ -360,68 +348,51 @@ export function createCommentActionFetch(comment) {
       })
       .then((response) => response.json())
       .then((data) => {
-        console.log('createCommentActionFetch fetched data: ', data);
-        dispatch(createCommentAction(comment));
+        console.log('createCommentFetch fetched data: ', data);
+        dispatch(createComment(comment));
         console.log('dispatched comment to store');
       })
-      .catch(() => dispatch(createCommentActionErrored(true)));
+      .catch(() => dispatch(createCommentErrored(true)));
   };
 }
-
-/*export const createComment = (comment) =>
-  fetch(`${url}/comments`, {
-    method: 'POST',
-    headers: {
-      ...headers,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(comment)
-  }).then(res => res.json())
-    .then(data => data)
-    .catch(function(error) {
-      console.log('API postComment error: ', error);
-    })*/
 // end thunk createComment
 
+// todo: thunk editPost
 export const editPost = (post) => {
-  apiCalls.putPost(post).then((data) => {
-    console.log('return data from apiCalls.putPost: ', data);
-    console.log('put post: ', post);
-  });
   return {
     type: EDIT_POST,
     post,
   }
 }
+// end thunk edit post
 
+// todo: thunk editComment
 export const editComment = (comment) => {
-  apiCalls.putComment(comment).then((data) => {
-    console.log('API edit comment (', comment, '), data: ', data);
-  })
   return {
     type: EDIT_COMMENT,
     comment,
   }
 }
+// end thunk editComment
 
-// implement deletePost with thunk
-export const deletePostActionErrored = (bool) => {
+// deletePost thunk
+export const deletePostErrored = (bool) => {
   return {
     type: ERROR_DELETE_POST,
     error: bool
   }
 }
 
-export const deletePostAction = (id) => {
-  console.log('entered deletePostAction with id: ', id);
+export const deletePost = (id) => {
+  console.log('entered deletePost action with id: ', id);
   return {
     type: DELETE_POST,
     id
   }
 }
 
-export function deletePostActionFetch(id) {
-  console.log('entered deletePostActionFetch(', id, ')');
+export function deletePostFetch(id) {
+  console.log('entered deletePostFetch(', id, ')');
   return (dispatch) => {
     console.log(`running fetch with url: ${url}/posts/${id}`);
     console.log('and headers: ', headers);
@@ -441,41 +412,25 @@ export function deletePostActionFetch(id) {
       })
       //.then((response) => response.json())
       .then((data) => {
-        console.log('deletePostActionFetch, (', id, ') fetched data: ', data);
-        dispatch(deletePostAction(id));
-        console.log('dispatched deletePostAction to store');
+        console.log('deletePostFetch, (', id, ') fetched data: ', data);
+        dispatch(deletePost(id));
+        console.log('dispatched deletePost action to store');
       })
-      .catch(() => dispatch(deletePostActionErrored(true)));
+      .catch(() => dispatch(deletePost(true)));
   };
 }
 // end implement delete post with thunk
 
-
-
-
-
-/*export const votePost = (id, option) => {
-  console.log('in votePost action with id: ', id, ' option: ', option);
-  apiCalls.votePost(id, option).then((data) => {
-    console.log('API votePost post id (', id, '), option: ', option, ' data: ', data);
-  })
-  return {
-    type: VOTE_POST,
-    id,
-    option
-  }
-}*/
-
 // migrate votePost to thunk
-export const votePostActionErrored = (bool) => {
+export const votePostErrored = (bool) => {
   return {
     type: ERROR_VOTE_POST,
     error: bool
   }
 }
 
-export const votePostAction = (id, option) => {
-  console.log('entered votePostAction with id: ', id, ' and option: ', option);
+export const votePost = (id, option) => {
+  console.log('entered votePost action with id: ', id, ' and option: ', option);
   return {
     type: VOTE_POST,
     id,
@@ -483,8 +438,8 @@ export const votePostAction = (id, option) => {
   }
 }
 
-export function votePostActionFetch(id, option) {
-  console.log('entered votePostActionFetch(', id, ', ', option, ')');
+export function votePostFetch(id, option) {
+  console.log('entered votePostFetch(', id, ', ', option, ')');
   return (dispatch) => {
     console.log(`running fetch with url: ${url}/posts/${id}`);
     console.log('and headers: ', headers);
@@ -505,12 +460,12 @@ export function votePostActionFetch(id, option) {
       })
       .then((response) => response.json())
       .then((data) => {
-        console.log('votePostActionFetch, (', id, ', ', option, ') fetched data: ', data);
-        console.log(`dispatch(votePostAction(${id}, ${option})`);
-        dispatch(votePostAction(id, option));
+        console.log('votePostFetch, (', id, ', ', option, ') fetched data: ', data);
+        console.log(`dispatch(votePost(${id}, ${option})`);
+        dispatch(votePost(id, option));
         console.log('dispatched post vote to store');
       })
-      .catch(() => dispatch(votePostActionErrored(true)));
+      .catch(() => dispatch(votePostErrored(true)));
   };
 }
 // end migrate votePost to thunk

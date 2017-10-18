@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { createPostActionFetch, clearPostCat, setPostCat } from '../actions/actions.js';
+import { createPostFetch, clearPostCat, setPostCat } from '../actions/actions.js';
 import CatSet from '../components/CatSet.js';
 
 class PostCreate extends React.Component {
@@ -71,7 +71,7 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    createPost: (post) => dispatch(createPostActionFetch(post)),
+    createPost: (post) => dispatch(createPostFetch(post)),
     setPostCat: (cat) => dispatch(setPostCat(cat))
   };
 }

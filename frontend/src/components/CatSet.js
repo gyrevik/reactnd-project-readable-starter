@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { setPostCat, catsActionFetch } from '../actions/actions.js';
+import { setPostCat, catsFetch } from '../actions/actions.js';
 
 class CatSet extends React.Component {
   componentDidMount() {
@@ -42,7 +42,7 @@ const mapStateToProps = (state, props) => {
   
 const mapDispatchToProps = (dispatch) => {
     return {
-      fetchCats: () => dispatch(catsActionFetch()),
+      fetchCats: () => dispatch(catsFetch()),
       setPostCat: (cat) => dispatch(setPostCat(cat))
   };
 }

@@ -2,8 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Modal from 'react-modal';
-import { voteCommentActionFetch, commentsActionFetch, 
-  createCommentActionFetch, deletePostActionFetch } from '../actions/actions.js';
+import { voteCommentFetch, commentsFetch, createCommentFetch, deletePostFetch } from '../actions/actions.js';
 import CatSet from '../components/CatSet.js';
 import * as utils from '../utils';
 import * as apiCalls from '../apiCalls';
@@ -136,10 +135,10 @@ const mapStateToProps = (state, props) => {
   
 const mapDispatchToProps = (dispatch) => {
     return {
-      createComment: (comment) => dispatch(createCommentActionFetch(comment)),
-      deletePost: (postId) => dispatch(deletePostActionFetch(postId)),
-      voteComment: (commentId, option) => dispatch(voteCommentActionFetch(commentId, option)),
-      fetchComments: (postId) => dispatch(commentsActionFetch(postId))
+      createComment: (comment) => dispatch(createCommentFetch(comment)),
+      deletePost: (postId) => dispatch(deletePostFetch(postId)),
+      voteComment: (commentId, option) => dispatch(voteCommentFetch(commentId, option)),
+      fetchComments: (postId) => dispatch(commentsFetch(postId))
   };
 }
 

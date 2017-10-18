@@ -8,7 +8,7 @@ const headers = {
 // PUT /comments/:id	Edit the details of an existing comment.	
 // timestamp - timestamp. Get this however you want. 
 // body - [String]
-export const putComment = (comment) =>
+export const editComment = (comment) =>
   fetch(`${url}/comments/${comment.id}`, {
     method: 'PUT',
     headers: {
@@ -24,7 +24,7 @@ export const putComment = (comment) =>
 
 // PUT /posts/:id	Edit the details of an existing post.	title - [String] 
 // body - [String]
-export const putPost = (post) =>
+export const editPost = (post) =>
   fetch(`${url}/posts/${post.id}`, {
     method: 'PUT',
     headers: {
