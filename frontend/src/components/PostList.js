@@ -54,6 +54,16 @@ const mapStateToProps = (state, props) => {
   const sortByKey = key => (a, b) => a[state.sortPostsField] < b[state.sortPostsField];	// desc (number)
   posts.sort(sortByKey(state.sortPostsField));
 
+  //let postsView = posts.slice();
+  posts = posts.filter(post => {
+    if (post.category === state.viewCat || state.viewCat === 'all') {
+      return true;
+    }
+    else {
+      return false;
+    }
+  });
+
   return { posts, sortPostsField: state.sortPostsField };
 }
   

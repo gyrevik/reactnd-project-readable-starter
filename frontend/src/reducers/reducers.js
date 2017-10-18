@@ -8,8 +8,10 @@ import {
 } from '../actions/actions.js'
 
 export function catReducer (state = 'all', action) {
+  console.log(`in catReducer with action.type: ${action.type} and action.postCat: ${action.postCat}`);
   switch (action.type) {
     case SET_POST_CAT:
+      console.log(`in catReducer SET_POST_CAT case returning action.postCat: ${action.postCat}`);
       return action.postCat;
     default:
       return state;

@@ -69,7 +69,6 @@ class App extends Component {
       		  <CatViewLinks
                 cats={this.props.cats}
                 setViewCat={this.props.setViewCat} 
-                clearPostCat={this.props.clearPostCat} 
                 selectedCat={this.props.viewCat} />
       		</div>
             <div>
@@ -77,12 +76,7 @@ class App extends Component {
               <PostCreate />
             </div>
             <div>
-              <PostList 
-                posts={this.props.postsView}
-                sortPostsField={this.props.sortPostsField}
-                deletePost={this.props.deletePost} 
-                setPostCurrent={this.props.setPostCurrent}
-                votePost={this.props.votePost} />
+              <PostList />
             </div>
           </div>
         )}/>
@@ -111,20 +105,10 @@ const mapStateToProps = (state, props) => {
     posts = JSON.parse(state.posts);
   
   posts = posts.filter(post => post.deleted ? false : true);  // filter out deleted posts
-
-  let postsView = posts.slice();
-  postsView = postsView.filter(post => {
-    if (post.category === state.viewCat || state.viewCat === 'all') {
-      return true;
-    }
-    else {
-      return false;
-    }
-  });
   
-  const cats = state.cats;
+  //const cats = state.cats;
   
-  return { cats, posts, postsView, postCat, viewCat }
+  return { posts, postCat, viewCat }
 }
 
 const mapDispatchToProps = (dispatch, props) =>
