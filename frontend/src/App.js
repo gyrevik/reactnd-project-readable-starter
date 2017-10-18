@@ -70,6 +70,7 @@ class App extends Component {
         <Route exact path="/postCreateEdit" render={() => (
           <div>
             <Header appIntro="Post Create/Edit View" />
+            <PostCreate />
           </div>
         )} />
       </div>
