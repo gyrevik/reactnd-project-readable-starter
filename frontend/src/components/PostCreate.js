@@ -38,7 +38,9 @@ class PostCreate extends React.Component {
         <form role="form">
           <br />
           <div>
-          	<input type="text" onChange={this.handleTitleChange} id="title" name="title" placeholder="Title" required />
+          	<input type="text" onChange={this.handleTitleChange} id="title" 
+              defaultValue={ mode === "edit" ? this.props.post.title : "" }
+              name="title" placeholder="Title" required />
           </div>
 
           <div>
@@ -68,7 +70,7 @@ class PostCreate extends React.Component {
 const mapStateToProps = (state, props) => { 
   console.log('CreatePost.mapStateToProps.state.posts: ', state.posts);
   console.log('CreatePost.mapStateToProps.state.cats: ', state.cats);
-  return { mode: state.mode, posts: state.posts, cats: state.cats, postCat: state.postCat };
+  return { post: state.post, posts: state.posts, cats: state.cats, postCat: state.postCat };
 }
 
 const mapDispatchToProps = (dispatch) => {
