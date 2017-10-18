@@ -7,6 +7,7 @@ export const SET_VIEW_CAT = 'SET_VIEW_CAT';
 export const SET_POST_CURRENT = 'SET_POST_CURRENT';
 export const CREATE_POST = 'CREATE_POST';
 export const EDIT_POST = 'EDIT_POST';
+export const ERROR_EDIT_POST = 'ERROR_EDIT_POST';
 export const DELETE_POST = 'DELETE_POST';
 export const ERROR_DELETE_POST = 'ERROR_DELETE_POST';
 export const VOTE_POST = 'VOTE_POST';
@@ -20,6 +21,7 @@ export const SORT_POSTS_DIRECTION = 'SORT_POSTS_DIRECTION';
 export const CREATE_COMMENT = 'CREATE_COMMENT';
 export const ERROR_CREATE_COMMENT = 'ERROR_CREATE_COMMENT';
 export const EDIT_COMMENT = 'EDIT_COMMENT';
+export const ERROR_EDIT_COMMENT = 'ERROR_EDIT_COMMENT';
 export const DELETE_COMMENT = 'DELETE_COMMENT';
 export const ERROR_DELETE_COMMENT = 'ERROR_DELETE_COMMENT';
 export const VOTE_COMMENT = 'VOTE_COMMENT';
@@ -279,14 +281,13 @@ export function voteCommentFetch(id, option) {
   return (dispatch) => {
     console.log(`running fetch with url: ${url}/comments/${id}`);
     console.log('and headers: ', headers);
-    const params = JSON.stringify({ option: option });
     fetch(`${url}/comments/${id}`, { 
       method: 'POST',
       headers: {
         ...headers,
         'Content-Type': 'application/json'
       },
-      body: params, })
+      body: JSON.stringify({ option: option }), })
       .then((response) => {
         if (!response.ok) {
           throw Error(response.statusText);
@@ -358,21 +359,126 @@ export function createCommentFetch(comment) {
 }
 // end thunk createComment
 
-// todo: thunk editPost
+// thunk editPost
+export const editPostErrored = (bool) => {
+  return {
+    type: ERROR_EDIT_POST,
+    error: bool
+  }
+}
+
 export const editPost = (post) => {
   return {
     type: EDIT_POST,
     post,
   }
 }
+
+// PUT /posts/:id	Edit the details of an existing post.	
+// params:  title - [String] 
+//          body  - [String]
+export const editPost = (post) =>
+  fetch(`${url}/posts/${post.id}`, {
+    method: 'PUT',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ title: post.title, body: post.body })
+  }).then(res => res.json())
+    .then(data => data)
+    .catch(function(error) {
+      console.log('API editPost error: ', error);
+    })
+
+export function editPostFetch(post) {
+  console.log('entered editPostFetch with post: ', post);
+  return (dispatch) => {
+    console.log(`running fetch with url: ${url}/posts/${post.id}`);
+    fetch(`${url}/posts/${post.id}`, { 
+      method: 'PUT',
+      headers: {
+        ...headers,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ title: post.title, body: post.body })
+    })
+    .then((response) => {
+      if (!response.ok) {
+        throw Error(response.statusText);
+      }
+      //dispatch(itemsIsLoading(false));
+      return response;
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log('editPostFetch fetched data: ', data);
+      dispatch(editPost(post));
+      console.log('dispatched post to store');
+    })
+    .catch(() => dispatch(editPostErrored(true)));
+  };
+}
 // end thunk edit post
 
-// todo: thunk editComment
+// thunk editComment
 export const editComment = (comment) => {
   return {
     type: EDIT_COMMENT,
     comment,
   }
+}
+
+export const editCommentErrored = (bool) => {
+  return {
+    type: ERROR_EDIT_COMMENT,
+    error: bool
+  }
+}
+
+// PUT /comments/:id	Edit the details of an existing comment.
+// params:  timestamp - timestamp. Get this however you want. 
+//          body - [String]
+/*export const editComment = (comment) =>
+  fetch(`${url}/comments/${comment.id}`, {
+    method: 'PUT',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ timestamp: comment.timestamp, body: comment.body })
+  }).then(res => res.json())
+    .then(data => data)
+    .catch(function(error) {
+      console.log('API putComment error: ', error);
+    })*/
+
+export function editCommentFetch(comment) {
+  console.log('entered editCommentFetch with comment: ', comment);
+  return (dispatch) => {
+    console.log(`running fetch with url: ${url}/comments/${comment.id}`);
+    fetch(`${url}/comments/${comment.id}`, { 
+      method: 'PUT',
+      headers: {
+        ...headers,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ timestamp: comment.timestamp, body: comment.body }) })
+      .then((response) => {
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+        //dispatch(itemsIsLoading(false));
+        return response;
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('editCommentFetch fetched data: ', data);
+        dispatch(editComment(comment));
+        console.log('dispatched comment to store');
+      })
+      .catch(() => dispatch(editCommentErrored(true)));
+  };
 }
 // end thunk editComment
 
@@ -444,14 +550,13 @@ export function votePostFetch(id, option) {
   return (dispatch) => {
     console.log(`running fetch with url: ${url}/posts/${id}`);
     console.log('and headers: ', headers);
-    const params = JSON.stringify({ option: option });
     fetch(`${url}/posts/${id}`, { 
       method: 'POST',
       headers: {
         ...headers,
         'Content-Type': 'application/json'
       },
-      body: params, })
+      body: JSON.stringify({ option: option }), })
       .then((response) => {
         if (!response.ok) {
           throw Error(response.statusText);
@@ -471,7 +576,7 @@ export function votePostFetch(id, option) {
 }
 // end migrate votePost to thunk
 
-// todo: thunk deleteComment
+// thunk deleteComment
 export const deleteCommentErrored = (bool) => {
   return {
     type: ERROR_DELETE_COMMENT,
@@ -480,25 +585,11 @@ export const deleteCommentErrored = (bool) => {
 }
 
 export const deleteComment = (id) => {
-  //deleteCommentFetch(id).then((data) => {
-  //  console.log('API deleteComment id (', id, '), data: ', data);
-  //})
   return {
     type: DELETE_COMMENT,
     id,
   }
 }
-
-// DELETE /comments/:id
-/*const deleteCommentFetch = (id) =>
-  fetch(`${url}/comments/${id}`, {
-    method: 'DELETE',
-    headers: {
-      ...headers,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(id)
-  }).then(res => res.json())*/
 
 export function deleteCommentFetch(id) {
   console.log('entered deleteCommentFetch(', id, ')');
