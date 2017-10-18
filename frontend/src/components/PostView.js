@@ -74,6 +74,7 @@ class PostView extends React.Component {
         <a href="javascript:void(0)" onClick={() => this.props.deletePost(this.props.post.id)}>
           Delete Post
         </a>
+        {' - '} <Link to="/postCreateEdit">Edit Post</Link>
         <br/><br/>
         <Link to="/">Home</Link>
         <br/><br/>
