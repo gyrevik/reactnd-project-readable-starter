@@ -1,23 +1,43 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { setViewCat, catsActionFetch } from '../actions/actions.js';
 
-export default function CatViewLinks({ cats, setViewCat, selectedCat }) {
-  const spanBold = { fontWeight:'bold' };
-  const spanNormal = { fontWeight:'normal' };
-  console.log('cats in CatViewLinks: ', cats);
-  console.log('CatViewLinks typeof(cats): ', typeof(cats));
-  
-  return (
-    <div>
-      View Category:{' '}
-	      {cats.map ((cat, i) =>
-  		    <span key={Math.random()} style={selectedCat===cat.name ? spanBold : spanNormal}>
-    	      <Link to="/category" key={i.toString()} onClick={() => setViewCat(cat.name)}>
-		        {cat.name}
-		      </Link>
-			  <span>{ i < cats.length-1 ? ' - ' : '' }</span>
-			</span>
-		  )}
-    </div>  
-  )
+class CatViewLinks extends React.Component {  //({ cats, setViewCat, selectedCat }) {
+  render () {
+    const spanBold = { fontWeight:'bold' };
+    const spanNormal = { fontWeight:'normal' };
+    console.log('cats in CatViewLinks: ', this.props.cats);
+    console.log('CatViewLinks typeof(this.props.cats): ', typeof(this.props.cats));
+
+    return (
+      <div>
+        View Category:{' '}
+          {this.props.cats.map ((cat, i) =>
+            <span key={Math.random()} style={this.props.selectedCat===cat.name ? spanBold : spanNormal}>
+              <Link to="/category" key={i.toString()} onClick={() => this.props.setViewCat(cat.name)}>
+              {cat.name}
+            </Link>
+          <span>{ i < this.props.cats.length-1 ? ' - ' : '' }</span>
+        </span>
+        )}
+      </div>  
+    )
+  }
 }
+
+const mapStateToProps = (state, props) => { 
+  console.log('CatViewLinks.mapStateToProps.state.cats: ', state.cats);
+  console.log('state.viewCat: ', state.viewCat);
+
+  return { cats: state.cats, selectedCat: state.viewCat };
+}
+  
+const mapDispatchToProps = (dispatch) => {
+    return {
+      fetchCats: () => dispatch(catsActionFetch()),
+      setViewCat: (cat) => dispatch(setViewCat(cat))
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CatViewLinks)

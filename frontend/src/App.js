@@ -3,7 +3,7 @@ import { Route } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { voteCommentActionFetch, setPostCat, setPostCurrent, setViewCat, clearPostCat, sortPostsField } from './actions/actions.js';
+import { voteCommentActionFetch, setPostCurrent, setViewCat, clearPostCat, sortPostsField } from './actions/actions.js';
 import CatSet from './components/CatSet.js';
 import CatViewLinks from './components/CatViewLinks.js';
 import PostList from './components/PostList.js';
@@ -128,6 +128,6 @@ const mapStateToProps = (state, props) => {
 }
 
 const mapDispatchToProps = (dispatch, props) =>
-  bindActionCreators({ setPostCat, setViewCat }, dispatch)
+  bindActionCreators({ setViewCat }, dispatch)
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App))

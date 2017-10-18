@@ -2,9 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { setPostCat, catsActionFetch } from '../actions/actions.js';
-//import * as utils from '../utils';
 
-class CatSet extends React.Component {  //({ cats, setPostCat, selectedCat }) {
+class CatSet extends React.Component {
   componentDidMount() {
     console.log(`CatSet.js.componentDidMount state: ${JSON.stringify(this.state)}`);
     console.log('about to run fetchCats in componentDidMount');
