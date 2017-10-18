@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import { voteCommentActionFetch, setPostCurrent, setViewCat, clearPostCat, sortPostsField } from './actions/actions.js';
 import CatSet from './components/CatSet.js';
 import CatViewLinks from './components/CatViewLinks.js';
+import Header from './components/Header.js';
 import PostList from './components/PostList.js';
 import PostCreate from './components/PostCreate.js';
 import PostView from './components/PostView.js';
@@ -75,9 +76,7 @@ class App extends Component {
         )}/>
         <Route exact path="/post" render={() => (
           <div>
-            <br />
-            <div>Post Detail View</div>
-            <br />
+            <Header appIntro="Post Detail View" />
             <div><PostView /></div>
           </div>
         )}/>
