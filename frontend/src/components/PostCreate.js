@@ -28,11 +28,13 @@ class PostCreate extends React.Component {
   
   render() {
     const path = createHistory().location.pathname;
+    let mode;
+    if (path === "/") mode = "add"; else mode = "edit";
 
     return (
       <div>  
       	<p><CatSet /></p>
-        Mode: { path !== "/" ? this.props.mode : "add" }
+        Mode: { mode }
         <form role="form">
           <br />
           <div>

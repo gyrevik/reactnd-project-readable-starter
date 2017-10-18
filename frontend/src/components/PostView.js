@@ -80,7 +80,7 @@ class PostView extends React.Component {
         <br/><br/>
         Comments:<br/>
         <ul>
-          {//[ ...this.state.comments, ...this.props.comments ].sort(sortByKey('voteScore')).map((comment, i) => 
+          {
             this.props.comments.sort(sortByKey('voteScore')).map((comment, i) => 
             <li key={i.toString()}>
               id: {comment.id}<br/>
