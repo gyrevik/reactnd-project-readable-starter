@@ -34,13 +34,7 @@ class App extends Component {
       <div className="App">
         <Route exact path="/" render={() => (
           <div>
-            <div className="App-header">
-              <img src={logo} className="App-logo" alt="logo" />
-              <h2>Readable</h2>
-            </div>
-            <p className="App-intro">
-              Let's Read some blog posts! C:\Work\Readable
-            </p>
+            <Header appIntro="Home" />
       		<div>
       		  <CatViewLinks />
       		</div>
@@ -55,13 +49,7 @@ class App extends Component {
         )}/>
         <Route exact path="/category" render={() =>(
           <div>
-            <div className="App-header">
-              <img src={logo} className="App-logo" alt="logo" />
-              <h2>Readable</h2>
-            </div>
-            <p className="App-intro">
-              Category View
-            </p>
+            <Header appIntro="Category View" />
             <div>
               <CatViewLinks />
             </div>
@@ -82,13 +70,7 @@ class App extends Component {
         )}/>
         <Route exact path="/postCreateEdit" render={() => (
           <div>
-            <div className="App-header">
-              <img src={logo} className="App-logo" alt="logo" />
-              <h2>Readable</h2>
-            </div>
-            <p className="App-intro">
-              Post Create/Edit View
-            </p>
+            <Header appIntro="Post Create/Edit View" />
           </div>
         )} />
       </div>
