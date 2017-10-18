@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Modal from 'react-modal';
 import { voteCommentActionFetch, commentsActionFetch, 
-  createComment, deletePostActionFetch } from '../actions/actions.js';
+  createCommentActionFetch, deletePostActionFetch } from '../actions/actions.js';
 import CatSet from '../components/CatSet.js';
 import * as utils from '../utils';
 import * as apiCalls from '../apiCalls';
@@ -20,7 +20,6 @@ class PostView extends React.Component {
 
     this.state = {
       comment:'',
-      //comments: [],
       openModal:false
     };
   }
@@ -137,7 +136,7 @@ const mapStateToProps = (state, props) => {
   
 const mapDispatchToProps = (dispatch) => {
     return {
-      createComment: (comment) => dispatch(createComment(comment)),
+      createComment: (comment) => dispatch(createCommentActionFetch(comment)),
       deletePost: (postId) => dispatch(deletePostActionFetch(postId)),
       voteComment: (commentId, option) => dispatch(voteCommentActionFetch(commentId, option)),
       fetchComments: (postId) => dispatch(commentsActionFetch(postId))

@@ -68,13 +68,6 @@ const mapStateToProps = (state, props) => {
   console.log('CreatePost.mapStateToProps.state.cats: ', state.cats);
   return { posts: state.posts, cats: state.cats, postCat: state.postCat };
 }
-  
-/*const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({
-      createPost: createPostAction,
-      setPostCat: setPostCat,
-  	}, dispatch);
-}*/
 
 const mapDispatchToProps = (dispatch) => {
   return {

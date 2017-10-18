@@ -20,6 +20,7 @@ export const SORT_POSTS_FIELD = 'SORT_POSTS_FIELD';
 export const SORT_POSTS_DIRECTION = 'SORT_POSTS_DIRECTION';
 
 export const CREATE_COMMENT = 'CREATE_COMMENT';
+export const ERROR_CREATE_COMMENT = 'ERROR_CREATE_COMMENT';
 export const EDIT_COMMENT = 'EDIT_COMMENT';
 export const DELETE_COMMENT = 'DELETE_COMMENT';
 export const VOTE_COMMENT = 'VOTE_COMMENT';
@@ -262,12 +263,6 @@ export function catsActionFetch() {
   };
 }
 
-/*export const getCategories = () =>
-  fetch(`${url}/categories`, { headers })
-    .then(res => res.json())
-    .then(data => data.categories)*/
-// end thunk for categories
-
 // implement vote comment thunk actions:
 export const voteCommentActionErrored = (bool) => {
   return {
@@ -316,7 +311,15 @@ export function voteCommentActionFetch(id, option) {
 }
 // end implement vote comment thunk actions
 
-export const createComment = (comment) => {
+// todo: thunk createComment
+export const createCommentActionErrored = (bool) => {
+  return {
+    type: ERROR_CREATE_COMMENT,
+    error: bool
+  }
+}
+
+export const createCommentAction = (comment) => {
   console.log('entered createComment with comment: ', comment);
   let { id, parentId, timestamp, body, author, voteScore, deleted, parentDeleted } = comment;
   console.log('action.createComment parentId: ', parentId, '\nbody: ', body, '\nauthor: ', author, '\nvoteScore: ', voteScore, '\ndeleted: ', deleted, '\nparentDeleted: ', parentDeleted);
@@ -325,10 +328,10 @@ export const createComment = (comment) => {
     throw new Error('invalid comment: parentId and body required');
   }
   
-  apiCalls.postComment(comment).then((data) => {
+  /*apiCalls.postComment(comment).then((data) => {
     console.log('return data from apiCalls.postComment: ', data);
     console.log('posted comment: ', comment);
-  });
+  });*/
 
   console.log('returning from createComment action creater type: ', CREATE_COMMENT, ' and comment: ', comment);
   return {
@@ -336,6 +339,49 @@ export const createComment = (comment) => {
     comment: { id, parentId, timestamp, body, author:'alex', voteScore:1, deleted:false, parentDelted:false },
   }
 }
+
+export function createCommentActionFetch(comment) {
+  console.log('entered createCommentActionFetch with comment: ', comment);
+  return (dispatch) => {
+    console.log(`running fetch with url: ${url}/comments`);
+    fetch(`${url}/comments`, { 
+      method: 'POST',
+      headers: {
+        ...headers,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(comment) })
+      .then((response) => {
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+        //dispatch(itemsIsLoading(false));
+        return response;
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('createCommentActionFetch fetched data: ', data);
+        dispatch(createCommentAction(comment));
+        console.log('dispatched comment to store');
+      })
+      .catch(() => dispatch(createCommentActionErrored(true)));
+  };
+}
+
+/*export const createComment = (comment) =>
+  fetch(`${url}/comments`, {
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(comment)
+  }).then(res => res.json())
+    .then(data => data)
+    .catch(function(error) {
+      console.log('API postComment error: ', error);
+    })*/
+// end thunk createComment
 
 export const editPost = (post) => {
   apiCalls.putPost(post).then((data) => {
