@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { createPostFetch, clearPostCat, setPostCat } from '../actions/actions.js';
+import { createPostFetch, editPostFetch, clearPostCat, setPostCat } from '../actions/actions.js';
 import CatSet from '../components/CatSet.js';
 import createHistory from 'history/createBrowserHistory';
 
@@ -32,7 +32,7 @@ class PostCreate extends React.Component {
     if (path === "/") mode = "add"; else mode = "edit";
 
     const createPostObj = {
-      id: Date.now().toString(), 
+      id: mode === "edit" ? this.props.post.id : Date.now().toString(), 
       timestamp: Date.now(),
       title: this.state.title, 
       body: this.state.body, 
@@ -59,7 +59,9 @@ class PostCreate extends React.Component {
               defaultValue={ mode === "edit" ? this.props.post.body : "" } placeholder="Body" maxLength="140" rows="7" />
           </div>
 
-          <button onClick={ () => mode === "edit" ? this.props.createPost( createPostObj ) : this.props.createPost( createPostObj ) } 
+          <button onClick={ () => mode === "edit" ? 
+            this.props.editPost( createPostObj ) : 
+            this.props.createPost( createPostObj ) } 
             type="button" id="submit" name="submit">
               { mode === "edit" ? "Edit Post" : "Add Post" }
           </button>
@@ -78,6 +80,7 @@ const mapStateToProps = (state, props) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     createPost: (post) => dispatch(createPostFetch(post)),
+    editPost: (post) => dispatch(editPostFetch(post)),
     setPostCat: (cat) => dispatch(setPostCat(cat))
   };
 }
