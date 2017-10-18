@@ -21,6 +21,7 @@ export const CREATE_COMMENT = 'CREATE_COMMENT';
 export const ERROR_CREATE_COMMENT = 'ERROR_CREATE_COMMENT';
 export const EDIT_COMMENT = 'EDIT_COMMENT';
 export const DELETE_COMMENT = 'DELETE_COMMENT';
+export const ERROR_DELETE_COMMENT = 'ERROR_DELETE_COMMENT';
 export const VOTE_COMMENT = 'VOTE_COMMENT';
 export const ERROR_VOTE_COMMENT = 'ERROR_VOTE_COMMENT';
 
@@ -74,7 +75,7 @@ export const sortPostsDirection = (direction) => {
   }
 }
 
-// todo: thunk postAction
+// thunk createPost
 export const createPost = (post) => {
   console.log('entered createPost with post: ', post);
   let { title, body, author, category, voteScore, deleted } = post;
@@ -129,7 +130,7 @@ export function createPostFetch(post) {
     .catch(() => dispatch(createPostErrored(true)));
   };
 }
-// end thunk post
+// end thunk createPost
 
 export const commentsErrored = (bool) => {
   return {
@@ -470,10 +471,18 @@ export function votePostFetch(id, option) {
 }
 // end migrate votePost to thunk
 
+// todo: thunk deleteComment
+export const deleteCommentErrored = (bool) => {
+  return {
+    type: ERROR_DELETE_COMMENT,
+    error: bool
+  }
+}
+
 export const deleteComment = (id) => {
-  deleteCommentFetch(id).then((data) => {
-    console.log('API deleteComment id (', id, '), data: ', data);
-  })
+  //deleteCommentFetch(id).then((data) => {
+  //  console.log('API deleteComment id (', id, '), data: ', data);
+  //})
   return {
     type: DELETE_COMMENT,
     id,
@@ -481,7 +490,7 @@ export const deleteComment = (id) => {
 }
 
 // DELETE /comments/:id
-const deleteCommentFetch = (id) =>
+/*const deleteCommentFetch = (id) =>
   fetch(`${url}/comments/${id}`, {
     method: 'DELETE',
     headers: {
@@ -489,4 +498,34 @@ const deleteCommentFetch = (id) =>
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(id)
-  }).then(res => res.json())
+  }).then(res => res.json())*/
+
+export function deleteCommentFetch(id) {
+  console.log('entered deleteCommentFetch(', id, ')');
+  return (dispatch) => {
+    console.log(`running fetch with url: ${url}/comments/${id}`);
+    console.log('and headers: ', headers);
+    fetch(`${url}/comments/${id}`, { 
+      method: 'DELETE',
+      headers: {
+        ...headers,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(id) })
+      .then((response) => {
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+        //dispatch(itemsIsLoading(false));
+        return response;
+      })
+      //.then((response) => response.json())
+      .then((data) => {
+        console.log('deleteCommentFetch, (', id, ') fetched data: ', data);
+        dispatch(deleteComment(id));
+        console.log('dispatched deleteComment action to store');
+      })
+      .catch(() => dispatch(deleteComment(true)));
+  };
+}
+// end thunk deleteComment

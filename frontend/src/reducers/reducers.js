@@ -172,11 +172,9 @@ export function commentsReducer (state = [], action) {
       )
     }
     case DELETE_COMMENT: {
-      const { comment } = action;
       return state.map(c => {
-        if (c.id === comment.id)
+        if (c.id === action.id)
           c.deleted = true;
-        
         return c;
       })
     }

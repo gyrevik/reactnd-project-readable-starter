@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Modal from 'react-modal';
-import { voteCommentFetch, commentsFetch, createCommentFetch, deletePostFetch } from '../actions/actions.js';
+import { voteCommentFetch, commentsFetch, createCommentFetch, deletePostFetch, deleteCommentFetch } from '../actions/actions.js';
 import CatSet from '../components/CatSet.js';
 import * as utils from '../utils';
 import * as apiCalls from '../apiCalls';
@@ -88,7 +88,10 @@ class PostView extends React.Component {
               Vote Score: {comment.voteScore} {' - '} 
                 <a href="javascript:void(0)" onClick={() => this.props.voteComment(comment.id, 'upVote')}>upVote alex</a>
                 {' - '}
-                <a href="javascript:void(0)" onClick={() => this.props.voteComment(comment.id, 'downVote')}>downVote</a><br/>
+                <a href="javascript:void(0)" onClick={() => this.props.voteComment(comment.id, 'downVote')}>downVote</a>
+                {' - '}
+                <a href="javascript:void(0)" onClick={() => this.props.deleteComment(comment.id)}>delete</a>
+                <br/>
             </li>
           )}
         </ul>
@@ -137,6 +140,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
       createComment: (comment) => dispatch(createCommentFetch(comment)),
       deletePost: (postId) => dispatch(deletePostFetch(postId)),
+      deleteComment: (commentId) => dispatch(deleteCommentFetch(commentId)),
       voteComment: (commentId, option) => dispatch(voteCommentFetch(commentId, option)),
       fetchComments: (postId) => dispatch(commentsFetch(postId))
   };
