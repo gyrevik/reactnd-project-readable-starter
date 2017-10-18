@@ -5,9 +5,6 @@ import { sortPostsField, setPostCurrent, votePostFetch, postsFetch, createPostFe
 import * as utils from '../utils';
 
 class PostList extends React.Component {
-  // was passed in when this was a functional component:
-  // posts, deletePost, sortPostsField, setPostCurrent 
-
   componentDidMount() {
     console.log(`PostList.js.componentDidMount state: ${JSON.stringify(this.state)}`);
     console.log('about to run fetchPosts in componentDidMount');
@@ -53,7 +50,6 @@ const mapStateToProps = (state, props) => {
   const sortByKey = key => (a, b) => a[state.sortPostsField] < b[state.sortPostsField];	// desc (number)
   posts.sort(sortByKey(state.sortPostsField));
 
-  //let postsView = posts.slice();
   posts = posts.filter(post => {
     if (post.category === state.viewCat || state.viewCat === 'all') {
       return true;

@@ -151,7 +151,6 @@ export const getComments = (comments) => {
 
 export function commentsFetch(postId) {
   console.log('entered commentsFetch(', postId, ')');
-  //const headers = apiCalls.headers;
   return (dispatch) => {
     //dispatch(itemsIsLoading(true));
     console.log(`running fetch with url: ${url}/posts/${postId}/comments`);
@@ -193,7 +192,6 @@ export const getPosts = (posts) => {
 
 export function postsFetch() {
   console.log('entered postsFetch()');
-  //const headers = apiCalls.headers;
   return (dispatch) => {
     //dispatch(itemsIsLoading(true));
     console.log(`running fetch with url: ${url}/posts`);
@@ -236,7 +234,6 @@ export const getCats = (cats) => {
 
 export function catsFetch() {
   console.log('entered catsFetch()');
-  //const headers = apiCalls.headers;
   return (dispatch) => {
     //dispatch(itemsIsLoading(true));
     console.log(`running fetch with url: ${url}/categories`);
@@ -377,20 +374,6 @@ export const editPost = (post) => {
 // PUT /posts/:id	Edit the details of an existing post.	
 // params:  title - [String] 
 //          body  - [String]
-export const editPost = (post) =>
-  fetch(`${url}/posts/${post.id}`, {
-    method: 'PUT',
-    headers: {
-      ...headers,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ title: post.title, body: post.body })
-  }).then(res => res.json())
-    .then(data => data)
-    .catch(function(error) {
-      console.log('API editPost error: ', error);
-    })
-
 export function editPostFetch(post) {
   console.log('entered editPostFetch with post: ', post);
   return (dispatch) => {
@@ -439,20 +422,6 @@ export const editCommentErrored = (bool) => {
 // PUT /comments/:id	Edit the details of an existing comment.
 // params:  timestamp - timestamp. Get this however you want. 
 //          body - [String]
-/*export const editComment = (comment) =>
-  fetch(`${url}/comments/${comment.id}`, {
-    method: 'PUT',
-    headers: {
-      ...headers,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ timestamp: comment.timestamp, body: comment.body })
-  }).then(res => res.json())
-    .then(data => data)
-    .catch(function(error) {
-      console.log('API putComment error: ', error);
-    })*/
-
 export function editCommentFetch(comment) {
   console.log('entered editCommentFetch with comment: ', comment);
   return (dispatch) => {

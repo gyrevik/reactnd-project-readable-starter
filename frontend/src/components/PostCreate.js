@@ -28,10 +28,7 @@ class PostCreate extends React.Component {
   render() {
     return (
       <div>  
-      	<CatSet 
-          cats={this.props.cats}
-          setPostCat={this.props.setPostCat} 
-          selectedCat={this.props.postCat} />
+      	<CatSet />
       
         <form role="form">
           <br />

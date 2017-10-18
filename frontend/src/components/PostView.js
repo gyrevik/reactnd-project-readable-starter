@@ -5,7 +5,6 @@ import Modal from 'react-modal';
 import { voteCommentFetch, commentsFetch, createCommentFetch, deletePostFetch, deleteCommentFetch } from '../actions/actions.js';
 import CatSet from '../components/CatSet.js';
 import * as utils from '../utils';
-import * as apiCalls from '../apiCalls';
 import createHistory from 'history/createBrowserHistory';
 
 class PostView extends React.Component {
