@@ -65,12 +65,12 @@ class App extends Component {
             <p className="App-intro">
               Category View
             </p>
-      		<div>
-      		  <CatViewLinks
-                cats={this.props.cats}
-                setViewCat={this.props.setViewCat} 
-                selectedCat={this.props.viewCat} />
-      		</div>
+            <div>
+              <CatViewLinks
+                  cats={this.props.cats}
+                  setViewCat={this.props.setViewCat} 
+                  selectedCat={this.props.viewCat} />
+            </div>
             <div>
               <br />
               <PostCreate />
@@ -88,6 +88,17 @@ class App extends Component {
             <div><PostView /></div>
           </div>
         )}/>
+        <Route exact path="/postCreateEdit" render={() => (
+          <div>
+            <div className="App-header">
+              <img src={logo} className="App-logo" alt="logo" />
+              <h2>Readable</h2>
+            </div>
+            <p className="App-intro">
+              Post Create/Edit View
+            </p>
+          </div>
+        )} />
       </div>
     );
   }
