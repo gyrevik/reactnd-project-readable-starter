@@ -59,8 +59,7 @@ class PostCreate extends React.Component {
               defaultValue={ mode === "edit" ? this.props.post.body : "" } placeholder="Body" maxLength="140" rows="7" />
           </div>
 
-          <button onClick={() => 
-            this.props.createPost( createPostObj )} 
+          <button onClick={ () => mode === "edit" ? this.props.createPost( createPostObj ) : this.props.createPost( createPostObj ) } 
             type="button" id="submit" name="submit">
               { mode === "edit" ? "Edit Post" : "Add Post" }
           </button>
