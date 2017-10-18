@@ -41,11 +41,7 @@ class App extends Component {
               Let's Read some blog posts! C:\Work\Readable
             </p>
       		<div>
-      		  <CatViewLinks
-                cats={this.props.cats}
-                setViewCat={this.props.setViewCat} 
-                clearPostCat={this.props.clearPostCat} 
-                selectedCat={this.props.viewCat} />
+      		  <CatViewLinks />
       		</div>
             <div>
               <br />
@@ -66,10 +62,7 @@ class App extends Component {
               Category View
             </p>
             <div>
-              <CatViewLinks
-                  cats={this.props.cats}
-                  setViewCat={this.props.setViewCat} 
-                  selectedCat={this.props.viewCat} />
+              <CatViewLinks />
             </div>
             <div>
               <br />
