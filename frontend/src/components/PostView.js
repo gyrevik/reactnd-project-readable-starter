@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Modal from 'react-modal';
-import { setMode, voteCommentFetch, commentsFetch, createCommentFetch, deletePostFetch, deleteCommentFetch } from '../actions/actions.js';
+import { setMode, voteCommentFetch, commentsFetch, createCommentFetch, editCommentFetch, 
+  deletePostFetch, deleteCommentFetch } from '../actions/actions.js';
 import CatSet from '../components/CatSet.js';
 import * as utils from '../utils';
 import createHistory from 'history/createBrowserHistory';
@@ -15,22 +16,24 @@ class PostView extends React.Component {
     
     console.log('initializing local state in constructor');
 
-    this.state = { openModal:false };
+    this.state = { openModal: false, edit: false };
   }
 
   handleComment() {
-    this.props.createComment({
+    const commentObj = {
       body: this.body.value, 
-      id:Date.now().toString(),
+      id: this.state.edit ? this.state.comment.id : Date.now().toString(),
       parentId:this.props.post.id.toString(),
-      timestamp: Date.now(),
-      voteScore:1,
+      timestamp: this.state.edit ? this.state.comment.timestamp : Date.now(),
+      voteScore:this.state.edit ? this.state.comment.voteScore : 1,
       author:'alex',
       deleted:false,
       parentDeleted:false
-    })
+    };
+    
+    this.state.edit ? this.props.editComment(commentObj) : this.props.createComment(commentObj);
 
-    this.setState({openCommentModal:false});
+    //this.setState({openModal:false});
     console.log('handleComment executed');
   }
 
@@ -44,6 +47,7 @@ class PostView extends React.Component {
 
   render() {
     const sortByKey = key => (a, b) => a['voteScore'] < b['voteScore'];	// desc (number)
+    //const edit = this.state.edit;
 
     return (
       <div>
@@ -81,7 +85,8 @@ class PostView extends React.Component {
                 {' - '}
                 <a href="javascript:void(0)" onClick={() => this.props.voteComment(comment.id, 'downVote')}>downVote</a>
                 {' - '}
-                <a href="javascript:void(0)" onClick={() => this.props.editComment(comment.id)}>edit</a>
+                <a href="javascript:void(0)" 
+                  onClick={() => this.setState({openModal:true, edit:true, comment})}>edit</a>
                 {' - '}
                 <a href="javascript:void(0)" onClick={() => this.props.deleteComment(comment.id)}>delete</a>
                 <br/>
@@ -90,24 +95,25 @@ class PostView extends React.Component {
         </ul>
 
         <Modal
-          isOpen={this.state.openCommentModal}
+          isOpen={this.state.openModal}
           closeTimeoutMS={1}
           contentLabel="Modal"
         >
-          <h1>Add Comment</h1>
+          <h1>{this.state.edit ? "Edit" : "Add"} Comment</h1>
           <div>
             <form role="form">
               <div>
                 <textarea ref={(input) => { this.body = input; }} id="body" placeholder="Body" 
+                  defaultValue={ this.state.edit ? this.state.comment.body : '' }
                   maxLength="140" rows="7" />
               </div>
               
               <button onClick={ this.handleComment } type="button" id="submit" name="submit">
-                  Submit Comment
+                  {this.state.edit ? "Edit" : "Submit"} Comment
               </button>
             </form>
           </div>
-          <button onClick={() => this.setState({openCommentModal:false})} 
+          <button onClick={() => this.setState({openModal:false})} 
             type="button" id="closeCommentModal" name="closeCommentModal">
               Close
           </button> 
@@ -132,6 +138,7 @@ const mapStateToProps = (state, props) => {
 const mapDispatchToProps = (dispatch) => {
     return {
       createComment: (comment) => dispatch(createCommentFetch(comment)),
+      editComment: (comment) => dispatch(editCommentFetch(comment)),
       deletePost: (postId) => dispatch(deletePostFetch(postId)),
       deleteComment: (commentId) => dispatch(deleteCommentFetch(commentId)),
       voteComment: (commentId, option) => dispatch(voteCommentFetch(commentId, option)),
