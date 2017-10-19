@@ -7,7 +7,7 @@ import CatSet from './components/CatSet.js';
 import CatViewLinks from './components/CatViewLinks.js';
 import Header from './components/Header.js';
 import PostList from './components/PostList.js';
-import PostCreate from './components/PostCreate.js';
+import PostCreateEdit from './components/PostCreateEdit.js';
 import PostView from './components/PostView.js';
 import createHistory from 'history/createBrowserHistory';
 
@@ -39,7 +39,7 @@ class App extends Component {
       		</div>
             <div>
               <br />
-              <PostCreate />
+              <PostCreateEdit />
             </div>
             <div>
               <PostList />
@@ -54,7 +54,7 @@ class App extends Component {
             </div>
             <div>
               <br />
-              <PostCreate />
+              <PostCreateEdit />
             </div>
             <div>
               <PostList />
@@ -70,7 +70,7 @@ class App extends Component {
         <Route exact path="/postCreateEdit" render={() => (
           <div>
             <Header appIntro="Post Create/Edit View" />
-            <PostCreate />
+            <PostCreateEdit />
           </div>
         )} />
       </div>

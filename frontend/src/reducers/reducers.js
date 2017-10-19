@@ -30,6 +30,8 @@ export function catReducer (state = 'all', action) {
 export function postReducer (state = {}, action) {
   console.log('state in postReducer: ', state);
   switch (action.type) {
+    case EDIT_POST:
+      return action.post;
     case SET_POST_CURRENT:
       return action.post;
     case DELETE_POST:

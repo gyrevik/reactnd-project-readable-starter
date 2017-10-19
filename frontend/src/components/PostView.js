@@ -86,7 +86,7 @@ class PostView extends React.Component {
               id: {comment.id}<br/>
               {comment.body}<br/>
               Vote Score: {comment.voteScore} {' - '} 
-                <a href="javascript:void(0)" onClick={() => this.props.voteComment(comment.id, 'upVote')}>upVote alex</a>
+                <a href="javascript:void(0)" onClick={() => this.props.voteComment(comment.id, 'upVote')}>upVote</a>
                 {' - '}
                 <a href="javascript:void(0)" onClick={() => this.props.voteComment(comment.id, 'downVote')}>downVote</a>
                 {' - '}
