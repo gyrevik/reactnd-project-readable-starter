@@ -11,25 +11,16 @@ class PostView extends React.Component {
   constructor(props) {
     super(props);
     
-    this.handleCommentChange = this.handleCommentChange.bind(this);
     this.handleComment = this.handleComment.bind(this);
     
     console.log('initializing local state in constructor');
 
-    this.state = {
-      comment:'',
-      openModal:false
-    };
-  }
-  
-  handleCommentChange(e) {
-    this.setState({comment:e.target.value});
-    console.log('handleCommentChange: ', e.target.value);
+    this.state = { openModal:false };
   }
 
   handleComment() {
     this.props.createComment({
-      body: this.state.comment, 
+      body: this.body.value, 
       id:Date.now().toString(),
       parentId:this.props.post.id.toString(),
       timestamp: Date.now(),
@@ -90,6 +81,8 @@ class PostView extends React.Component {
                 {' - '}
                 <a href="javascript:void(0)" onClick={() => this.props.voteComment(comment.id, 'downVote')}>downVote</a>
                 {' - '}
+                <a href="javascript:void(0)" onClick={() => this.props.editComment(comment.id)}>edit</a>
+                {' - '}
                 <a href="javascript:void(0)" onClick={() => this.props.deleteComment(comment.id)}>delete</a>
                 <br/>
             </li>
@@ -105,7 +98,7 @@ class PostView extends React.Component {
           <div>
             <form role="form">
               <div>
-                <textarea onChange={ this.handleCommentChange } id="body" placeholder="Body" 
+                <textarea ref={(input) => { this.body = input; }} id="body" placeholder="Body" 
                   maxLength="140" rows="7" />
               </div>
               
