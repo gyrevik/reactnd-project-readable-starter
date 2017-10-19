@@ -33,12 +33,12 @@ class PostCreate extends React.Component {
 
     const postObj = {
       id: edit ? this.props.post.id : Date.now().toString(), 
-      timestamp: Date.now(),
-      title: this.state.title, 
-      body: this.state.body, 
+      timestamp: edit ? this.props.post.timestamp : Date.now(),
+      title: edit ? this.props.post.title : this.state.title, 
+      body: edit ? this.props.post.body : this.state.body, 
       author: 'alex',
-      category: this.props.postCat,
-      voteScore: 1,
+      category: edit ? this.props.post.category : this.props.postCat,
+      voteScore: edit ? this.props.post.voteScore : 1,
       deleted: false
     }
 
