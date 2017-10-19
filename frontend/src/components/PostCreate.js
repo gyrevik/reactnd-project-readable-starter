@@ -28,11 +28,11 @@ class PostCreate extends React.Component {
   
   render() {
     const path = createHistory().location.pathname;
-    let mode;
-    if (path === "/") mode = "add"; else mode = "edit";
+    let edit = false;
+    if (path !== "/") edit = true;
 
-    const createPostObj = {
-      id: mode === "edit" ? this.props.post.id : Date.now().toString(), 
+    const postObj = {
+      id: edit ? this.props.post.id : Date.now().toString(), 
       timestamp: Date.now(),
       title: this.state.title, 
       body: this.state.body, 
@@ -45,25 +45,25 @@ class PostCreate extends React.Component {
     return (
       <div>  
       	<p><CatSet /></p>
-        Mode: { mode }
+        Mode: { edit ? "edit" : "add" }
         <form role="form">
           <br />
           <div>
           	<input type="text" onChange={this.handleTitleChange} id="title" 
-              defaultValue={ mode === "edit" ? this.props.post.title : "" }
+              defaultValue={ edit ? this.props.post.title : "" }
               name="title" placeholder="Title" required />
           </div>
 
           <div>
           	<textarea onChange={this.handleBodyChange} id="body"
-              defaultValue={ mode === "edit" ? this.props.post.body : "" } placeholder="Body" maxLength="140" rows="7" />
+              defaultValue={ edit ? this.props.post.body : "" } placeholder="Body" maxLength="140" rows="7" />
           </div>
 
-          <button onClick={ () => mode === "edit" ? 
-            this.props.editPost( createPostObj ) : 
-            this.props.createPost( createPostObj ) } 
+          <button onClick={ () => edit ? 
+            this.props.editPost( postObj ) : 
+            this.props.createPost( postObj ) } 
             type="button" id="submit" name="submit">
-              { mode === "edit" ? "Edit Post" : "Add Post" }
+              { edit ? "Edit Post" : "Add Post" }
           </button>
         </form>
       </div>
