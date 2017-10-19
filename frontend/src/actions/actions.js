@@ -375,6 +375,7 @@ export const editPostErrored = (bool) => {
 }
 
 export const editPost = (post) => {
+  console.log('entered editPost action type', EDIT_POST, ' with post: ', post);
   return {
     type: EDIT_POST,
     post,

@@ -8,68 +8,84 @@ import createHistory from 'history/createBrowserHistory';
 class PostCreate extends React.Component {
   constructor(props) {
     super(props);
-    this.handleTitleChange = this.handleTitleChange.bind(this);
-    this.handleBodyChange = this.handleBodyChange.bind(this);
-    this.state = {
+    //this.handleTitleChange = this.handleTitleChange.bind(this);
+    //this.handleBodyChange = this.handleBodyChange.bind(this);
+    this.handleFormInput = this.handleFormInput.bind(this);
+    /*this.state = {
       title:'',
       body:''
-    };
+    };*/
   }
   
-  handleTitleChange(e) {
+  /*handleTitleChange(e) {
     this.setState({title:e.target.value});
     console.log('in handleTitleChange: ', e.target.value);
-  }
+  }*/
   
-  handleBodyChange(e) {
+  /*handleBodyChange(e) {
     this.setState({body:e.target.value});
     console.log('in handleBodyChange: ', e.target.value);
+  }*/
+
+  handleFormInput() {
+    // Explicitly focus the text input using the raw DOM API
+    console.log('this.title.value: ', this.title.value);
+    console.log('this.body.value: ', this.body.value);
+
+    const postObj = {
+      id:         this.edit() ? this.props.post.id : Date.now().toString(), 
+      timestamp:  this.edit() ? this.props.post.timestamp : Date.now(),
+      title:      this.title.value, 
+      body:       this.body.value, 
+      author:     'alex',
+      category:   this.edit() ? this.props.post.category : this.props.postCat,
+      voteScore:  this.edit() ? this.props.post.voteScore : 1,
+      deleted:    false
+    }
+
+    this.edit() ? this.props.editPost( postObj ) : this.props.createPost( postObj );
+  }
+
+  edit = () => {
+    const path = createHistory().location.pathname;
+    let edit = false;
+    if (path !== "/") 
+      edit = true;
+    return edit;
   }
   
   render() {
-    const path = createHistory().location.pathname;
-    let edit = false;
-    if (path !== "/") edit = true;
-
-    const postObj = {
-      id: edit ? this.props.post.id : Date.now().toString(), 
-      timestamp: edit ? this.props.post.timestamp : Date.now(),
-      title: edit ? this.props.post.title : this.state.title, 
-      body: edit ? this.props.post.body : this.state.body, 
-      author: 'alex',
-      category: edit ? this.props.post.category : this.props.postCat,
-      voteScore: edit ? this.props.post.voteScore : 1,
-      deleted: false
-    }
-
     return (
       <div>  
       	<p><CatSet /></p>
-        Mode: { edit ? "edit" : "add" }
+        Mode: { this.edit() ? "edit" : "add" }
         <form role="form">
           <br />
           <div>
-          	<input type="text" onChange={this.handleTitleChange} id="title" 
-              defaultValue={ edit ? this.props.post.title : "" }
+          	<input type="text" 
+              ref={(input) => { this.title = input; }} 
+              id="title" 
+              defaultValue={ this.edit() ? this.props.post.title : "" }
               name="title" placeholder="Title" required />
           </div>
-
           <div>
-          	<textarea onChange={this.handleBodyChange} id="body"
-              defaultValue={ edit ? this.props.post.body : "" } placeholder="Body" maxLength="140" rows="7" />
+          	<textarea 
+              id="body"
+              ref={(input) => { this.body = input; }} 
+              defaultValue={ this.edit() ? this.props.post.body : "" } placeholder="Body" maxLength="140" rows="7" />
           </div>
-
-          <button onClick={ () => edit ? 
-            this.props.editPost( postObj ) : 
-            this.props.createPost( postObj ) } 
+          <button onClick={ this.handleFormInput } 
             type="button" id="submit" name="submit">
-              { edit ? "Edit Post" : "Add Post" }
+              { this.edit() ? "Edit Post" : "Add Post" }
           </button>
         </form>
       </div>
     )
   }
 }
+
+// onChange={ this.handleTitleChange }
+// onChange={this.handleBodyChange} 
 
 const mapStateToProps = (state, props) => { 
   console.log('CreatePost.mapStateToProps.state.posts: ', state.posts);
