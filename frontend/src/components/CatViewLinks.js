@@ -11,14 +11,22 @@ class CatViewLinks extends React.Component {
     return (
       <div>
         View Category:{' '}
-          {this.props.cats.map ((cat, i) =>
-            <span key={Math.random()} style={this.props.selectedCat===cat.name ? spanBold : spanNormal}>
-              <Link to="/category" key={i.toString()} onClick={() => this.props.setViewCat(cat.name)}>
+        {this.props.cats.map ((cat, i) =>
+          <span key={Math.random()}>
+            <Link to="/category" key={i.toString()} onClick={() => this.props.setViewCat(cat.name)}
+              style={this.props.selectedCat===cat.name ? spanBold : spanNormal}>
               {cat.name}
             </Link>
-          <span>{ i < this.props.cats.length-1 ? ' - ' : '' }</span>
-        </span>
+            <span>{ ' - '}</span>
+          </span>
         )}
+        <span>
+          { /* i < this.props.cats.length-1 ? ' - ' : '' */ } 
+          <Link to="/category" onClick={() => this.props.setViewCat('all')} 
+            style={this.props.selectedCat==='all' ? spanBold : spanNormal}>
+            all
+          </Link>
+        </span>
       </div>  
     )
   }
