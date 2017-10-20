@@ -151,10 +151,11 @@ export const commentsErrored = (bool) => {
   }
 }
 
-export const getComments = (comments) => {
-  console.log('entered comments with comments: ', comments);
+export const getComments = (postId, comments) => {
+  console.log('entered getComments with comments: ', comments, ' and postId: ', postId);
   return {
     type: GET_COMMENTS,
+    postId,
     comments
   }
 }
@@ -177,7 +178,7 @@ export function commentsFetch(postId) {
       .then((response) => response.json())
       .then((comments) => {
         console.log('commentsFetch, (', postId, ') fetched comments: ', comments);
-        dispatch(getComments(comments));
+        dispatch(getComments(postId, comments));
         console.log('dispatched comments to store');
       })
       .catch(() => dispatch(commentsErrored(true)));

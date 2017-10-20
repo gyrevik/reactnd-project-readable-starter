@@ -23,11 +23,11 @@ class App extends Component {
   }
 
   componentDidMount() {
-    console.log(`App.js.componentDidMount state: ${JSON.stringify(this.state)}`);
+    //console.log(`App.js.componentDidMount state: ${JSON.stringify(this.state)}`);
   }
   
   render() {
-    console.log('createHistory().location.pathname: ', createHistory().location.pathname);	// 		/	/category
+    //console.log('createHistory().location.pathname: ', createHistory().location.pathname);	// 		/	/category
 
     return (
       <div className="App">

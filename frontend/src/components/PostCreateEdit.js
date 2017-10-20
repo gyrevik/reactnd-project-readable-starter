@@ -14,8 +14,8 @@ class PostCreateEdit extends React.Component {
   
   handleFormInput() {
     // Explicitly focus the text input using the raw DOM API
-    console.log('this.title.value: ', this.title.value);
-    console.log('this.body.value: ', this.body.value);
+    //console.log('this.title.value: ', this.title.value);
+    //console.log('this.body.value: ', this.body.value);
 
     const postObj = {
       id:         this.edit() ? this.props.post.id : Date.now().toString(), 
@@ -73,8 +73,8 @@ class PostCreateEdit extends React.Component {
 // onChange={this.handleBodyChange} 
 
 const mapStateToProps = (state, props) => { 
-  console.log('CreatePost.mapStateToProps.state.posts: ', state.posts);
-  console.log('CreatePost.mapStateToProps.state.cats: ', state.cats);
+  //console.log('CreatePost.mapStateToProps.state.posts: ', state.posts);
+  //console.log('CreatePost.mapStateToProps.state.cats: ', state.cats);
   return { post: state.post, posts: state.posts, cats: state.cats, postCat: state.postCat };
 }
 
