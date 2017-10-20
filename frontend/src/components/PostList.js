@@ -7,19 +7,8 @@ import * as utils from '../utils';
 
 class PostList extends React.Component {
   componentDidMount() {
-    //console.log(`PostList.js.componentDidMount state: ${JSON.stringify(this.state)}`);
-    //console.log('about to run fetchPosts in componentDidMount');
     this.props.fetchPosts();
-    //console.log('ran fetchPosts in componentDidMount');
-    //console.log(`PostList.js.componentDidMount state: ${JSON.stringify(this.state)}`);
-
-    //this.props.fetchComments();
   }
-
-  //getNumCommForPost = (postId) => {
-    //this.props.fetchComments(postId);
-    //return this.state.comments.reduce((a, c) => c.parentId === postId && c.deleted === false ? ++a : a, 0);
-  //}
   
   render () {
     return (
@@ -31,7 +20,6 @@ class PostList extends React.Component {
           </li>
           {this.props.posts.map((post, i) =>
             <li key={i.toString()}>
-              { /*this.props.fetchComments(post.id)*/ }
               Category: { post.category } {' - '} 
               Title: <Link to="/post" onClick={() => this.props.setPostCurrent(post)}>{ post.title }</Link> {' - '} 
               Vote Score: { post.voteScore } {' - '} 
@@ -43,7 +31,7 @@ class PostList extends React.Component {
               id: {post.id} <br/>
               deleted: {post.deleted === true ? 'true' : 'false'} {' - '}
               Number of comments: <NumComments postId={post.id} />
-              { /*this.getNumCommForPost(post.id)*/ } <br/>
+              <br/>
             </li>
           )}
         </ul>
@@ -53,10 +41,6 @@ class PostList extends React.Component {
 }
 
 const mapStateToProps = (state, props) => { 
-  //console.log('PostList.mapStateToProps.state.posts: ', state.posts);
-  //console.log('PostList.mapStateToProps.state.post: ', state.post);
-  //console.log('typeof(state.posts): ', typeof(state.posts));
-  
   let posts = state.posts.slice();
   const sortByKey = key => (a, b) => a[state.sortPostsField] < b[state.sortPostsField];	// desc (number)
   posts.sort(sortByKey(state.sortPostsField));
@@ -69,8 +53,6 @@ const mapStateToProps = (state, props) => {
       return false;
     }
   });
-
-  //console.log('num comments: ', state.comments.length)
 
   return { posts, sortPostsField: state.sortPostsField, comments: state.comments };
 }

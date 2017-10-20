@@ -21,14 +21,8 @@ class App extends Component {
       backend: 'backend-data'
     }
   }
-
-  componentDidMount() {
-    //console.log(`App.js.componentDidMount state: ${JSON.stringify(this.state)}`);
-  }
   
   render() {
-    //console.log('createHistory().location.pathname: ', createHistory().location.pathname);	// 		/	/category
-
     return (
       <div className="App">
         <Route exact path="/" render={() => (

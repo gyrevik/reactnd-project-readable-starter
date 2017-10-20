@@ -13,9 +13,6 @@ class PostView extends React.Component {
     super(props);
     
     this.handleComment = this.handleComment.bind(this);
-    
-    //console.log('initializing local state in constructor');
-
     this.state = { openModal: false, edit: false };
   }
 
@@ -32,22 +29,14 @@ class PostView extends React.Component {
     };
     
     this.state.edit ? this.props.editComment(commentObj) : this.props.createComment(commentObj);
-
-    //this.setState({openModal:false});
-    //console.log('handleComment executed');
   }
 
   componentDidMount() {
-    //console.log(`PostView.js.componentDidMount state: ${JSON.stringify(this.state)}`);
-    //console.log('about to run fetchComments in componentDidMount for post.id: ', this.props.post.id);
     this.props.fetchComments(this.props.post.id);
-    //console.log('ran fetchComments in componentDidMount');
-    //console.log(`PostView.js.componentDidMount state: ${JSON.stringify(this.state)}`);
   }
 
   render() {
     const sortByKey = key => (a, b) => a['voteScore'] < b['voteScore'];	// desc (number)
-    //const edit = this.state.edit;
 
     return (
       <div>
@@ -75,10 +64,9 @@ class PostView extends React.Component {
         <br/><br/>
         Comments:<br/>
         <ul>
-          {
-            this.props.comments.filter(comment => comment.deleted === false && comment.parentId === this.props.post.id)
-                               .sort(sortByKey('voteScore'))
-                               .map((comment, i) => 
+          {this.props.comments.filter(comment => comment.deleted === false && comment.parentId === this.props.post.id)
+                              .sort(sortByKey('voteScore'))
+                              .map((comment, i) => 
             <li key={i.toString()}>
               id: {comment.id}<br/>
               {comment.body}<br/>
@@ -130,10 +118,6 @@ class PostView extends React.Component {
 }
 
 const mapStateToProps = (state, props) => { 
-  //console.log('PostView.mapStateToProps.state.posts: ', state.posts);
-  //console.log('PostView.mapStateToProps.state.comments: ', state.comments);
-  //console.log('PostView.mapStateToProps.state.post: ', state.post);
-
   return { posts: state.posts, post: state.post, comment: state.comment, comments: state.comments };
 }
   

@@ -13,10 +13,6 @@ class PostCreateEdit extends React.Component {
   }
   
   handleFormInput() {
-    // Explicitly focus the text input using the raw DOM API
-    //console.log('this.title.value: ', this.title.value);
-    //console.log('this.body.value: ', this.body.value);
-
     const postObj = {
       id:         this.edit() ? this.props.post.id : Date.now().toString(), 
       timestamp:  this.edit() ? this.props.post.timestamp : Date.now(),
@@ -33,8 +29,9 @@ class PostCreateEdit extends React.Component {
 
   edit = () => {
     const path = createHistory().location.pathname;
+    console.log('path: ', path);
     let edit = false;
-    if (path !== "/") 
+    if (path !== '/' && path !== "category") 
       edit = true;
     return edit;
   }
@@ -69,12 +66,7 @@ class PostCreateEdit extends React.Component {
   }
 }
 
-// onChange={ this.handleTitleChange }
-// onChange={this.handleBodyChange} 
-
 const mapStateToProps = (state, props) => { 
-  //console.log('CreatePost.mapStateToProps.state.posts: ', state.posts);
-  //console.log('CreatePost.mapStateToProps.state.cats: ', state.cats);
   return { post: state.post, posts: state.posts, cats: state.cats, postCat: state.postCat };
 }
 

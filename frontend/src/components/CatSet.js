@@ -5,18 +5,12 @@ import { setPostCat, catsFetch } from '../actions/actions.js';
 
 class CatSet extends React.Component {
   componentDidMount() {
-    //console.log(`CatSet.js.componentDidMount state: ${JSON.stringify(this.state)}`);
-    //console.log('about to run fetchCats in componentDidMount');
     this.props.fetchCats();
-    //console.log('ran fetchCats in componentDidMount');
-    //console.log(`CatSet.js.componentDidMount state: ${JSON.stringify(this.state)}`);
   }
   
   render () {
     const spanBold = { fontWeight:'bold' };
     const spanNormal = { fontWeight:'normal' };
-    //console.log('cats in CategorySet: ', this.props.cats);
-    //console.log('CategorySet typeof(this.props.cats): ', typeof(this.props.cats));
 
     return (
       <span>Post Category:&nbsp;
@@ -33,10 +27,6 @@ class CatSet extends React.Component {
 }
 
 const mapStateToProps = (state, props) => { 
-  //console.log('CatSet.mapStateToProps.state.cats: ', state.cats);
-  //const selectedCat = 'react';
-  //console.log('state.postCat: ', state.postCat);
-
   return { cats: state.cats, selectedCat: state.postCat };
 }
   

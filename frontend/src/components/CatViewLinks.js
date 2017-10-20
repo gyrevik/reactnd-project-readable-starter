@@ -7,8 +7,6 @@ class CatViewLinks extends React.Component {
   render () {
     const spanBold = { fontWeight:'bold' };
     const spanNormal = { fontWeight:'normal' };
-    //console.log('cats in CatViewLinks: ', this.props.cats);
-    //console.log('CatViewLinks typeof(this.props.cats): ', typeof(this.props.cats));
 
     return (
       <div>
@@ -27,9 +25,6 @@ class CatViewLinks extends React.Component {
 }
 
 const mapStateToProps = (state, props) => { 
-  //console.log('CatViewLinks.mapStateToProps.state.cats: ', state.cats);
-  //console.log('state.viewCat: ', state.viewCat);
-
   return { cats: state.cats, selectedCat: state.viewCat };
 }
   
