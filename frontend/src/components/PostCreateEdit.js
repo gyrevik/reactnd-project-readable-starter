@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { createPostFetch, editPostFetch, clearPostCat, setPostCat } from '../actions/actions.js';
 import CatSet from '../components/CatSet.js';
 import createHistory from 'history/createBrowserHistory';
+import * as jsxStyles from '../jsxStyles';
 
 class PostCreateEdit extends React.Component {
   constructor(props) {
@@ -36,12 +37,6 @@ class PostCreateEdit extends React.Component {
   }
   
   render() {
-    const error = {
-      color:'red',
-      //backgroundColor:'black',
-      fontWeight:'bold'
-    };
-
     return (
       <div>  
       	<p><CatSet /></p>
@@ -65,7 +60,7 @@ class PostCreateEdit extends React.Component {
             type="button" id="submit" name="submit">
               { this.edit() ? "Edit Post" : "Add Post" }
           </button>
-          <span style={ error }>{ ' ' } { this.props.postError ? 'error in post, please check' : '' }</span>
+          <span style={ jsxStyles.error }>{ ' ' } { this.props.postError ? 'error in post, please check' : '' }</span>
         </form>
       </div>
     )

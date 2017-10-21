@@ -322,11 +322,6 @@ export const createComment = (comment) => {
   console.log('entered createComment with comment: ', comment);
   let { id, parentId, timestamp, body, author, voteScore, deleted, parentDeleted } = comment;
   console.log('action.createComment parentId: ', parentId, '\nbody: ', body, '\nauthor: ', author, '\nvoteScore: ', voteScore, '\ndeleted: ', deleted, '\nparentDeleted: ', parentDeleted);
-  if (body.length === 0 || parentId.length === 0) {
-    console.log('throwing error !body || !parentId in createComment action creater');
-    throw new Error('invalid comment: parentId and body required');
-  }
-
   console.log('returning from createComment action creater type: ', CREATE_COMMENT, ' and comment: ', comment);
   return {
     type: CREATE_COMMENT,
@@ -336,6 +331,12 @@ export const createComment = (comment) => {
 
 export function createCommentFetch(comment) {
   return (dispatch) => {
+    dispatch(createCommentErrored(false));
+    if (comment.body.length === 0 || comment.parentId.length === 0) {
+      console.log('comment error !body || !parentId in createCommentFetch action creater');
+      dispatch(createCommentErrored(true));
+      return;
+    }
     fetch(`${url}/comments`, { 
       method: 'POST',
       headers: {

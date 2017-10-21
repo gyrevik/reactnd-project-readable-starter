@@ -7,6 +7,7 @@ import { setMode, voteCommentFetch, commentsFetch, createCommentFetch, editComme
 import CatSet from '../components/CatSet.js';
 import NumComments from '../components/NumComments.js';
 import * as utils from '../utils';
+import * as jsxStyles from '../jsxStyles';
 import createHistory from 'history/createBrowserHistory';
 
 class PostView extends React.Component {
@@ -103,6 +104,7 @@ class PostView extends React.Component {
               <button onClick={ this.handleComment } type="button" id="submit" name="submit">
                   {this.state.edit ? "Edit" : "Submit"} Comment
               </button>
+              <span style={ jsxStyles.error }>{ ' ' } { this.props.commentError ? 'error in comment, please check' : '' }</span>
             </form>
           </div>
           <button onClick={() => this.setState({openModal:false})} 
@@ -120,7 +122,7 @@ class PostView extends React.Component {
 }
 
 const mapStateToProps = (state, props) => { 
-  return { posts: state.posts, post: state.post, comment: state.comment, comments: state.comments };
+  return { commentError: state.commentError, posts: state.posts, post: state.post, comment: state.comment, comments: state.comments };
 }
   
 const mapDispatchToProps = (dispatch) => {
