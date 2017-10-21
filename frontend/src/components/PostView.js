@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Modal from 'react-modal';
-import { setMode, voteCommentFetch, commentsFetch, createCommentFetch, editCommentFetch, 
+import { setMode, voteCommentFetch, commentsFetch, createCommentFetch, createCommentErrored, editCommentFetch, 
   deletePostFetch, deleteCommentFetch } from '../actions/actions.js';
 import CatSet from '../components/CatSet.js';
 import NumComments from '../components/NumComments.js';
@@ -15,7 +15,21 @@ class PostView extends React.Component {
     super(props);
     
     this.handleComment = this.handleComment.bind(this);
+    this.handleModalSubmit = this.handleModalSubmit.bind(this);
+    this.handleModalOpen = this.handleModalOpen.bind(this);
+
     this.state = { openModal: false, edit: false };
+  }
+
+  handleModalOpen() {
+    this.props.createCommentError(false);
+    this.setState({ openModal: true })
+  }
+
+  handleModalSubmit() {
+    if (!this.props.commentError) {
+      this.setState({ openModal: false })
+    }
   }
 
   handleComment() {
@@ -31,6 +45,7 @@ class PostView extends React.Component {
     };
     
     this.state.edit ? this.props.editComment(commentObj) : this.props.createComment(commentObj);
+    if (!this.props.commentError) this.setState({ openModal: false });
   }
 
   componentDidMount() {
@@ -53,7 +68,7 @@ class PostView extends React.Component {
         <div>deleted: { this.props.post.deleted  === true ? 'true' : 'false' }</div>
         <div>Number of comments: <NumComments postId={this.props.post.id} /></div>
         
-        <button onClick={() => this.setState({openModal:true})} 
+        <button onClick={ this.handleModalOpen } 
           type="button" id="openCommentModal" name="openCommentModal">
             Add Comment
         </button>
@@ -104,13 +119,13 @@ class PostView extends React.Component {
               <button onClick={ this.handleComment } type="button" id="submit" name="submit">
                   {this.state.edit ? "Edit" : "Submit"} Comment
               </button>
+              <button onClick={() => this.setState({openModal:false})} 
+                type="button" id="closeCommentModal" name="closeCommentModal">
+                  Close
+              </button> 
               <span style={ jsxStyles.error }>{ ' ' } { this.props.commentError ? 'error in comment, please check' : '' }</span>
             </form>
           </div>
-          <button onClick={() => this.setState({openModal:false})} 
-            type="button" id="closeCommentModal" name="closeCommentModal">
-              Close
-          </button> 
           <Link to="/">Home</Link>
         </Modal>
       </div>
@@ -126,6 +141,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
       createComment: (comment) => dispatch(createCommentFetch(comment)),
       editComment: (comment) => dispatch(editCommentFetch(comment)),
+      createCommentError: (bool) => dispatch(createCommentErrored(bool)),
       deletePost: (postId) => dispatch(deletePostFetch(postId)),
       deleteComment: (commentId) => dispatch(deleteCommentFetch(commentId)),
       voteComment: (commentId, option) => dispatch(voteCommentFetch(commentId, option)),
