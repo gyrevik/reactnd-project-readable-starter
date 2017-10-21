@@ -5,6 +5,7 @@ import Modal from 'react-modal';
 import { setMode, voteCommentFetch, commentsFetch, createCommentFetch, editCommentFetch, 
   deletePostFetch, deleteCommentFetch } from '../actions/actions.js';
 import CatSet from '../components/CatSet.js';
+import NumComments from '../components/NumComments.js';
 import * as utils from '../utils';
 import createHistory from 'history/createBrowserHistory';
 
@@ -49,6 +50,7 @@ class PostView extends React.Component {
         <div>Category: { this.props.post.category }</div>
         <div>id: { this.props.post.id }</div>
         <div>deleted: { this.props.post.deleted  === true ? 'true' : 'false' }</div>
+        <div>Number of comments: <NumComments postId={this.props.post.id} /></div>
         
         <button onClick={() => this.setState({openModal:true})} 
           type="button" id="openCommentModal" name="openCommentModal">
