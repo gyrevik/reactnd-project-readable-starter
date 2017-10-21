@@ -7,6 +7,8 @@ import {
   ERROR_COMMENTS, VOTE_COMMENT, VOTE_POST, GET_POSTS, GET_CATS
 } from '../actions/actions.js'
 
+import * as utils from '../utils';
+
 export function modeReducer (state = 'none', action) {
   switch (action.type) {
     case SET_MODE:
@@ -121,39 +123,11 @@ export function commentReducer (state = false, action) {
   }
 }
 
-/*export function postIdCommNumReducer (state = {}, action) {
-  const numComments = [action.comments].length;
-  const postId = action.postId;
-  switch (action.type) {
-    case GET_COMMENTS:
-      return { ...state, postId: numComments }
-    default:
-      return state;
-  }
-}*/
-
-function arrayUnique(array) {
-  var a = array.concat();
-  for(var i=0; i<a.length; ++i) {
-      for(var j=i+1; j<a.length; ++j) {
-          if(a[i].id === a[j].id)
-              a.splice(j--, 1);
-      }
-  }
-
-  return a;
-}
-
-var array1 = ["Vijendra","Singh"];
-var array2 = ["Singh", "Shakya"];
-  // Merges both arrays and gets unique items
-var array3 = arrayUnique(array1.concat(array2));
-
 export function commentsReducer (state = [], action) {
   switch (action.type) {
     case GET_COMMENTS: {
       let oldArray = state.slice();
-      const newArray = arrayUnique(oldArray.concat(action.comments));
+      const newArray = utils.arrayUnique(oldArray.concat(action.comments));
 
       return newArray;
     }
