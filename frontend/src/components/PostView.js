@@ -58,9 +58,9 @@ class PostView extends React.Component {
             Add Comment
         </button>
         <br/><br/>
-        <a href="javascript:void(0)" onClick={() => this.props.deletePost(this.props.post.id)}>
+        <Link to="/" onClick={() => this.props.deletePost(this.props.post.id)}>
           Delete Post
-        </a>
+        </Link>
         {' - '} <Link to="/postCreateEdit" onClick={() => this.props.setMode('edit')}>Edit Post</Link>
         <br/><br/>
         <Link to="/">Home</Link>
@@ -111,10 +111,7 @@ class PostView extends React.Component {
             type="button" id="closeCommentModal" name="closeCommentModal">
               Close
           </button> 
-          <button
-            type="button" onClick={() => window.location.replace("/")}>
-            Home
-          </button>
+          <Link to="/">Home</Link>
         </Modal>
       </div>
     )
