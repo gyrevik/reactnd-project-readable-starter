@@ -2,9 +2,9 @@ import { combineReducers } from 'redux';
 
 import {
   SET_POST_CAT, SET_POST_CURRENT, SET_VIEW_CAT, SET_MODE,
-  CREATE_POST, EDIT_POST, DELETE_POST, SORT_POSTS_FIELD,
+  CREATE_POST, ERROR_CREATE_POST, EDIT_POST, DELETE_POST, SORT_POSTS_FIELD,
   CREATE_COMMENT, EDIT_COMMENT, DELETE_COMMENT, GET_COMMENTS, 
-  ERROR_COMMENTS, VOTE_COMMENT, VOTE_POST, GET_POSTS, GET_CATS
+  ERROR_CREATE_COMMENT, VOTE_COMMENT, VOTE_POST, GET_POSTS, GET_CATS
 } from '../actions/actions.js'
 
 import * as utils from '../utils';
@@ -70,12 +70,23 @@ function catsReducer (state = [], action) {
   }
 }
 
+export function postErrorReducer (state = false, action) {
+  switch (action.type) {
+    case ERROR_CREATE_POST: {
+      return action.error;
+    }
+    default:
+      return state;
+  }
+}
+
 export function postsReducer (state = [], action) {
   switch (action.type) {
     case GET_POSTS: {
       return action.posts;
     }
     case CREATE_POST: {
+      console.log('in postsReducer.CREATE_POST with action.post.title: ', action.post.title, ' and action.post.body: ', action.post.body);
       const { type, post } = action;
       let newPosts;
       if (typeof(state) === 'object')
@@ -115,7 +126,7 @@ export function postsReducer (state = [], action) {
 
 export function commentReducer (state = false, action) {
   switch (action.type) {
-    case ERROR_COMMENTS: {
+    case ERROR_CREATE_COMMENT: {
       return action.error;
     }
     default:
@@ -171,6 +182,7 @@ export function commentsReducer (state = [], action) {
 
 export default combineReducers({
   post: postReducer,
+  postError: postErrorReducer,
   postCat: catReducer,
   posts: postsReducer,
   sortPostsField: sortPostsReducer,
@@ -178,6 +190,5 @@ export default combineReducers({
   viewCat: viewReducer,
   mode: modeReducer,
   comments: commentsReducer,
-  //postIdCommNumIndex: postIdCommNumReducer,
-  commentsError: commentReducer
+  commentError: commentReducer
 })

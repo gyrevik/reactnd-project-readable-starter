@@ -51,6 +51,8 @@ const mapStateToProps = (state, props) => {
     }
   });
 
+  console.log('PostList.mapStateToProps state: ', state);
+
   return { posts, sortPostsField: state.sortPostsField, comments: state.comments };
 }
   

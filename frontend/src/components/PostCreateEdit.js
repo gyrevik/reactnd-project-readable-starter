@@ -29,7 +29,6 @@ class PostCreateEdit extends React.Component {
 
   edit = () => {
     const path = createHistory().location.pathname;
-    console.log('path: ', path);
     let edit = false;
     if (path !== '/' && path !== "/category") 
       edit = true;
