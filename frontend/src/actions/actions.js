@@ -101,7 +101,7 @@ export const createPost = (post) => {
   }
 }
 
-export const createPostErrored = (bool) => {
+export const createPostErrored = (bool = false) => {
   return {
     type: ERROR_CREATE_POST,
     error: bool
