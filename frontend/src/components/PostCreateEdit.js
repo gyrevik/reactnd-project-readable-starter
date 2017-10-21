@@ -36,6 +36,12 @@ class PostCreateEdit extends React.Component {
   }
   
   render() {
+    const error = {
+      color:'red',
+      //backgroundColor:'black',
+      fontWeight:'bold'
+    };
+
     return (
       <div>  
       	<p><CatSet /></p>
@@ -59,6 +65,7 @@ class PostCreateEdit extends React.Component {
             type="button" id="submit" name="submit">
               { this.edit() ? "Edit Post" : "Add Post" }
           </button>
+          <span style={ error }>{ ' ' } { this.props.postError ? 'error in post, please check' : '' }</span>
         </form>
       </div>
     )
@@ -66,7 +73,7 @@ class PostCreateEdit extends React.Component {
 }
 
 const mapStateToProps = (state, props) => { 
-  return { post: state.post, posts: state.posts, cats: state.cats, postCat: state.postCat };
+  return { postError: state.postError, post: state.post, posts: state.posts, cats: state.cats, postCat: state.postCat };
 }
 
 const mapDispatchToProps = (dispatch) => {

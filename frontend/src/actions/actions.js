@@ -111,6 +111,8 @@ export const createPostErrored = (bool = false) => {
 export function createPostFetch(post) {
   return (dispatch) => {
     //dispatch(itemsIsLoading(true));
+    // initialize postError to false so that it does not say true after a previous error
+    dispatch(createPostErrored(false));
     console.log('entered createPostFetch()');
     if (!post.title || !post.body || !post.category || post.category==='all') {
       console.log('dispatching error !title || !body || !category || category===\'all\' in createPostFetch action creater');
