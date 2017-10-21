@@ -27,11 +27,8 @@ class PostList extends React.Component {
                 {' - '}
                 <a href="javascript:void(0)" onClick={() => this.props.votePost(post.id, 'downVote')}>downVote</a><br/>
               Time: { utils.niceDate(post.timestamp) } <br/>
-              Body: { post.body } {' - '} <br/>
-              id: {post.id} <br/>
-              deleted: {post.deleted === true ? 'true' : 'false'} {' - '}
+              Body: { post.body }<br/>
               Number of comments: <NumComments postId={post.id} />
-              <br/>
             </li>
           )}
         </ul>

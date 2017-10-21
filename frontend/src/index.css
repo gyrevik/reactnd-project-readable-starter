@@ -4,4 +4,10 @@ body {
   font-family: sans-serif;
 }
 
-ul { list-style-type: none; }
+ul { 
+  list-style-type: none; 
+}
+
+li {
+  margin: 10px 0;
+}
