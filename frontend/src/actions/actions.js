@@ -380,8 +380,18 @@ export const editPost = (post) => {
 // params:  title - [String] 
 //          body  - [String]
 export function editPostFetch(post) {
-  console.log('entered editPostFetch with post: ', post);
   return (dispatch) => {
+    //dispatch(itemsIsLoading(true));
+    // initialize postError to false so that it does not say true after a previous error
+    dispatch(editPostErrored(false));
+    console.log('entered editPostFetch with post: ', post);
+    if (!post.title || !post.body || !post.category || post.category==='all') {
+      console.log('dispatching error !title || !body || !category || category===\'all\' in editPostFetch action creater');
+      //throw new Error('invalid post: category, title and body required');
+      dispatch(editPostErrored(true));
+      return;
+    }
+    
     fetch(`${url}/posts/${post.id}`, { 
       method: 'PUT',
       headers: {

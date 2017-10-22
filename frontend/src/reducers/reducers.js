@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 
 import {
   SET_POST_CAT, SET_POST_CURRENT, SET_VIEW_CAT, SET_MODE,
-  CREATE_POST, ERROR_CREATE_POST, EDIT_POST, DELETE_POST, SORT_POSTS_FIELD,
+  CREATE_POST, ERROR_CREATE_POST, ERROR_EDIT_POST, EDIT_POST, DELETE_POST, SORT_POSTS_FIELD,
   CREATE_COMMENT, EDIT_COMMENT, DELETE_COMMENT, GET_COMMENTS, 
   ERROR_CREATE_COMMENT, VOTE_COMMENT, VOTE_POST, GET_POSTS, GET_CATS
 } from '../actions/actions.js'
@@ -72,7 +72,8 @@ function catsReducer (state = [], action) {
 
 export function postErrorReducer (state = false, action) {
   switch (action.type) {
-    case ERROR_CREATE_POST: {
+    case ERROR_CREATE_POST, ERROR_EDIT_POST: {
+      console.log('postErrorReducer: ', action.type);
       return action.error;
     }
     default:
