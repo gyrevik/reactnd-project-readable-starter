@@ -44,8 +44,14 @@ class PostView extends React.Component {
       parentDeleted:false
     };
     
+    if (!commentObj.body) {
+      this.props.createCommentError(true);
+      return;
+    }
+
     this.state.edit ? this.props.editComment(commentObj) : this.props.createComment(commentObj);
-    if (!this.props.commentError) this.setState({ openModal: false });
+    //if (!this.props.commentError) this.setState({ openModal: false });
+    this.setState({ openModal: false });
   }
 
   componentDidMount() {
