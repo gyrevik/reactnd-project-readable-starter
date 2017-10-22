@@ -35,7 +35,7 @@ class PostView extends React.Component {
   handleComment() {
     const commentObj = {
       body: this.body.value, 
-      id: this.state.edit ? this.state.comment.id : Date.now().toString(),
+      id: this.state.edit ? this.state.comment.id : Math.random().toString(),
       parentId:this.props.post.id.toString(),
       timestamp: this.state.edit ? this.state.comment.timestamp : Date.now(),
       voteScore:this.state.edit ? this.state.comment.voteScore : 1,

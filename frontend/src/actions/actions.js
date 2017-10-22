@@ -97,7 +97,7 @@ export const createPost = (post) => {
   console.log('returning from createPost action creater type: ', CREATE_POST, ' and post: ', post);
   return {
     type: CREATE_POST,
-    post: { id:Date.now(), timestamp:Date.now(), title, body, author:'alex', category, voteScore:1, deleted:false },
+    post: { id:Math.random(), timestamp:Date.now(), title, body, author:'alex', category, voteScore:1, deleted:false },
   }
 }
 
