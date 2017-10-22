@@ -38,9 +38,8 @@ class PostList extends React.Component {
 }
 
 const mapStateToProps = (state, props) => { 
+  console.log('state.sortPostsField: ', state.sortPostsField);
   let posts = state.posts.slice();
-  const sortByKey = key => (a, b) => a[state.sortPostsField] < b[state.sortPostsField];	// desc (number)
-  posts.sort(sortByKey(state.sortPostsField));
 
   posts = posts.filter(post => {
     if (post.category === state.viewCat || state.viewCat === 'all') {
@@ -51,6 +50,9 @@ const mapStateToProps = (state, props) => {
     }
   });
 
+  const sortByKey = key => (a, b) => b[state.sortPostsField] - a[state.sortPostsField];	// desc (number)
+  posts.sort(sortByKey(state.sortPostsField));
+
   console.log('PostList.mapStateToProps state: ', state);
 
   return { posts, sortPostsField: state.sortPostsField, comments: state.comments };
@@ -59,7 +61,6 @@ const mapStateToProps = (state, props) => {
 const mapDispatchToProps = (dispatch) => {
     return {
       fetchPosts: () => dispatch(postsFetch()),
-      //fetchComments: (postId) => dispatch(commentsFetch(postId)),
       votePost: (postId, option) => dispatch(votePostFetch(postId, option)),
       setPostCurrent: (postId) => dispatch(setPostCurrent(postId)),
       sortPostsField: (field) => dispatch(sortPostsField(field))

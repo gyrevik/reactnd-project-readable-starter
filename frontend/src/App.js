@@ -73,21 +73,21 @@ class App extends Component {
 }
 
 const mapStateToProps = (state, props) => {
-  const postCat = state.postCat;
-  let viewCat = state.viewCat;
-  if (createHistory().location.pathname === "/") viewCat = "react";
+  //const postCat = state.postCat;
+  //let viewCat = state.viewCat;
+  //if (createHistory().location.pathname === "/") viewCat = "react";
   
-  let posts;
-  if (typeof(state.posts) === 'object')
-  	posts = state.posts.slice();
-  else
-    posts = JSON.parse(state.posts);
+  //let posts;
+  //if (typeof(state.posts) === 'object')
+  	//posts = state.posts.slice();
+  //else
+    //posts = JSON.parse(state.posts);
   
-  posts = posts.filter(post => post.deleted ? false : true);  // filter out deleted posts
+  //posts = posts.filter(post => post.deleted ? false : true);  // filter out deleted posts
   
   //const cats = state.cats;
   
-  return { posts, postCat, viewCat }
+  return {}
 }
 
 export default withRouter(connect(mapStateToProps)(App))
