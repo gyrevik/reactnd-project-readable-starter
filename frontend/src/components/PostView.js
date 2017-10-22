@@ -72,7 +72,6 @@ class PostView extends React.Component {
         <div>Category: { this.props.post.category }</div>
         <div>id: { this.props.post.id }</div>
         <div>deleted: { this.props.post.deleted  === true ? 'true' : 'false' }</div>
-        <div>Number of comments: <NumComments postId={this.props.post.id} /></div>
         
         <button onClick={ this.handleModalOpen } 
           type="button" id="openCommentModal" name="openCommentModal">
@@ -86,7 +85,7 @@ class PostView extends React.Component {
         <br/><br/>
         <Link to="/">Home</Link>
         <br/><br/>
-        Comments:<br/>
+        Comments: (<NumComments postId={this.props.post.id} />)<br/>
         <ul>
           {this.props.comments.filter(comment => comment.deleted === false && comment.parentId === this.props.post.id)
                               .sort(sortByKey('voteScore'))
