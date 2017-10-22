@@ -72,22 +72,7 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = (state, props) => {
-  //const postCat = state.postCat;
-  //let viewCat = state.viewCat;
-  //if (createHistory().location.pathname === "/") viewCat = "react";
-  
-  //let posts;
-  //if (typeof(state.posts) === 'object')
-  	//posts = state.posts.slice();
-  //else
-    //posts = JSON.parse(state.posts);
-  
-  //posts = posts.filter(post => post.deleted ? false : true);  // filter out deleted posts
-  
-  //const cats = state.cats;
-  
-  return {}
-}
+//const mapStateToProps = (state, props) => { return {} }
 
-export default withRouter(connect(mapStateToProps)(App))
+//export default withRouter(connect(mapStateToProps)(App))
+export default withRouter(App)
