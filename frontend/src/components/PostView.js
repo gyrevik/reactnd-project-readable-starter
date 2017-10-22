@@ -70,9 +70,7 @@ class PostView extends React.Component {
         <div>Time: { utils.niceDate(this.props.post.timestamp) }</div>
         <div>Vote Score: { this.props.post.voteScore }</div>
         <div>Category: { this.props.post.category }</div>
-        <div>id: { this.props.post.id }</div>
-        <div>deleted: { this.props.post.deleted  === true ? 'true' : 'false' }</div>
-        
+        <br/>
         <button onClick={ this.handleModalOpen } 
           type="button" id="openCommentModal" name="openCommentModal">
             Add Comment
@@ -91,7 +89,6 @@ class PostView extends React.Component {
                               .sort(sortByKey('voteScore'))
                               .map((comment, i) => 
             <li key={i.toString()}>
-              id: {comment.id}<br/>
               {comment.body}<br/>
               Vote Score: {comment.voteScore} {' - '} 
                 <a href="javascript:void(0)" onClick={() => this.props.voteComment(comment.id, 'upVote')}>upVote</a>
@@ -128,10 +125,11 @@ class PostView extends React.Component {
                 type="button" id="closeCommentModal" name="closeCommentModal">
                   Close
               </button> 
+              {' '}
+              <Link to="/">Home</Link>
               <span style={ jsxStyles.error }>{ ' ' } { this.props.commentError ? 'error in comment, please check' : '' }</span>
             </form>
           </div>
-          <Link to="/">Home</Link>
         </Modal>
       </div>
     )

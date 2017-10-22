@@ -16,7 +16,7 @@ class PostCreateEdit extends React.Component {
   handleFormInput() {
     const postObj = {
       id:         this.edit() ? this.props.post.id : Math.random().toString(), 
-      timestamp:  this.edit() ? this.props.post.timestamp : Math.random(),
+      timestamp:  this.edit() ? this.props.post.timestamp : Date.now(),
       title:      this.title.value, 
       body:       this.body.value, 
       author:     'alex',
