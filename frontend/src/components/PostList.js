@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { sortPostsField, setPostCurrent, votePostFetch, postsFetch, commentsFetch, createPostFetch } from '../actions/actions.js';
 import NumComments from '../components/NumComments.js';
 import * as utils from '../utils';
+import * as jsxStyles from '../jsxStyles';
 
 class PostList extends React.Component {
   componentDidMount() {
@@ -11,12 +12,23 @@ class PostList extends React.Component {
   }
   
   render () {
+    console.log('this.props.sortPostsField: ', this.props.sortPostsField);
     return (
       <div>
         <ul>
-          <li key={500}>
-            Sort by <a href="javascript:void(0)" onClick={() => this.props.sortPostsField('voteScore')}>Vote Score</a>
-            {' - '} <a href="javascript:void(0)" onClick={() => this.props.sortPostsField('timestamp')}>Time</a>
+          <li key={Math.random()}>
+            Sort by {' '}
+            <a href="javascript:void(0)" onClick={() => this.props.sortField('voteScore')}>
+              <span style={this.props.sortPostsField==="voteScore" ? jsxStyles.spanBold : jsxStyles.spanNormal}>
+                Vote Score
+              </span>
+            </a>
+            {' - '} 
+            <a href="javascript:void(0)" onClick={() => this.props.sortField('timestamp')}>
+              <span style={this.props.sortPostsField==='timestamp' ? jsxStyles.spanBold : jsxStyles.spanNormal}>
+                Time
+              </span>
+            </a>
           </li>
           {this.props.posts.map((post, i) =>
             <li key={i.toString()}>
@@ -63,7 +75,7 @@ const mapDispatchToProps = (dispatch) => {
       fetchPosts: () => dispatch(postsFetch()),
       votePost: (postId, option) => dispatch(votePostFetch(postId, option)),
       setPostCurrent: (postId) => dispatch(setPostCurrent(postId)),
-      sortPostsField: (field) => dispatch(sortPostsField(field))
+      sortField: (field) => dispatch(sortPostsField(field))
   };
 }
 
