@@ -9,7 +9,6 @@ import Header from './components/Header.js';
 import PostList from './components/PostList.js';
 import PostCreateEdit from './components/PostCreateEdit.js';
 import PostView from './components/PostView.js';
-import createHistory from 'history/createBrowserHistory';
 
 import logo from './logo.svg';
 import './App.css';

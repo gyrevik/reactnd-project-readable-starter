@@ -8,7 +8,6 @@ import CatSet from '../components/CatSet.js';
 import NumComments from '../components/NumComments.js';
 import * as utils from '../utils';
 import * as jsxStyles from '../jsxStyles';
-import createHistory from 'history/createBrowserHistory';
 
 class PostView extends React.Component {
   constructor(props) {

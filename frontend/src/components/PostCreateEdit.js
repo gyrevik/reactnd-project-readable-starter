@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { createPostFetch, editPostFetch, clearPostCat, setPostCat } from '../actions/actions.js';
 import CatSet from '../components/CatSet.js';
 import createHistory from 'history/createBrowserHistory';
+import { Link } from 'react-router-dom';
 import * as jsxStyles from '../jsxStyles';
 
 class PostCreateEdit extends React.Component {
@@ -26,6 +27,7 @@ class PostCreateEdit extends React.Component {
     }
 
     this.edit() ? this.props.editPost( postObj ) : this.props.createPost( postObj );
+    //createHistory().push("/post");
   }
 
   edit = () => {
@@ -56,10 +58,9 @@ class PostCreateEdit extends React.Component {
               ref={(input) => { this.body = input; }} 
               defaultValue={ this.edit() ? this.props.post.body : "" } placeholder="Body" maxLength="140" rows="7" />
           </div>
-          <button onClick={ this.handleFormInput } 
-            type="button" id="submit" name="submit">
+          <Link to="/post" onClick={ this.handleFormInput }>
               { this.edit() ? "Edit Post" : "Add Post" }
-          </button>
+          </Link>
           <span style={ jsxStyles.error }>{ ' ' } { this.props.postError ? 'error in post, please check' : '' }</span>
         </form>
       </div>
