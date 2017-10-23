@@ -18,11 +18,14 @@ class PostCreateEdit extends React.Component {
   componentDidMount() {
     console.log('setting postError to false in componentDidMount');
     this.props.editPostError(false);
+    console.log('postError: ', this.props.postError);
   }
   
   handleFormInput() {
     if (this.title.value === '' || this.body.value === '') {
+      console.log('post title and/or body is empty');
       this.edit() ? this.props.editPostError(true) : this.props.createPostError(true);
+      console.log('postError after execution of action: ', this.props.postError);
       return;
     }
 
@@ -37,19 +40,9 @@ class PostCreateEdit extends React.Component {
       deleted:    false
     }
 
-    
-
-    console.log('handleFormInput');
-    console.log('this.edit(): ', this.edit());
-    console.log('this.props.postError before action: ', this.props.postError);
-
     this.edit() ? this.props.editPost( postObj ) : this.props.createPost( postObj );
-    console.log('this.props.postError after action: ', this.props.postError);
 
-    //if (!this.props.postError) {
-      console.log(`this.props.history.push('/post')`);
-      this.props.history.push('/post');
-    //}
+    if (this.edit()) this.props.history.push('/post');
   }
 
   edit = () => {

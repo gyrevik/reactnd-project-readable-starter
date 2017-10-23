@@ -66,7 +66,7 @@ export const setPostCurrent = (post) => {
 // end no thunk because no server call
 
 export const setViewCat = (viewCat) => {
-  console.log('entered setViewCat action creater with viewCat: ', viewCat);
+  //console.log('entered setViewCat action creater with viewCat: ', viewCat);
   return {
     type: SET_VIEW_CAT,
     viewCat,
@@ -74,7 +74,7 @@ export const setViewCat = (viewCat) => {
 }
 
 export const sortPostsField = (field) => {
-  console.log('sortPostsField: ', field);
+  //console.log('sortPostsField: ', field);
   return {
     type: SORT_POSTS_FIELD,
     field,
@@ -102,6 +102,7 @@ export const createPost = (post) => {
 }
 
 export const createPostErrored = (bool = false) => {
+  console.log('entered createPostErrored action');
   return {
     type: ERROR_CREATE_POST,
     error: bool
@@ -179,9 +180,9 @@ export function commentsFetch(postId) {
       })
       .then((response) => response.json())
       .then((comments) => {
-        console.log('commentsFetch, (', postId, ') fetched comments: ', comments);
+        //console.log('commentsFetch, (', postId, ') fetched comments: ', comments);
         dispatch(getComments(postId, comments));
-        console.log('dispatched comments to store');
+        //console.log('dispatched comments to store');
       })
       .catch(() => dispatch(commentsErrored(true)));
   };
@@ -196,7 +197,7 @@ export const postsErrored = (bool) => {
 }
 
 export const getPosts = (posts) => {
-  console.log('entered getPosts action with posts: ', posts);
+  //console.log('entered getPosts action with posts: ', posts);
   return {
     type: GET_POSTS,
     posts
@@ -204,7 +205,7 @@ export const getPosts = (posts) => {
 }
 
 export function postsFetch() {
-  console.log('entered postsFetch()');
+  //console.log('entered postsFetch()');
   return (dispatch) => {
     //dispatch(itemsIsLoading(true));
     fetch(`${url}/posts`, { headers })
@@ -236,7 +237,7 @@ export const catsErrored = (bool) => {
 }
 
 export const getCats = (cats) => {
-  console.log('entered getCats action with cats: ', cats);
+  //console.log('entered getCats action with cats: ', cats);
   return {
     type: GET_CATS,
     cats
@@ -244,7 +245,7 @@ export const getCats = (cats) => {
 }
 
 export function catsFetch() {
-  console.log('entered catsFetch()');
+  //console.log('entered catsFetch()');
   return (dispatch) => {
     //dispatch(itemsIsLoading(true));
     fetch(`${url}/categories`, { headers })
@@ -283,7 +284,7 @@ export const voteComment = (id, option) => {
 }
 
 export function voteCommentFetch(id, option) {
-  console.log('entered voteCommentFetch(', id, ', ', option, ')');
+  //console.log('entered voteCommentFetch(', id, ', ', option, ')');
   return (dispatch) => {
     fetch(`${url}/comments/${id}`, { 
       method: 'POST',
@@ -319,10 +320,10 @@ export const createCommentErrored = (bool) => {
 }
 
 export const createComment = (comment) => {
-  console.log('entered createComment with comment: ', comment);
+  //console.log('entered createComment with comment: ', comment);
   let { id, parentId, timestamp, body, author, voteScore, deleted, parentDeleted } = comment;
-  console.log('action.createComment parentId: ', parentId, '\nbody: ', body, '\nauthor: ', author, '\nvoteScore: ', voteScore, '\ndeleted: ', deleted, '\nparentDeleted: ', parentDeleted);
-  console.log('returning from createComment action creater type: ', CREATE_COMMENT, ' and comment: ', comment);
+  //console.log('action.createComment parentId: ', parentId, '\nbody: ', body, '\nauthor: ', author, '\nvoteScore: ', voteScore, '\ndeleted: ', deleted, '\nparentDeleted: ', parentDeleted);
+  //console.log('returning from createComment action creater type: ', CREATE_COMMENT, ' and comment: ', comment);
   return {
     type: CREATE_COMMENT,
     comment: { id, parentId, timestamp, body, author:'alex', voteScore:1, deleted:false, parentDelted:false },
@@ -333,7 +334,7 @@ export function createCommentFetch(comment) {
   return (dispatch) => {
     dispatch(createCommentErrored(false));
     if (comment.body.length === 0 || comment.parentId.length === 0) {
-      console.log('comment error !body || !parentId in createCommentFetch action creater');
+      //console.log('comment error !body || !parentId in createCommentFetch action creater');
       dispatch(createCommentErrored(true));
       return;
     }
@@ -384,7 +385,7 @@ export function editPostFetch(post) {
     //dispatch(itemsIsLoading(true));
     // initialize postError to false so that it does not say true after a previous error
     dispatch(editPostErrored(false));
-    console.log('entered editPostFetch with post: ', post);
+    //console.log('entered editPostFetch with post: ', post);
     if (!post.title || !post.body || !post.category || post.category==='all') {
       console.log('dispatching error !title || !body || !category || category===\'all\' in editPostFetch action creater');
       //throw new Error('invalid post: category, title and body required');
@@ -437,7 +438,7 @@ export const editCommentErrored = (bool) => {
 // params:  timestamp - timestamp. Get this however you want. 
 //          body - [String]
 export function editCommentFetch(comment) {
-  console.log('entered editCommentFetch with comment: ', comment);
+  //console.log('entered editCommentFetch with comment: ', comment);
   return (dispatch) => {
     fetch(`${url}/comments/${comment.id}`, { 
       method: 'PUT',
@@ -473,7 +474,7 @@ export const deletePostErrored = (bool) => {
 }
 
 export const deletePost = (id) => {
-  console.log('entered deletePost action with id: ', id);
+  //console.log('entered deletePost action with id: ', id);
   return {
     type: DELETE_POST,
     id
@@ -514,7 +515,7 @@ export const votePostErrored = (bool) => {
 }
 
 export const votePost = (id, option) => {
-  console.log('entered votePost action with id: ', id, ' and option: ', option);
+  //console.log('entered votePost action with id: ', id, ' and option: ', option);
   return {
     type: VOTE_POST,
     id,

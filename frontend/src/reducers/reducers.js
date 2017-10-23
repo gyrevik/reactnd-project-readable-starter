@@ -71,8 +71,13 @@ function catsReducer (state = [], action) {
 }
 
 export function postErrorReducer (state = false, action) {
+  console.log('entered postErrorReducer with action.type: ', action.type);
   switch (action.type) {
-    case ERROR_CREATE_POST, ERROR_EDIT_POST: {
+    case ERROR_CREATE_POST: {
+      console.log('postErrorReducer: ', action.type, ' action.error: ', action.error);
+      return action.error;
+    }
+    case ERROR_EDIT_POST: {
       console.log('postErrorReducer: ', action.type, ' action.error: ', action.error);
       return action.error;
     }
