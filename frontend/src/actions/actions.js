@@ -156,7 +156,7 @@ export const commentsErrored = (bool) => {
 }
 
 export const getComments = (postId, comments) => {
-  console.log('entered getComments with comments: ', comments, ' and postId: ', postId);
+  //console.log('entered getComments with comments: ', comments, ' and postId: ', postId);
   return {
     type: GET_COMMENTS,
     postId,
@@ -165,7 +165,7 @@ export const getComments = (postId, comments) => {
 }
 
 export function commentsFetch(postId) {
-  console.log('entered commentsFetch(', postId, ')');
+  //console.log('entered commentsFetch(', postId, ')');
   return (dispatch) => {
     //dispatch(itemsIsLoading(true));
     fetch(`${url}/posts/${postId}/comments`, { headers })
@@ -391,7 +391,7 @@ export function editPostFetch(post) {
       dispatch(editPostErrored(true));
       return;
     }
-    
+
     fetch(`${url}/posts/${post.id}`, { 
       method: 'PUT',
       headers: {

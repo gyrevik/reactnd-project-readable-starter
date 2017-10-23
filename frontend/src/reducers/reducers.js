@@ -73,7 +73,7 @@ function catsReducer (state = [], action) {
 export function postErrorReducer (state = false, action) {
   switch (action.type) {
     case ERROR_CREATE_POST, ERROR_EDIT_POST: {
-      console.log('postErrorReducer: ', action.type);
+      console.log('postErrorReducer: ', action.type, ' action.error: ', action.error);
       return action.error;
     }
     default:
@@ -87,7 +87,7 @@ export function postsReducer (state = [], action) {
       return action.posts;
     }
     case CREATE_POST: {
-      console.log('in postsReducer.CREATE_POST with action.post.title: ', action.post.title, ' and action.post.body: ', action.post.body);
+      //console.log('in postsReducer.CREATE_POST with action.post.title: ', action.post.title, ' and action.post.body: ', action.post.body);
       const { type, post } = action;
       let newPosts;
       if (typeof(state) === 'object')

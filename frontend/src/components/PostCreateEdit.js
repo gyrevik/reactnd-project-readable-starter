@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { createPostFetch, editPostFetch, clearPostCat, setPostCat } from '../actions/actions.js';
+import { createPostFetch, editPostFetch, createPostErrored, editPostErrored, clearPostCat, setPostCat } from '../actions/actions.js';
 import CatSet from '../components/CatSet.js';
 import createHistory from 'history/createBrowserHistory';
 import { Link } from 'react-router-dom';
@@ -14,8 +14,18 @@ class PostCreateEdit extends React.Component {
     
     this.handleFormInput = this.handleFormInput.bind(this);
   }
+
+  componentDidMount() {
+    console.log('setting postError to false in componentDidMount');
+    this.props.editPostError(false);
+  }
   
   handleFormInput() {
+    if (this.title.value === '' || this.body.value === '') {
+      this.edit() ? this.props.editPostError(true) : this.props.createPostError(true);
+      return;
+    }
+
     const postObj = {
       id:         this.edit() ? this.props.post.id : Math.random().toString(), 
       timestamp:  this.edit() ? this.props.post.timestamp : Date.now(),
@@ -27,11 +37,19 @@ class PostCreateEdit extends React.Component {
       deleted:    false
     }
 
+    
+
+    console.log('handleFormInput');
+    console.log('this.edit(): ', this.edit());
+    console.log('this.props.postError before action: ', this.props.postError);
+
     this.edit() ? this.props.editPost( postObj ) : this.props.createPost( postObj );
-    if (!this.props.postError) {
+    console.log('this.props.postError after action: ', this.props.postError);
+
+    //if (!this.props.postError) {
       console.log(`this.props.history.push('/post')`);
       this.props.history.push('/post');
-    }
+    //}
   }
 
   edit = () => {
@@ -66,7 +84,6 @@ class PostCreateEdit extends React.Component {
             type="button" id="submit" name="submit">
             { this.edit() ? "Edit Post" : "Add Post" }
           </button>
-          { /*ButtonCreateEdit*/ }
           <span style={ jsxStyles.error }>{ ' ' } { this.props.postError ? 'error in post, please check' : '' }</span>
         </form>
       </div>
@@ -82,6 +99,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     createPost: (post) => dispatch(createPostFetch(post)),
     editPost: (post) => dispatch(editPostFetch(post)),
+    createPostError: (bool) => dispatch(createPostErrored(bool)),
+    editPostError: (bool) => dispatch(editPostErrored(bool)),
     setPostCat: (cat) => dispatch(setPostCat(cat))
   };
 }
