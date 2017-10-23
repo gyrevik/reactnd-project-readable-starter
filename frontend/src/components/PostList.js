@@ -50,7 +50,7 @@ class PostList extends React.Component {
 }
 
 const mapStateToProps = (state, props) => { 
-  //console.log('state.sortPostsField: ', state.sortPostsField);
+  console.log('PostList mapStateToProps state.posts: ', state.posts);
   let posts = state.posts.slice();
 
   posts = posts.filter(post => {

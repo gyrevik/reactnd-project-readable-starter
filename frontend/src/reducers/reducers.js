@@ -92,7 +92,6 @@ export function postsReducer (state = [], action) {
       return action.posts;
     }
     case CREATE_POST: {
-      //console.log('in postsReducer.CREATE_POST with action.post.title: ', action.post.title, ' and action.post.body: ', action.post.body);
       const { type, post } = action;
       let newPosts;
       if (typeof(state) === 'object')
@@ -104,6 +103,7 @@ export function postsReducer (state = [], action) {
       return newPosts;
     }
     case EDIT_POST: {
+      console.log('in postsReducer EDIT_POST case with action.post: ', action.post);
       return state.map((oldPost) =>
         action.post.id === oldPost.id ? { ...oldPost, ...action.post } : oldPost
       )

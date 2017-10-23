@@ -29,20 +29,21 @@ class PostCreateEdit extends React.Component {
       return;
     }
 
+    const edit = this.edit();
     const postObj = {
-      id:         this.edit() ? this.props.post.id : Math.random().toString(), 
-      timestamp:  this.edit() ? this.props.post.timestamp : Date.now(),
+      id:         edit ? this.props.post.id : Math.random().toString(), 
+      timestamp:  edit ? Date.now() : Date.now(),
       title:      this.title.value, 
       body:       this.body.value, 
       author:     'alex',
-      category:   this.edit() ? this.props.post.category : this.props.postCat,
-      voteScore:  this.edit() ? this.props.post.voteScore : 1,
+      category:   edit ? this.props.post.category : this.props.postCat,
+      voteScore:  edit ? this.props.post.voteScore : 1,
       deleted:    false
     }
 
-    this.edit() ? this.props.editPost( postObj ) : this.props.createPost( postObj );
+    edit ? this.props.editPost( postObj ) : this.props.createPost( postObj );
 
-    if (this.edit()) this.props.history.push('/post');
+    if (edit) this.props.history.push('/post');
   }
 
   edit = () => {
@@ -54,28 +55,29 @@ class PostCreateEdit extends React.Component {
   }
   
   render() {
+    const edit = this.edit();
     return (
       <div>  
       	<p><CatSet /></p>
-        Mode: { this.edit() ? "edit" : "add" }
+        Mode: { edit ? "edit" : "add" }
         <form role="form">
           <br />
           <div>
           	<input type="text" 
               ref={(input) => { this.title = input; }} 
               id="title" 
-              defaultValue={ this.edit() ? this.props.post.title : "" }
+              defaultValue={ edit ? this.props.post.title : "" }
               name="title" placeholder="Title" required />
           </div>
           <div>
           	<textarea 
               id="body"
               ref={(input) => { this.body = input; }} 
-              defaultValue={ this.edit() ? this.props.post.body : "" } placeholder="Body" maxLength="140" rows="7" />
+              defaultValue={ edit ? this.props.post.body : "" } placeholder="Body" maxLength="140" rows="7" />
           </div>
           <button onClick={ this.handleFormInput } 
             type="button" id="submit" name="submit">
-            { this.edit() ? "Edit Post" : "Add Post" }
+            { edit ? "Edit Post" : "Add Post" }
           </button>
           <span style={ jsxStyles.error }>{ ' ' } { this.props.postError ? 'error in post, please check' : '' }</span>
         </form>

@@ -393,6 +393,7 @@ export function editPostFetch(post) {
       return;
     }
 
+    console.log('about to call fetch with post: ', post);
     fetch(`${url}/posts/${post.id}`, { 
       method: 'PUT',
       headers: {
@@ -400,6 +401,7 @@ export function editPostFetch(post) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ title: post.title, body: post.body })
+      //body: JSON.stringify({ post })
     })
     .then((response) => {
       if (!response.ok) {
