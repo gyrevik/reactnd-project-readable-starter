@@ -5,6 +5,7 @@ import { createPostFetch, editPostFetch, clearPostCat, setPostCat } from '../act
 import CatSet from '../components/CatSet.js';
 import createHistory from 'history/createBrowserHistory';
 import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom'
 import * as jsxStyles from '../jsxStyles';
 
 class PostCreateEdit extends React.Component {
@@ -27,6 +28,10 @@ class PostCreateEdit extends React.Component {
     }
 
     this.edit() ? this.props.editPost( postObj ) : this.props.createPost( postObj );
+    if (!this.props.postError) {
+      console.log(`this.props.history.push('/post')`);
+      this.props.history.push('/post');
+    }
   }
 
   edit = () => {
@@ -61,6 +66,7 @@ class PostCreateEdit extends React.Component {
             type="button" id="submit" name="submit">
             { this.edit() ? "Edit Post" : "Add Post" }
           </button>
+          { /*ButtonCreateEdit*/ }
           <span style={ jsxStyles.error }>{ ' ' } { this.props.postError ? 'error in post, please check' : '' }</span>
         </form>
       </div>
@@ -80,4 +86,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostCreateEdit)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PostCreateEdit))
