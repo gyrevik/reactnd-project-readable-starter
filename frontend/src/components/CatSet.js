@@ -7,7 +7,7 @@ import * as jsxStyles from '../jsxStyles';
 
 class CatSet extends React.Component {
   componentDidMount() {
-    this.props.fetchCats();
+    this.props.catsFetch();
   }
   
   render () {
@@ -28,12 +28,5 @@ class CatSet extends React.Component {
 const mapStateToProps = ({ cats, postCat }) => { 
   return { cats, postCat };
 }
-  
-const mapDispatchToProps = (dispatch) => {
-    return {
-      fetchCats: () => dispatch(catsFetch()),
-      setPostCat: (cat) => dispatch(setPostCat(cat))
-  };
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(CatSet)
+export default connect(mapStateToProps, {catsFetch, setPostCat})(CatSet)
