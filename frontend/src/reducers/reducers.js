@@ -9,7 +9,7 @@ import {
 
 import { arrayUnique } from '../helper';
 
-export function modeReducer (state = 'none', action) {
+export function mode (state = 'none', action) {
   switch (action.type) {
     case SET_MODE:
       return action.mode;
@@ -18,7 +18,7 @@ export function modeReducer (state = 'none', action) {
   }
 }
 
-export function catReducer (state = 'all', action) {
+export function postCat (state = 'all', action) {
   switch (action.type) {
     case SET_POST_CAT:
       return action.postCat;
@@ -27,7 +27,7 @@ export function catReducer (state = 'all', action) {
   }
 }
 
-export function postReducer (state = {}, action) {
+export function post (state = {}, action) {
   switch (action.type) {
     case EDIT_POST:
       return action.post;
@@ -42,7 +42,7 @@ export function postReducer (state = {}, action) {
   }
 }
 
-export function viewReducer (state = 'all', action) {
+export function viewCat (state = 'all', action) {
   switch (action.type) {
     case SET_VIEW_CAT:
       return action.viewCat;
@@ -51,7 +51,7 @@ export function viewReducer (state = 'all', action) {
   }
 }
 
-export function sortPostsReducer (state = '', action) {
+export function sortPostsField (state = '', action) {
   switch (action.type) {
     case SORT_POSTS_FIELD: {
       return action.field;
@@ -61,7 +61,7 @@ export function sortPostsReducer (state = '', action) {
     }
 }
 
-function catsReducer (state = [], action) {
+function cats (state = [], action) {
   switch (action.type) {
     case GET_CATS:
       return action.cats;
@@ -70,7 +70,7 @@ function catsReducer (state = [], action) {
   }
 }
 
-export function postErrorReducer (state = false, action) {
+export function postError (state = false, action) {
   switch (action.type) {
     case ERROR_CREATE_POST: {
       return action.error;
@@ -83,7 +83,7 @@ export function postErrorReducer (state = false, action) {
   }
 }
 
-export function postsReducer (state = [], action) {
+export function posts (state = [], action) {
   switch (action.type) {
     case GET_POSTS: {
       return action.posts;
@@ -126,7 +126,7 @@ export function postsReducer (state = [], action) {
   }
 }
 
-export function commentReducer (state = false, action) {
+export function commentError (state = false, action) {
   switch (action.type) {
     case ERROR_CREATE_COMMENT: {
       return action.error;
@@ -136,7 +136,7 @@ export function commentReducer (state = false, action) {
   }
 }
 
-export function commentsReducer (state = [], action) {
+export function comments (state = [], action) {
   switch (action.type) {
     case GET_COMMENTS: {
       let oldArray = state.slice();
@@ -183,14 +183,14 @@ export function commentsReducer (state = [], action) {
 }
 
 export default combineReducers({
-  post: postReducer,
-  postError: postErrorReducer,
-  postCat: catReducer,
-  posts: postsReducer,
-  sortPostsField: sortPostsReducer,
-  cats: catsReducer,
-  viewCat: viewReducer,
-  mode: modeReducer,
-  comments: commentsReducer,
-  commentError: commentReducer
+  post,
+  postError,
+  postCat,
+  posts,
+  sortPostsField,
+  cats,
+  viewCat,
+  mode,
+  comments,
+  commentError
 })
