@@ -1,14 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { sortPostsField, setPostCurrent, votePostFetch, postsFetch, commentsFetch, createPostFetch } from '../actions/actions.js';
+import * as actions from '../actions/actions';
+import { posts, viewCat, sortPostsField } from '../reducers/reducers';
 import NumComments from '../components/NumComments.js';
 import { niceDate } from '../helper';
 import * as jsxStyles from '../jsxStyles';
 
 class PostList extends React.Component {
   componentDidMount() {
-    this.props.fetchPosts();
+    this.props.postsFetch();
   }
   
   render () {
@@ -17,13 +18,13 @@ class PostList extends React.Component {
         <ul>
           <li key={Math.random()}>
             Sort by {' '}
-            <a href="javascript:void(0)" onClick={() => this.props.sortField('voteScore')}>
+            <a href="javascript:void(0)" onClick={() => this.props.sortPostsField('voteScore')}>
               <span style={this.props.sortPostsField==="voteScore" ? jsxStyles.spanBold : jsxStyles.spanNormal}>
                 Vote Score
               </span>
             </a>
             {' - '} 
-            <a href="javascript:void(0)" onClick={() => this.props.sortField('timestamp')}>
+            <a href="javascript:void(0)" onClick={() => this.props.sortPostsField('timestamp')}>
               <span style={this.props.sortPostsField==='timestamp' ? jsxStyles.spanBold : jsxStyles.spanNormal}>
                 Time
               </span>
@@ -34,9 +35,9 @@ class PostList extends React.Component {
               Category: { post.category } {' - '} 
               Title: <Link to="/post" onClick={() => this.props.setPostCurrent(post)}>{ post.title }</Link> {' - '} 
               Vote Score: { post.voteScore } {' - '} 
-                <a href="javascript:void(0)" onClick={() => this.props.votePost(post.id, 'upVote')}>upVote</a>
+                <a href="javascript:void(0)" onClick={() => this.props.votePostFetch(post.id, 'upVote')}>upVote</a>
                 {' - '}
-                <a href="javascript:void(0)" onClick={() => this.props.votePost(post.id, 'downVote')}>downVote</a><br/>
+                <a href="javascript:void(0)" onClick={() => this.props.votePostFetch(post.id, 'downVote')}>downVote</a><br/>
               Time: { niceDate(post.timestamp) } <br/>
               Body: { post.body }<br/>
               Number of comments: <NumComments postId={post.id} />
@@ -48,11 +49,9 @@ class PostList extends React.Component {
   }
 }
 
-const mapStateToProps = (state, props) => { 
-  let posts = state.posts.slice();
-
+const mapStateToProps = ({ posts, viewCat, sortPostsField }) => { 
   posts = posts.filter(post => {
-    if (post.category === state.viewCat || state.viewCat === 'all') {
+    if (post.category === viewCat || viewCat === 'all') {
       return true;
     }
     else {
@@ -60,19 +59,10 @@ const mapStateToProps = (state, props) => {
     }
   });
 
-  const sortByKey = key => (a, b) => b[state.sortPostsField] - a[state.sortPostsField];	// desc (number)
-  posts.sort(sortByKey(state.sortPostsField));
+  const sortByKey = key => (a, b) => b[sortPostsField] - a[sortPostsField];	// desc (number)
+  posts.sort(sortByKey(sortPostsField));
 
-  return { posts, sortPostsField: state.sortPostsField, comments: state.comments };
-}
-  
-const mapDispatchToProps = (dispatch) => {
-    return {
-      fetchPosts: () => dispatch(postsFetch()),
-      votePost: (postId, option) => dispatch(votePostFetch(postId, option)),
-      setPostCurrent: (postId) => dispatch(setPostCurrent(postId)),
-      sortField: (field) => dispatch(sortPostsField(field))
-  };
+  return { posts, sortPostsField };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostList)
+export default connect(mapStateToProps, actions)(PostList)
