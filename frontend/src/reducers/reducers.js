@@ -71,14 +71,11 @@ function catsReducer (state = [], action) {
 }
 
 export function postErrorReducer (state = false, action) {
-  console.log('entered postErrorReducer with action.type: ', action.type);
   switch (action.type) {
     case ERROR_CREATE_POST: {
-      console.log('postErrorReducer: ', action.type, ' action.error: ', action.error);
       return action.error;
     }
     case ERROR_EDIT_POST: {
-      console.log('postErrorReducer: ', action.type, ' action.error: ', action.error);
       return action.error;
     }
     default:
@@ -103,7 +100,6 @@ export function postsReducer (state = [], action) {
       return newPosts;
     }
     case EDIT_POST: {
-      console.log('in postsReducer EDIT_POST case with action.post: ', action.post);
       return state.map((oldPost) =>
         action.post.id === oldPost.id ? { ...oldPost, ...action.post } : oldPost
       )

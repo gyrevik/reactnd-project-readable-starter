@@ -9,7 +9,6 @@ import {
 import { url, headers } from '../helper';
 
 export const setMode = (mode) => {
-  console.log(`in setMode(${mode}) action creater`);
   return {
     type: SET_MODE,
     mode,
@@ -17,7 +16,6 @@ export const setMode = (mode) => {
 }
 
 export const setPostCat = (postCat) => {
-  console.log(`in setPostCat(${postCat}) action creater`);
   return {
     type: SET_POST_CAT,
     postCat,
@@ -34,7 +32,6 @@ export const setPostCurrent = (post) => {
 // end no thunk because no server call
 
 export const setViewCat = (viewCat) => {
-  //console.log('entered setViewCat action creater with viewCat: ', viewCat);
   return {
     type: SET_VIEW_CAT,
     viewCat,
@@ -42,7 +39,6 @@ export const setViewCat = (viewCat) => {
 }
 
 export const sortPostsField = (field) => {
-  //console.log('sortPostsField: ', field);
   return {
     type: SORT_POSTS_FIELD,
     field,
@@ -58,11 +54,7 @@ export const sortPostsDirection = (direction) => {
 
 // thunk createPost
 export const createPost = (post) => {
-  console.log('entered createPost with post: ', post, ' and post.category: ', post.category);
   let { title, body, author, category, voteScore, deleted } = post;
-  console.log('action.createPost title: ', title, '\nbody: ', body, '\nauthor: ', author, '\ncategory: ', category, '\nvoteScore: ', voteScore, '\ndeleted: ', deleted);
-
-  console.log('returning from createPost action creater type: ', CREATE_POST, ' and post: ', post);
   return {
     type: CREATE_POST,
     post: { id:Math.random(), timestamp:Date.now(), title, body, author:'alex', category, voteScore:1, deleted:false },
@@ -70,7 +62,6 @@ export const createPost = (post) => {
 }
 
 export const createPostErrored = (bool = false) => {
-  console.log('entered createPostErrored action');
   return {
     type: ERROR_CREATE_POST,
     error: bool
@@ -82,9 +73,7 @@ export function createPostFetch(post) {
     //dispatch(itemsIsLoading(true));
     // initialize postError to false so that it does not say true after a previous error
     dispatch(createPostErrored(false));
-    console.log('entered createPostFetch()');
     if (!post.title || !post.body || !post.category || post.category==='all') {
-      console.log('dispatching error !title || !body || !category || category===\'all\' in createPostFetch action creater');
       //throw new Error('invalid post: category, title and body required');
       dispatch(createPostErrored(true));
       return;
@@ -108,9 +97,7 @@ export function createPostFetch(post) {
     })
     .then((response) => response.json())
     .then((data) => {
-      console.log('createPostFetch data: ', data);
       dispatch(createPost(post));
-      console.log('dispatched post to store');
     })
     .catch(() => dispatch(createPostErrored(true)));
   };
@@ -125,7 +112,6 @@ export const commentsErrored = (bool) => {
 }
 
 export const getComments = (postId, comments) => {
-  //console.log('entered getComments with comments: ', comments, ' and postId: ', postId);
   return {
     type: GET_COMMENTS,
     postId,
@@ -134,7 +120,6 @@ export const getComments = (postId, comments) => {
 }
 
 export function commentsFetch(postId) {
-  //console.log('entered commentsFetch(', postId, ')');
   return (dispatch) => {
     //dispatch(itemsIsLoading(true));
     fetch(`${url}/posts/${postId}/comments`, { headers })
@@ -148,9 +133,7 @@ export function commentsFetch(postId) {
       })
       .then((response) => response.json())
       .then((comments) => {
-        //console.log('commentsFetch, (', postId, ') fetched comments: ', comments);
         dispatch(getComments(postId, comments));
-        //console.log('dispatched comments to store');
       })
       .catch(() => dispatch(commentsErrored(true)));
   };
@@ -165,7 +148,6 @@ export const postsErrored = (bool) => {
 }
 
 export const getPosts = (posts) => {
-  //console.log('entered getPosts action with posts: ', posts);
   return {
     type: GET_POSTS,
     posts
@@ -173,7 +155,6 @@ export const getPosts = (posts) => {
 }
 
 export function postsFetch() {
-  //console.log('entered postsFetch()');
   return (dispatch) => {
     //dispatch(itemsIsLoading(true));
     fetch(`${url}/posts`, { headers })
@@ -181,15 +162,12 @@ export function postsFetch() {
         if (!response.ok) {
           throw Error(response.statusText);
         }
-
         //dispatch(itemsIsLoading(false));
         return response;
       })
       .then((response) => response.json())
       .then((posts) => {
-        console.log('postsFetch posts: ', posts);
         dispatch(getPosts(posts));
-        console.log('dispatched posts to store');
       })
       .catch(() => dispatch(postsErrored(true)));
   };
@@ -205,7 +183,6 @@ export const catsErrored = (bool) => {
 }
 
 export const getCats = (cats) => {
-  //console.log('entered getCats action with cats: ', cats);
   return {
     type: GET_CATS,
     cats
@@ -213,7 +190,6 @@ export const getCats = (cats) => {
 }
 
 export function catsFetch() {
-  //console.log('entered catsFetch()');
   return (dispatch) => {
     //dispatch(itemsIsLoading(true));
     fetch(`${url}/categories`, { headers })
@@ -226,9 +202,7 @@ export function catsFetch() {
       })
       .then((response) => response.json())
       .then((cats) => {
-        console.log('catsFetch cats.categories: ', cats.categories);
         dispatch(getCats(cats.categories));
-        console.log('dispatched cats.categories to store');
       })
       .catch(() => dispatch(catsErrored(true)));
   };
@@ -243,7 +217,6 @@ export const voteCommentErrored = (bool) => {
 }
 
 export const voteComment = (id, option) => {
-  console.log(`entered voteComment(${id}, ${option})`);
   return {
     type: VOTE_COMMENT,
     id,
@@ -252,7 +225,6 @@ export const voteComment = (id, option) => {
 }
 
 export function voteCommentFetch(id, option) {
-  //console.log('entered voteCommentFetch(', id, ', ', option, ')');
   return (dispatch) => {
     fetch(`${url}/comments/${id}`, { 
       method: 'POST',
@@ -270,9 +242,7 @@ export function voteCommentFetch(id, option) {
       })
       .then((response) => response.json())
       .then((data) => {
-        console.log('voteCommentFetch, (', id, ', ', option, ') fetched data: ', data);
         dispatch(voteComment(id, option));
-        console.log('dispatched comment vote to store');
       })
       .catch(() => dispatch(voteCommentErrored(true)));
   };
@@ -288,10 +258,7 @@ export const createCommentErrored = (bool) => {
 }
 
 export const createComment = (comment) => {
-  //console.log('entered createComment with comment: ', comment);
   let { id, parentId, timestamp, body, author, voteScore, deleted, parentDeleted } = comment;
-  //console.log('action.createComment parentId: ', parentId, '\nbody: ', body, '\nauthor: ', author, '\nvoteScore: ', voteScore, '\ndeleted: ', deleted, '\nparentDeleted: ', parentDeleted);
-  //console.log('returning from createComment action creater type: ', CREATE_COMMENT, ' and comment: ', comment);
   return {
     type: CREATE_COMMENT,
     comment: { id, parentId, timestamp, body, author:'alex', voteScore:1, deleted:false, parentDelted:false },
@@ -302,7 +269,6 @@ export function createCommentFetch(comment) {
   return (dispatch) => {
     dispatch(createCommentErrored(false));
     if (comment.body.length === 0 || comment.parentId.length === 0) {
-      //console.log('comment error !body || !parentId in createCommentFetch action creater');
       dispatch(createCommentErrored(true));
       return;
     }
@@ -338,7 +304,6 @@ export const editPostErrored = (bool) => {
 }
 
 export const editPost = (post) => {
-  console.log('entered editPost action type', EDIT_POST, ' with post: ', post);
   return {
     type: EDIT_POST,
     post,
@@ -353,15 +318,12 @@ export function editPostFetch(post) {
     //dispatch(itemsIsLoading(true));
     // initialize postError to false so that it does not say true after a previous error
     dispatch(editPostErrored(false));
-    //console.log('entered editPostFetch with post: ', post);
     if (!post.title || !post.body || !post.category || post.category==='all') {
-      console.log('dispatching error !title || !body || !category || category===\'all\' in editPostFetch action creater');
       //throw new Error('invalid post: category, title and body required');
       dispatch(editPostErrored(true));
       return;
     }
 
-    console.log('about to call fetch with post: ', post);
     fetch(`${url}/posts/${post.id}`, { 
       method: 'PUT',
       headers: {
@@ -380,9 +342,7 @@ export function editPostFetch(post) {
     })
     .then((response) => response.json())
     .then((data) => {
-      console.log('editPostFetch fetched data: ', data);
       dispatch(editPost(post));
-      console.log('dispatched post to store');
     })
     .catch(() => dispatch(editPostErrored(true)));
   };
@@ -408,7 +368,6 @@ export const editCommentErrored = (bool) => {
 // params:  timestamp - timestamp. Get this however you want. 
 //          body - [String]
 export function editCommentFetch(comment) {
-  //console.log('entered editCommentFetch with comment: ', comment);
   return (dispatch) => {
     fetch(`${url}/comments/${comment.id}`, { 
       method: 'PUT',
@@ -426,9 +385,7 @@ export function editCommentFetch(comment) {
       })
       .then((response) => response.json())
       .then((data) => {
-        console.log('editCommentFetch fetched data: ', data);
         dispatch(editComment(comment));
-        console.log('dispatched comment to store');
       })
       .catch(() => dispatch(editCommentErrored(true)));
   };
@@ -444,7 +401,6 @@ export const deletePostErrored = (bool) => {
 }
 
 export const deletePost = (id) => {
-  //console.log('entered deletePost action with id: ', id);
   return {
     type: DELETE_POST,
     id
@@ -485,7 +441,6 @@ export const votePostErrored = (bool) => {
 }
 
 export const votePost = (id, option) => {
-  //console.log('entered votePost action with id: ', id, ' and option: ', option);
   return {
     type: VOTE_POST,
     id,

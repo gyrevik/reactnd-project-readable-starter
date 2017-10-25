@@ -12,7 +12,6 @@ class PostList extends React.Component {
   }
   
   render () {
-    //console.log('this.props.sortPostsField: ', this.props.sortPostsField);
     return (
       <div>
         <ul>
@@ -50,7 +49,6 @@ class PostList extends React.Component {
 }
 
 const mapStateToProps = (state, props) => { 
-  console.log('PostList mapStateToProps state.posts: ', state.posts);
   let posts = state.posts.slice();
 
   posts = posts.filter(post => {
@@ -64,8 +62,6 @@ const mapStateToProps = (state, props) => {
 
   const sortByKey = key => (a, b) => b[state.sortPostsField] - a[state.sortPostsField];	// desc (number)
   posts.sort(sortByKey(state.sortPostsField));
-
-  //console.log('PostList.mapStateToProps state: ', state);
 
   return { posts, sortPostsField: state.sortPostsField, comments: state.comments };
 }

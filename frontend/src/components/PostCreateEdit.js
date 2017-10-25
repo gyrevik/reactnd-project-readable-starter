@@ -16,16 +16,12 @@ class PostCreateEdit extends React.Component {
   }
 
   componentDidMount() {
-    console.log('setting postError to false in componentDidMount');
     this.props.editPostError(false);
-    console.log('postError: ', this.props.postError);
   }
   
   handleFormInput() {
     if (this.title.value === '' || this.body.value === '') {
-      console.log('post title and/or body is empty');
       this.edit() ? this.props.editPostError(true) : this.props.createPostError(true);
-      console.log('postError after execution of action: ', this.props.postError);
       return;
     }
 
