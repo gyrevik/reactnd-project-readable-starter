@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { sortPostsField, setPostCurrent, votePostFetch, postsFetch, commentsFetch, createPostFetch } from '../actions/actions.js';
 import NumComments from '../components/NumComments.js';
-import * as utils from '../utils';
+import { niceDate } from '../helper';
 import * as jsxStyles from '../jsxStyles';
 
 class PostList extends React.Component {
@@ -38,7 +38,7 @@ class PostList extends React.Component {
                 <a href="javascript:void(0)" onClick={() => this.props.votePost(post.id, 'upVote')}>upVote</a>
                 {' - '}
                 <a href="javascript:void(0)" onClick={() => this.props.votePost(post.id, 'downVote')}>downVote</a><br/>
-              Time: { utils.niceDate(post.timestamp) } <br/>
+              Time: { niceDate(post.timestamp) } <br/>
               Body: { post.body }<br/>
               Number of comments: <NumComments postId={post.id} />
             </li>

@@ -4,14 +4,9 @@ import {
   CREATE_COMMENT, EDIT_COMMENT, DELETE_COMMENT, GET_COMMENTS, SORT_POSTS_DIRECTION, ERROR_EDIT_COMMENT,
   ERROR_CREATE_COMMENT, VOTE_COMMENT, VOTE_POST, GET_POSTS, GET_CATS, ERROR_COMMENTS, ERROR_DELETE_POST,
   ERROR_VOTE_POST, ERROR_DELETE_COMMENT
-} from '../actions/types'
+} from '../actions/types';
 
-const url = "http://localhost:3001"
-
-const headers = {
-  'Accept': 'application/json',
-  'Authorization': 'whatever-you-want'
-}
+import { url, headers } from '../helper';
 
 export const setMode = (mode) => {
   console.log(`in setMode(${mode}) action creater`);

@@ -6,7 +6,7 @@ import { setMode, voteCommentFetch, commentsFetch, createCommentFetch, createCom
   deletePostFetch, deleteCommentFetch } from '../actions/actions.js';
 import CatSet from '../components/CatSet.js';
 import NumComments from '../components/NumComments.js';
-import * as utils from '../utils';
+import { niceDate } from '../helper';
 import * as jsxStyles from '../jsxStyles';
 
 class PostView extends React.Component {
@@ -66,7 +66,7 @@ class PostView extends React.Component {
         <div>Title: { this.props.post.title }</div>
         <div>Body: { this.props.post.body }</div>
         <div>Author: { this.props.post.author }</div>
-        <div>Time: { utils.niceDate(this.props.post.timestamp) }</div>
+        <div>Time: { niceDate(this.props.post.timestamp) }</div>
         <div>Vote Score: { this.props.post.voteScore }</div>
         <div>Category: { this.props.post.category }</div>
         <br/>

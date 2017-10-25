@@ -7,7 +7,7 @@ import {
   ERROR_CREATE_COMMENT, VOTE_COMMENT, VOTE_POST, GET_POSTS, GET_CATS
 } from '../actions/types'
 
-import * as utils from '../utils';
+import { arrayUnique } from '../helper';
 
 export function modeReducer (state = 'none', action) {
   switch (action.type) {
@@ -144,7 +144,7 @@ export function commentsReducer (state = [], action) {
   switch (action.type) {
     case GET_COMMENTS: {
       let oldArray = state.slice();
-      const newArray = utils.arrayUnique(oldArray.concat(action.comments));
+      const newArray = arrayUnique(oldArray.concat(action.comments));
 
       return newArray;
     }
