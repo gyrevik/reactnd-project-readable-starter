@@ -86,7 +86,21 @@ export function postError (state = false, action) {
 export function posts (state = [], action) {
   switch (action.type) {
     case GET_POSTS: {
+      // todo: sort them using action.sortPostsField:
+      console.log('action.field in reducers.posts.GET_POSTS: ', action.field);
+      console.log('state: ', state);
+      console.log('action.posts: ', action.posts);
+      //let postList = state.slice();
+      const sortByKey = key => (a, b) => b[action.field] - a[action.field];	// desc (number)
+      return action.posts.sort(sortByKey(action.field));
+
       return action.posts;
+    }
+    case SORT_POSTS_FIELD: {
+      let postList = state.slice();
+      console.log('action.field: ', action.field);
+      const sortByKey = key => (a, b) => b[action.field] - a[action.field];	// desc (number)
+      return postList.sort(sortByKey(action.field));
     }
     case CREATE_POST: {
       const { type, post } = action;
@@ -119,7 +133,13 @@ export function posts (state = [], action) {
         
         return post;
       });
-      return newState;
+
+      // sort:
+      console.log('posts reducer VOTE_POST action.field: ', action.field);
+      const sortByKey = key => (a, b) => b[action.field] - a[action.field];	// desc (number)
+      return newState.sort(sortByKey(action.field));
+
+      //return newState;
     }
     default:
       return state;

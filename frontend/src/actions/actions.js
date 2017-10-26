@@ -38,7 +38,8 @@ export const setViewCat = (viewCat) => {
   }
 }
 
-export const sortPostsField = (field) => {
+export const setSortPostsField = (field) => {
+  console.log('in setSortPostsField action with field: ', field);
   return {
     type: SORT_POSTS_FIELD,
     field,
@@ -54,10 +55,10 @@ export const sortPostsDirection = (direction) => {
 
 // thunk createPost
 export const createPost = (post) => {
-  let { title, body, author, category, voteScore, deleted } = post;
+  let { id, title, body, author, category, voteScore, deleted } = post;
   return {
     type: CREATE_POST,
-    post: { id:Math.random(), timestamp:Date.now(), title, body, author:'alex', category, voteScore:1, deleted:false },
+    post: { id, timestamp:Date.now(), title, body, author:'alex', category, voteScore:1, deleted:false },
   }
 }
 
@@ -69,6 +70,7 @@ export const createPostErrored = (bool = false) => {
 }
 
 export function createPostFetch(post) {
+  console.log('in createPostFetch with post: ', post);
   return (dispatch) => {
     //dispatch(itemsIsLoading(true));
     // initialize postError to false so that it does not say true after a previous error
@@ -147,14 +149,17 @@ export const postsErrored = (bool) => {
   }
 }
 
-export const getPosts = (posts) => {
+export const getPosts = (posts, field) => {
+  console.log('actions.getPosts field: ', field);
   return {
     type: GET_POSTS,
-    posts
+    posts,
+    field
   }
 }
 
-export function postsFetch() {
+export function postsFetch(field) {
+  console.log('in postsFetch with field: ', field);
   return (dispatch) => {
     //dispatch(itemsIsLoading(true));
     fetch(`${url}/posts`, { headers })
@@ -167,7 +172,7 @@ export function postsFetch() {
       })
       .then((response) => response.json())
       .then((posts) => {
-        dispatch(getPosts(posts));
+        dispatch(getPosts(posts, field));
       })
       .catch(() => dispatch(postsErrored(true)));
   };
@@ -440,15 +445,17 @@ export const votePostErrored = (bool) => {
   }
 }
 
-export const votePost = (id, option) => {
+export const votePost = (id, option, field) => {
   return {
     type: VOTE_POST,
     id,
-    option
+    option,
+    field
   }
 }
 
-export function votePostFetch(id, option) {
+export function votePostFetch(id, option, field) {
+  console.log('entered votePostFetch with id: ', id, ' and option: ', option, ', field: ', field);
   return (dispatch) => {
     fetch(`${url}/posts/${id}`, { 
       method: 'POST',
@@ -466,7 +473,7 @@ export function votePostFetch(id, option) {
       })
       .then((response) => response.json())
       .then((data) => {
-        dispatch(votePost(id, option));
+        dispatch(votePost(id, option, field));
       })
       .catch(() => dispatch(votePostErrored(true)));
   };
