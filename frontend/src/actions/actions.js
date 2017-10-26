@@ -32,6 +32,7 @@ export const setPostCurrent = (post) => {
 // end no thunk because no server call
 
 export const setViewCat = (viewCat) => {
+  console.log('in setViewCat with viewCat: ', viewCat);
   return {
     type: SET_VIEW_CAT,
     viewCat,
@@ -39,7 +40,6 @@ export const setViewCat = (viewCat) => {
 }
 
 export const setSortPostsField = (field) => {
-  console.log('in setSortPostsField action with field: ', field);
   return {
     type: SORT_POSTS_FIELD,
     field,
@@ -70,13 +70,10 @@ export const createPostErrored = (bool = false) => {
 }
 
 export function createPostFetch(post) {
-  console.log('in createPostFetch with post: ', post);
   return (dispatch) => {
-    //dispatch(itemsIsLoading(true));
     // initialize postError to false so that it does not say true after a previous error
     dispatch(createPostErrored(false));
     if (!post.title || !post.body || !post.category || post.category==='all') {
-      //throw new Error('invalid post: category, title and body required');
       dispatch(createPostErrored(true));
       return;
     }
@@ -149,30 +146,27 @@ export const postsErrored = (bool) => {
   }
 }
 
-export const getPosts = (posts, field) => {
-  console.log('actions.getPosts field: ', field);
+export const getPosts = (posts, field, viewCat) => {
   return {
     type: GET_POSTS,
     posts,
-    field
+    field,
+    viewCat
   }
 }
 
-export function postsFetch(field) {
-  console.log('in postsFetch with field: ', field);
+export function postsFetch(field, viewCat) {
   return (dispatch) => {
-    //dispatch(itemsIsLoading(true));
     fetch(`${url}/posts`, { headers })
       .then((response) => {
         if (!response.ok) {
           throw Error(response.statusText);
         }
-        //dispatch(itemsIsLoading(false));
         return response;
       })
       .then((response) => response.json())
       .then((posts) => {
-        dispatch(getPosts(posts, field));
+        dispatch(getPosts(posts, field, viewCat));
       })
       .catch(() => dispatch(postsErrored(true)));
   };
@@ -455,7 +449,6 @@ export const votePost = (id, option, field) => {
 }
 
 export function votePostFetch(id, option, field) {
-  console.log('entered votePostFetch with id: ', id, ' and option: ', option, ', field: ', field);
   return (dispatch) => {
     fetch(`${url}/posts/${id}`, { 
       method: 'POST',
@@ -468,7 +461,6 @@ export function votePostFetch(id, option, field) {
         if (!response.ok) {
           throw Error(response.statusText);
         }
-        //dispatch(itemsIsLoading(false));
         return response;
       })
       .then((response) => response.json())

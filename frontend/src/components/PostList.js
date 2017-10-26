@@ -8,13 +8,13 @@ import * as jsxStyles from '../jsxStyles';
 
 class PostList extends React.Component {
   componentDidMount() {
-    const { sortPostsField } = this.props;
-    console.log('PostList.componentDidMount sortPostsField: ', sortPostsField);
-    this.props.postsFetch(sortPostsField);
+    const { sortPostsField, viewCat } = this.props;
+    this.props.postsFetch(sortPostsField, viewCat);
   }
   
   render () {
-    const { posts, sortPostsField, setSortPostsField, setPostCurrent, votePostFetch } = this.props;
+    const { posts, sortPostsField, setSortPostsField, setPostCurrent, votePostFetch, viewCat } = this.props;
+    console.log('viewCat in PostList render: ', viewCat)
     return (
       <div>
         <ul>
@@ -32,7 +32,8 @@ class PostList extends React.Component {
               </span>
             </a>
           </li>
-          {posts.map((post, i) =>
+          {posts.filter(post => post.category === viewCat || viewCat === 'all')
+                .map((post, i) =>
             <li key={i.toString()}>
               Category: { post.category } {' - '} 
               Title: <Link to="/post" onClick={() => setPostCurrent(post)}>{ post.title }</Link> {' - '} 
@@ -51,8 +52,8 @@ class PostList extends React.Component {
   }
 }
 
-const mapStateToProps = ({ posts, sortPostsField }) => {
-  return { posts, sortPostsField };
+const mapStateToProps = ({ posts, sortPostsField, viewCat }) => {
+  return { posts, sortPostsField, viewCat };
 }
 
 export default connect(mapStateToProps, actions)(PostList)
