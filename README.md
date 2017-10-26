@@ -4,7 +4,14 @@ This is the final assessment project for Udacity's Redux course which is a conte
 
 This repository includes the code for the backend API Server that was used to develop and interact with the front-end portion of the project.
 
-## Start Developing
+# frontend
+
+The frontend directory is a project that was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app). Its puropose is to satisfy the requirements in the Udacity Project Readable - Project Overview. The project is forked from https://github.com/udacity/reactnd-project-readable-starter
+
+The code is here: https://github.com/gyrevik/reactnd-project-readable-starter
+Clone this implementation from the above link.
+
+## Get up and running
 
 To get up and running right away:
 
