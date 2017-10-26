@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import * as actions from '../actions/actions';
-//import { posts, sortPostsField } from '../reducers/reducers';
 import NumComments from '../components/NumComments.js';
 import { niceDate } from '../helper';
 import * as jsxStyles from '../jsxStyles';
@@ -12,13 +11,9 @@ class PostList extends React.Component {
     const { sortPostsField } = this.props;
     console.log('PostList.componentDidMount sortPostsField: ', sortPostsField);
     this.props.postsFetch(sortPostsField);
-    
-    //this.props.setSortPostsField(this.props.sortPostsField);
   }
   
   render () {
-    //console.log('this.props.sortPostsField: ', this.props.sortPostsField);
-    //console.log('this.props.posts: ', this.props.posts);
     const { posts, sortPostsField, setSortPostsField, setPostCurrent, votePostFetch } = this.props;
     return (
       <div>

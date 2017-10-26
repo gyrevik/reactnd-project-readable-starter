@@ -2,8 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Modal from 'react-modal';
-import { setMode, voteCommentFetch, commentsFetch, createCommentFetch, createCommentErrored, editCommentFetch, 
-  deletePostFetch, deleteCommentFetch } from '../actions/actions.js';
+//import { setMode, voteCommentFetch, commentsFetch, createCommentFetch, createCommentErrored, editCommentFetch, 
+//  deletePostFetch, deleteCommentFetch } from '../actions/actions.js';
+import * as actions from '../actions/actions';
 import CatSet from '../components/CatSet.js';
 import NumComments from '../components/NumComments.js';
 import { niceDate } from '../helper';
@@ -21,7 +22,7 @@ class PostView extends React.Component {
   }
 
   handleModalOpen() {
-    this.props.createCommentError(false);
+    this.props.createCommentErrored(false);
     this.setState({ openModal: true })
   }
 
@@ -49,55 +50,54 @@ class PostView extends React.Component {
     }
 
     this.state.edit ? this.props.editComment(commentObj) : this.props.createComment(commentObj);
-    //if (!this.props.commentError) this.setState({ openModal: false });
     this.setState({ openModal: false });
   }
 
   componentDidMount() {
-    this.props.fetchComments(this.props.post.id);
+    this.props.commentsFetch(this.props.post.id);
   }
 
   render() {
     const sortByKey = key => (a, b) => a['voteScore'] < b['voteScore'];	// desc (number)
-
+    const { comments, commentError, post, deletePostFetch, voteCommentFetch, setMode, deleteCommentFetch } = this.props;
     return (
       <div>
         <br />
-        <div>Title: { this.props.post.title }</div>
-        <div>Body: { this.props.post.body }</div>
-        <div>Author: { this.props.post.author }</div>
-        <div>Time: { niceDate(this.props.post.timestamp) }</div>
-        <div>Vote Score: { this.props.post.voteScore }</div>
-        <div>Category: { this.props.post.category }</div>
+        <div>Title: { post.title }</div>
+        <div>Body: { post.body }</div>
+        <div>Author: { post.author }</div>
+        <div>Time: { niceDate(post.timestamp) }</div>
+        <div>Vote Score: { post.voteScore }</div>
+        <div>Category: { post.category }</div>
         <br/>
         <button onClick={ this.handleModalOpen } 
           type="button" id="openCommentModal" name="openCommentModal">
             Add Comment
         </button>
         <br/><br/>
-        <Link to="/" onClick={() => this.props.deletePost(this.props.post.id)}>
+        <Link to="/" onClick={() => deletePostFetch(post.id)}>
           Delete Post
         </Link>
-        {' - '} <Link to="/postCreateEdit" onClick={() => this.props.setMode('edit')}>Edit Post</Link>
+        {' - '} <Link to="/postCreateEdit" onClick={() => setMode('edit')}>Edit Post</Link>
         <br/><br/>
         <Link to="/">Home</Link>
         <br/><br/>
-        Comments: (<NumComments postId={this.props.post.id} />)<br/>
+        Comments: (<NumComments postId={post.id} />)<br/>
         <ul>
-          {this.props.comments.filter(comment => comment.deleted === false && comment.parentId === this.props.post.id)
+          {comments.filter(comment => comment.deleted === false && comment.parentId === post.id)
                               .sort(sortByKey('voteScore'))
                               .map((comment, i) => 
             <li key={i.toString()}>
               {comment.body}<br/>
               Vote Score: {comment.voteScore} {' - '} 
-                <a href="javascript:void(0)" onClick={() => this.props.voteComment(comment.id, 'upVote')}>upVote</a>
+                <a href="javascript:void(0)" onClick={() => voteCommentFetch(comment.id, 'upVote')}>upVote</a>
                 {' - '}
-                <a href="javascript:void(0)" onClick={() => this.props.voteComment(comment.id, 'downVote')}>downVote</a>
+                <a href="javascript:void(0)" onClick={() => voteCommentFetch(comment.id, 'downVote')}>downVote</a>
                 {' - '}
                 <a href="javascript:void(0)" 
                   onClick={() => this.setState({openModal:true, edit:true, comment})}>edit</a>
                 {' - '}
-                <a href="javascript:void(0)" onClick={() => this.props.deleteComment(comment.id)}>delete</a>
+                <a href="javascript:void(0)" onClick={() => deleteCommentFetch(comment.id)}>delete</a>
                 <br/>
             </li>
           )}
@@ -126,7 +126,7 @@ class PostView extends React.Component {
               </button> 
               {' '}
               <Link to="/">Home</Link>
-              <span style={ jsxStyles.error }>{ ' ' } { this.props.commentError ? 'error in comment, please check' : '' }</span>
+              <span style={ jsxStyles.error }>{ ' ' } { commentError ? 'error in comment, please check' : '' }</span>
             </form>
           </div>
         </Modal>
@@ -135,21 +135,21 @@ class PostView extends React.Component {
   }
 }
 
-const mapStateToProps = (state, props) => { 
-  return { commentError: state.commentError, posts: state.posts, post: state.post, comment: state.comment, comments: state.comments };
+const mapStateToProps = ({ commentError, posts, post, comment, comments }) => { 
+  return { commentError, posts, post, comment, comments };
 }
   
-const mapDispatchToProps = (dispatch) => {
-    return {
-      createComment: (comment) => dispatch(createCommentFetch(comment)),
-      editComment: (comment) => dispatch(editCommentFetch(comment)),
-      createCommentError: (bool) => dispatch(createCommentErrored(bool)),
-      deletePost: (postId) => dispatch(deletePostFetch(postId)),
-      deleteComment: (commentId) => dispatch(deleteCommentFetch(commentId)),
-      voteComment: (commentId, option) => dispatch(voteCommentFetch(commentId, option)),
-      fetchComments: (postId) => dispatch(commentsFetch(postId)),
-      setMode: (mode) => dispatch(setMode(mode))
+/*const mapDispatchToProps = (dispatch) => {
+  return {
+    createComment: (comment) => dispatch(createCommentFetch(comment)),
+    editComment: (comment) => dispatch(editCommentFetch(comment)),
+    createCommentError: (bool) => dispatch(createCommentErrored(bool)),
+    deletePost: (postId) => dispatch(deletePostFetch(postId)),
+    deleteComment: (commentId) => dispatch(deleteCommentFetch(commentId)),
+    voteComment: (commentId, option) => dispatch(voteCommentFetch(commentId, option)),
+    fetchComments: (postId) => dispatch(commentsFetch(postId)),
+    setMode: (mode) => dispatch(setMode(mode))
   };
-}
+}*/
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostView)
+export default connect(mapStateToProps, actions)(PostView)
