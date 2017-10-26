@@ -4,26 +4,21 @@ import { commentsFetch } from '../actions/actions.js';
 
 class NumComments extends React.Component {
   componentDidMount () {
-    this.props.fetchComments(this.props.postId);
+    this.props.commentsFetch(this.props.postId);
   }
 
   render () {
+    const { comments, postId } = this.props;
     return (
       <span>
-        { this.props.comments.reduce((a, c) => c.deleted === false && c.parentId === this.props.postId ? ++a : a, 0) }
+        { comments.reduce((a, comment) => comment.deleted === false && comment.parentId === postId ? ++a : a, 0) }
       </span>
     )
   }
 }
 
-const mapStateToProps = (state, props) => {  
-  return { comments: state.comments };
-}
-  
-const mapDispatchToProps = (dispatch) => {
-    return {
-      fetchComments: (postId) => dispatch(commentsFetch(postId))
-  };
+const mapStateToProps = ({ comments }) => {  
+  return { comments };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NumComments)
+export default connect(mapStateToProps, { commentsFetch })(NumComments)

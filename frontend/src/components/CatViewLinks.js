@@ -32,16 +32,8 @@ class CatViewLinks extends React.Component {
   }
 }
 
-const mapStateToProps = ({ cats, viewCat }) => { 
-  //console.log('viewCat in mapStateToProps: ', viewCat)
+const mapStateToProps = ({ cats, viewCat }) => {
   return { cats, viewCat };
-  //return { cats: state.cats, selectedCat: state.viewCat };
 }
-  
-/*const mapDispatchToProps = (dispatch) => {
-    return {
-      setViewCat: (cat) => dispatch(setViewCat(cat))
-  };
-}*/
 
 export default connect(mapStateToProps, { setViewCat, catsFetch })(CatViewLinks)
