@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { setPostCat, catsFetch } from '../actions/actions';
-import { cats, postCat } from '../reducers/reducers';
+import cats from '../reducers/cats';
+import postCat from '../reducers/postCat';
 import * as jsxStyles from '../jsxStyles';
 
 class CatSet extends React.Component {
