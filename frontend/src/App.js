@@ -3,6 +3,7 @@ import { Route } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import CatSet from './components/CatSet.js';
 import CatViewLinks from './components/CatViewLinks.js';
 import Header from './components/Header.js';
@@ -26,7 +27,7 @@ class App extends Component {
       <div className="App">
         <Route exact path="/" render={() => (
           <div>
-            <Header appIntro="Home" />
+            <MuiThemeProvider><Header appIntro="Home" /></MuiThemeProvider>
       		<div>
       		  <CatViewLinks />
       		</div>

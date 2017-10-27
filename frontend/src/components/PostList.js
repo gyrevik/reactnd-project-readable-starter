@@ -14,7 +14,6 @@ class PostList extends React.Component {
   
   render () {
     const { posts, sortPostsField, setSortPostsField, setPostCurrent, votePostFetch, viewCat } = this.props;
-    console.log('viewCat in PostList render: ', viewCat)
     return (
       <div>
         <ul>

@@ -32,7 +32,6 @@ export const setPostCurrent = (post) => {
 // end no thunk because no server call
 
 export const setViewCat = (viewCat) => {
-  console.log('in setViewCat with viewCat: ', viewCat);
   return {
     type: SET_VIEW_CAT,
     viewCat,
