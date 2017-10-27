@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { createPostFetch, editPostFetch, createPostErrored, editPostErrored, clearPostCat, setPostCat } from '../actions/actions.js';
+//import { createPostFetch, editPostFetch, createPostErrored, editPostErrored, clearPostCat, setPostCat } from '../actions/actions.js';
+import * as actions from '../actions/actions';
 import CatSet from '../components/CatSet.js';
 import createHistory from 'history/createBrowserHistory';
 import { Link } from 'react-router-dom';
@@ -86,4 +87,4 @@ const mapStateToProps = ({ cats, postError, post, posts, postCat }) => {
   return { postError, post, posts, cats, postCat };
 }
 
-export default withRouter(connect(mapStateToProps, { createPostFetch, editPostFetch, createPostErrored, editPostErrored, setPostCat })(PostCreateEdit))
+export default withRouter(connect(mapStateToProps, actions)(PostCreateEdit))

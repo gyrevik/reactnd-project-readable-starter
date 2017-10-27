@@ -138,18 +138,5 @@ class PostView extends React.Component {
 const mapStateToProps = ({ commentError, posts, post, comment, comments }) => { 
   return { commentError, posts, post, comment, comments };
 }
-  
-/*const mapDispatchToProps = (dispatch) => {
-  return {
-    createComment: (comment) => dispatch(createCommentFetch(comment)),
-    editComment: (comment) => dispatch(editCommentFetch(comment)),
-    createCommentError: (bool) => dispatch(createCommentErrored(bool)),
-    deletePost: (postId) => dispatch(deletePostFetch(postId)),
-    deleteComment: (commentId) => dispatch(deleteCommentFetch(commentId)),
-    voteComment: (commentId, option) => dispatch(voteCommentFetch(commentId, option)),
-    fetchComments: (postId) => dispatch(commentsFetch(postId)),
-    setMode: (mode) => dispatch(setMode(mode))
-  };
-}*/
 
 export default connect(mapStateToProps, actions)(PostView)
