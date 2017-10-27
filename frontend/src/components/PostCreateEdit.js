@@ -16,12 +16,12 @@ class PostCreateEdit extends React.Component {
   }
 
   componentDidMount() {
-    this.props.editPostError(false);
+    this.props.editPostErrored(false);
   }
   
   handleFormInput() {
     if (this.title.value === '' || this.body.value === '') {
-      this.edit() ? this.props.editPostError(true) : this.props.createPostError(true);
+      this.edit() ? this.props.editPostErrored(true) : this.props.createPostErrored(true);
       return;
     }
 
@@ -37,7 +37,7 @@ class PostCreateEdit extends React.Component {
       deleted:    false
     }
 
-    edit ? this.props.editPost( postObj ) : this.props.createPost( postObj );
+    edit ? this.props.editPostFetch( postObj ) : this.props.createPostFetch( postObj );
 
     if (edit) this.props.history.push('/post');
   }
@@ -82,18 +82,8 @@ class PostCreateEdit extends React.Component {
   }
 }
 
-const mapStateToProps = (state, props) => { 
-  return { postError: state.postError, post: state.post, posts: state.posts, cats: state.cats, postCat: state.postCat };
+const mapStateToProps = ({ cats, postError, post, posts, postCat }) => { 
+  return { postError, post, posts, cats, postCat };
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    createPost: (post) => dispatch(createPostFetch(post)),
-    editPost: (post) => dispatch(editPostFetch(post)),
-    createPostError: (bool) => dispatch(createPostErrored(bool)),
-    editPostError: (bool) => dispatch(editPostErrored(bool)),
-    setPostCat: (cat) => dispatch(setPostCat(cat))
-  };
-}
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PostCreateEdit))
+export default withRouter(connect(mapStateToProps, { createPostFetch, editPostFetch, createPostErrored, editPostErrored, setPostCat })(PostCreateEdit))
