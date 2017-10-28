@@ -7,7 +7,7 @@ import createHistory from 'history/createBrowserHistory';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom'
 import RaisedButton from 'material-ui/RaisedButton';
-import Grid from 'material-ui/Grid';
+//import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
 
 import * as jsxStyles from '../jsxStyles';
@@ -15,9 +15,9 @@ import * as jsxStyles from '../jsxStyles';
 const styles = {
   div:{
     display: 'flex',
-    flexDirection: 'row wrap',
+    flexDirection: 'center',
     padding: 20,
-    width: '100%'
+    width: '30%'
   },
   paperLeft:{
     flex: 1,
@@ -27,30 +27,12 @@ const styles = {
     padding: 10
   },
   paperRight:{
-    height: 600,
+    height: 300,
     flex: 4,
     margin: 10,
     textAlign: 'center',
   }
 };
-
-/*class ExampleComponent extends React.Component {
-  render() {
-    return (
-      <div>
-        <div style={styles.div}>
-          <Paper zDepth={3} style={styles.paperLeft}>
-            <h4>First Vertical component</h4>
-          </Paper>
-          <Paper zDepth={3} style={styles.paperRight}>
-              <h4>Second Vertical component</h4>
-          </Paper>
-        </div>
-      </div>
-    )
-  }
-}*/
-
 
 class PostCreateEdit extends React.Component {
   constructor(props) {
@@ -99,42 +81,39 @@ class PostCreateEdit extends React.Component {
     const edit = this.edit();
     const mode = edit ? "Mode: edit" : "Mode: add";
     return (
-      <div className="display: inline-block">
-        <div className="display: inline-block; float: left; width: 50%"><CatSet /><RaisedButton label={mode} disableTouchRipple={true} /></div>
-        <div className="display: inline-block; float: left; width: 50%"> 
-          <form role="form">
-            <br />
-            <div>
-              <input type="text" 
-                ref={(input) => { this.title = input; }} 
-                id="title" 
-                defaultValue={ edit ? this.props.post.title : "" }
-                name="title" placeholder="Title" required />
-            </div>
-            <div>
-              <textarea 
-                id="body"
-                ref={(input) => { this.body = input; }} 
-                defaultValue={ edit ? this.props.post.body : "" } placeholder="Body" maxLength="140" rows="7" />
-            </div>
-            <button onClick={ this.handleFormInput } 
-              type="button" id="submit" name="submit">
-              { edit ? "Edit Post" : "Add Post" }
-            </button>
-            <span style={ jsxStyles.error }>{ ' ' } { this.props.postError ? 'error in post, please check' : '' }</span>
-          </form>
-        </div>
-
-
-
+      <div>
+        <div><CatSet /><RaisedButton label={mode} disableTouchRipple={true} /></div>
         <div>
-          <div style={styles.div}>
-            <Paper zDepth={3} style={styles.paperLeft}>
-              <h4>First Vertical component</h4>
-            </Paper>
-            <Paper zDepth={3} style={styles.paperRight}>
-                <h4>Second Vertical component</h4>
-            </Paper>
+          <div align="center">
+            <div style={styles.div}>
+              <Paper zDepth={3} style={styles.paperLeft}>
+
+              </Paper>
+              <Paper zDepth={3} style={styles.paperRight}>
+                <form role="form">
+                  <br />
+                  <div>
+                    <input type="text" 
+                      ref={(input) => { this.title = input; }} 
+                      id="title" 
+                      defaultValue={ edit ? this.props.post.title : "" }
+                      name="title" placeholder="Title" required />
+                  </div>
+                  <div>
+                    <textarea 
+                      id="body"
+                      ref={(input) => { this.body = input; }} 
+                      defaultValue={ edit ? this.props.post.body : "" } 
+                      placeholder="Body" maxLength="140" rows="7" />
+                  </div>
+                  <button onClick={ this.handleFormInput }
+                    type="button" id="submit" name="submit">
+                    { edit ? "Edit Post" : "Add Post" }
+                  </button>
+                  <span style={ jsxStyles.error }>{ ' ' } { this.props.postError ? 'error in post, please check' : '' }</span>
+                </form>
+              </Paper>
+            </div>
           </div>
         </div>
 
