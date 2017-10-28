@@ -22,6 +22,7 @@ const Header = ({ appIntro }) => (
   <AppBar
     title={ appIntro }
     iconClassNameRight="muidocs-icon-navigation-expand-more"
+    showMenuIconButton={ false }
   />
 );
 

@@ -27,9 +27,9 @@ class App extends Component {
       <div className="App">
         <Route exact path="/" render={() => (
           <div>
-            <MuiThemeProvider><Header appIntro="Home" /></MuiThemeProvider>
+            <MuiThemeProvider><Header appIntro="Readable Home" /></MuiThemeProvider>
       		<div>
-      		  <CatViewLinks />
+          <MuiThemeProvider><CatViewLinks /></MuiThemeProvider>
       		</div>
             <div>
               <br />
@@ -42,9 +42,9 @@ class App extends Component {
         )}/>
         <Route exact path="/category" render={() =>(
           <div>
-            <Header appIntro="Category View" />
+            <MuiThemeProvider><Header appIntro="Readable Category View" /></MuiThemeProvider>
             <div>
-              <CatViewLinks />
+            <MuiThemeProvider><CatViewLinks /></MuiThemeProvider>
             </div>
             <div>
               <br />
@@ -57,13 +57,13 @@ class App extends Component {
         )}/>
         <Route exact path="/post" render={() => (
           <div>
-            <Header appIntro="Post Detail View" />
+            <MuiThemeProvider><Header appIntro="Readable Post Detail View" /></MuiThemeProvider>
             <div><PostView /></div>
           </div>
         )}/>
         <Route exact path="/postCreateEdit" render={() => (
           <div>
-            <Header appIntro="Post Create/Edit View" />
+            <MuiThemeProvider><Header appIntro="Readable Post Create/Edit View" /></MuiThemeProvider>
             <PostCreateEdit />
           </div>
         )} />
@@ -72,7 +72,4 @@ class App extends Component {
   }
 }
 
-//const mapStateToProps = (state, props) => { return {} }
-
-//export default withRouter(connect(mapStateToProps)(App))
 export default withRouter(App)

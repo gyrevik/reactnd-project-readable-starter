@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import RaisedButton from 'material-ui/RaisedButton';
 import { setViewCat, catsFetch } from '../actions/actions';
 import { cats } from '../reducers/cats';
 import { viewCat } from '../reducers/viewCat';
@@ -12,13 +13,14 @@ class CatViewLinks extends React.Component {
     return (
       <div>
         View Category:{' '}
+        <RaisedButton label="View Category:" disableTouchRipple={true} />
         {cats.map ((cat, i) =>
           <span key={Math.random()}>
-            <Link to="/category" key={i.toString()} onClick={() => setViewCat(cat.name)}
-              style={viewCat===cat.name ? jsxStyles.spanBold : jsxStyles.spanNormal}>
-              {cat.name}
-            </Link>
-            <span>{ ' - '}</span>
+            <RaisedButton label={cat.name} primary={viewCat===cat.name ? true : false} 
+              onClick={() => setViewCat(cat.name)}
+              containerElement={
+              <Link to="/category" key={i.toString()} />
+            }/>
           </span>
         )}
         <span>
