@@ -55,7 +55,7 @@ class PostCreateEdit extends React.Component {
     const edit = this.edit();
     return (
       <div>  
-      	<p><CatSet /></p>
+      	<CatSet />
         Mode: { edit ? "edit" : "add" }
         <form role="form">
           <br />

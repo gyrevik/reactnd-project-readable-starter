@@ -33,7 +33,7 @@ class App extends Component {
       		</div>
             <div>
               <br />
-              <PostCreateEdit />
+              <MuiThemeProvider><PostCreateEdit /></MuiThemeProvider>
             </div>
             <div>
               <PostList />
