@@ -14,15 +14,12 @@ class CatSet extends React.Component {
   
   render () {
     return (
-      <span>Post Category:&nbsp;
-      {this.props.cats.map (
-          (cat, i) =>
-            
-              <RaisedButton key={i.toString()} label={cat.name} primary={this.props.postCat===cat.name ? true : false}
-                onClick={() => this.props.setPostCat(cat.name)}
-                
-              />
-            
+      <span>
+        <RaisedButton label="Post Category:" disableTouchRipple={true} />
+        {this.props.cats.map ((cat, i) =>
+          <RaisedButton key={i.toString()} label={cat.name} primary={this.props.postCat===cat.name ? true : false}
+            onClick={() => this.props.setPostCat(cat.name)}
+          />
         )}
       </span>
     )

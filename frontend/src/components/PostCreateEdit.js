@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-//import { createPostFetch, editPostFetch, createPostErrored, editPostErrored, clearPostCat, setPostCat } from '../actions/actions.js';
 import * as actions from '../actions/actions';
 import CatSet from '../components/CatSet.js';
 import createHistory from 'history/createBrowserHistory';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom'
+import RaisedButton from 'material-ui/RaisedButton';
 import * as jsxStyles from '../jsxStyles';
 
 class PostCreateEdit extends React.Component {
@@ -53,10 +53,10 @@ class PostCreateEdit extends React.Component {
   
   render() {
     const edit = this.edit();
+    const mode = edit ? "Mode: edit" : "Mode: add";
     return (
       <div>  
-      	<CatSet />
-        Mode: { edit ? "edit" : "add" }
+      	<CatSet /><RaisedButton label={mode} disableTouchRipple={true} />
         <form role="form">
           <br />
           <div>
