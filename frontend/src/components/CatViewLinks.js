@@ -12,23 +12,16 @@ class CatViewLinks extends React.Component {
     const { setViewCat, viewCat, cats } = this.props;
     return (
       <div>
-        View Category:{' '}
         <RaisedButton label="View Category:" disableTouchRipple={true} />
         {cats.map ((cat, i) =>
-          <span key={Math.random()}>
-            <RaisedButton label={cat.name} primary={viewCat===cat.name ? true : false} 
-              onClick={() => setViewCat(cat.name)}
-              containerElement={
-              <Link to="/category" key={i.toString()} />
-            }/>
-          </span>
+          <RaisedButton key={Math.random()} label={cat.name} primary={viewCat===cat.name ? true : false} 
+            onClick={() => setViewCat(cat.name)}
+            containerElement={
+            <Link to="/category" key={i.toString()} />
+          }/>
         )}
-        <span>
-          <Link to="/category" onClick={() => setViewCat('all')} 
-            style={viewCat==='all' ? jsxStyles.spanBold : jsxStyles.spanNormal}>
-            all
-          </Link>
-        </span>
+        <RaisedButton label="all" primary={viewCat==='all' ? true : false} onClick={() => setViewCat('all')} 
+          containerElement={<Link to="/category" />} />
       </div>  
     )
   }
