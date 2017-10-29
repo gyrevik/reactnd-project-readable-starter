@@ -48,7 +48,7 @@ class App extends Component {
             </div>
             <div>
               <br />
-              <PostCreateEdit />
+              <MuiThemeProvider><PostCreateEdit /></MuiThemeProvider>
             </div>
             <div>
               <PostList />
@@ -64,7 +64,7 @@ class App extends Component {
         <Route exact path="/postCreateEdit" render={() => (
           <div>
             <MuiThemeProvider><Header appIntro="Readable Post Create/Edit View" /></MuiThemeProvider>
-            <PostCreateEdit />
+            <MuiThemeProvider><PostCreateEdit /></MuiThemeProvider>
           </div>
         )} />
       </div>
