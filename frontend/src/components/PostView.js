@@ -49,7 +49,7 @@ class PostView extends React.Component {
       return;
     }
 
-    this.state.edit ? this.props.editComment(commentObj) : this.props.createComment(commentObj);
+    this.state.edit ? this.props.editCommentFetch(commentObj) : this.props.createCommentFetch(commentObj);
     this.setState({ openModal: false });
   }
 
@@ -97,7 +97,7 @@ class PostView extends React.Component {
                 <a href="javascript:void(0)" 
                   onClick={() => this.setState({openModal:true, edit:true, comment})}>edit</a>
                 {' - '}
-                <a onClick={() => deleteCommentFetch(comment.id)}>delete</a>
+                <a href="javascript:void(0)" onClick={() => deleteCommentFetch(comment.id)}>delete</a>
                 <br/>
             </li>
           )}
@@ -118,7 +118,7 @@ class PostView extends React.Component {
               </div>
               
               <button onClick={ this.handleComment } type="button" id="submit" name="submit">
-                  {this.state.edit ? "Edit" : "Submit"} Comment
+                {this.state.edit ? "Edit" : "Submit"} Comment
               </button>
               <button onClick={() => this.setState({openModal:false})} 
                 type="button" id="closeCommentModal" name="closeCommentModal">
