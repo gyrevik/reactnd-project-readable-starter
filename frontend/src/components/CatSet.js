@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import RaisedButton from 'material-ui/RaisedButton';
-import DropDownMenu from 'material-ui/DropDownMenu';
+import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import { setPostCat, catsFetch } from '../actions/actions';
 import cats from '../reducers/cats';
@@ -15,7 +15,6 @@ class CatSet extends React.Component {
     this.state = {value: 1};
   }
 
-  //handleChange = (event, index, value) => this.setState({value});
   handleChange = (event, index, value) => this.props.setPostCat(value);
 
   componentDidMount() {
@@ -27,11 +26,12 @@ class CatSet extends React.Component {
     const { cats, postCat, setPostCat } = this.props;
     return (
       <span>
-        <DropDownMenu value={postCat==='all' ? 'react': postCat} onChange={this.handleChange}>
+        <SelectField value={postCat==='all' ? 'react': postCat} 
+          onChange={this.handleChange} floatingLabelText="Post Category">
           {cats.map((cat, i) =>
             <MenuItem key={i.toString()} value={cat.name} primaryText={cat.name} />
           )}
-        </DropDownMenu>
+        </SelectField>
       </span>
     )
   }

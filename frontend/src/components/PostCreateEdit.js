@@ -4,8 +4,6 @@ import createHistory from 'history/createBrowserHistory';
 import { withRouter } from 'react-router-dom'
 
 import RaisedButton from 'material-ui/RaisedButton';
-//import DropDownMenu from 'material-ui/DropDownMenu';
-//import MenuItem from 'material-ui/MenuItem';
 
 import * as actions from '../actions/actions';
 import CatSet from '../components/CatSet.js';
