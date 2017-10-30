@@ -4,6 +4,7 @@ import createHistory from 'history/createBrowserHistory';
 import { withRouter } from 'react-router-dom'
 
 import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
 
 import * as actions from '../actions/actions';
 import CatSet from '../components/CatSet.js';
@@ -22,23 +23,30 @@ class PostCreateEdit extends React.Component {
   
   handleFormInput() {
     const edit = this.edit();
-
-    if (this.title.value === '' || this.body.value === '') {
+    console.log('entered handleFormInput')
+    console.log('this.title.input.value: ', this.title.input.value)
+    //console.log('this.body.input.value: ', this.body.input.value)
+    console.log('this.body.getValue(): ', this.body.getValue())
+    if (this.title.input.value === '' || this.body.getValue() === '') {
+      //console.log('this.title.input.value: ', this.title.input.value)
+      //console.log('this.body.input.value: ', this.body.input.value)
       edit ? this.props.editPostErrored(true) : this.props.createPostErrored(true);
       return;
     }
 
+    const category = this.props.postCat === 'all' ? 'react' : this.props.postCat;
     const postObj = {
       id:         edit ? this.props.post.id : Math.random().toString(), 
       timestamp:  edit ? Date.now() : Date.now(),
-      title:      this.title.value, 
-      body:       this.body.value, 
+      title:      this.title.input.value, 
+      body:       this.body.getValue(), 
       author:     'alex',
-      category:   edit ? this.props.post.category : this.props.postCat,
+      category:   category,
       voteScore:  edit ? this.props.post.voteScore : 1,
       deleted:    false
     }
 
+    console.log('postObj: ', postObj)
     edit ? this.props.editPostFetch( postObj ) : this.props.createPostFetch( postObj );
 
     if (edit) this.props.history.push('/post');
@@ -64,18 +72,23 @@ class PostCreateEdit extends React.Component {
               <form>
                 <br />
                 <div>
-                  <input type="text" 
-                    ref={(input) => { this.title = input; }} 
+                  <TextField
+                    ref={(TextField) => { this.title = TextField; }} 
                     id="title" 
                     defaultValue={ edit ? this.props.post.title : "" }
-                    name="title" placeholder="Title" required />
+                    name="title" hintText="Title" required />
                 </div>
                 <div>
-                  <textarea 
+                  <TextField 
+                    ref={(TextField) => { this.body = TextField; }} 
                     id="body"
-                    ref={(input) => { this.body = input; }} 
                     defaultValue={ edit ? this.props.post.body : "" } 
-                    placeholder="Body" maxLength="140" rows="7" />
+                    name="body" hintText="Body" required 
+                    //value={ edit ? this.props.post.body : "" } 
+                    multiLine={true}
+                    rows={2}
+                    rowsMax={4}
+                  />
                 </div>
                 <button onClick={ this.handleFormInput }
                   type="button" id="submit" name="submit">
