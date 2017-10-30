@@ -77,7 +77,6 @@ class PostCreateEdit extends React.Component {
                     id="body"
                     defaultValue={ edit ? this.props.post.body : "" } 
                     name="body" hintText="Body" required 
-                    //value={ edit ? this.props.post.body : "" } 
                     multiLine={true}
                     rows={2}
                     rowsMax={4}
