@@ -59,7 +59,7 @@ class PostCreateEdit extends React.Component {
     const mode = edit ? "Mode: edit" : "Mode: add";
     return (
       <div>
-        <div><CatSet /><RaisedButton label={mode} disableTouchRipple={true} /></div>
+        <div><CatSet /></div>
         <div>
           <div align="center">
             <div>

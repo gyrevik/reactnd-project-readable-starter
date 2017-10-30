@@ -32,12 +32,6 @@ class CatSet extends React.Component {
             <MenuItem key={i.toString()} value={cat.name} primaryText={cat.name} />
           )}
         </DropDownMenu>
-        <RaisedButton label="Post Category:" disableTouchRipple={true} />
-        {cats.map ((cat, i) =>
-          <RaisedButton key={i.toString()} label={cat.name} primary={postCat===cat.name ? true : false}
-            onClick={() => setPostCat(cat.name)}
-          />
-        )}
       </span>
     )
   }
