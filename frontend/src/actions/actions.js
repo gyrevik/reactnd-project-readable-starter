@@ -249,7 +249,6 @@ export function voteCommentFetch(id, option) {
 
 // thunk createComment
 export const createCommentErrored = (bool) => {
-  console.log('createCommentErrored invoked with bool: ', bool)
   return {
     type: ERROR_CREATE_COMMENT,
     error: bool
@@ -265,7 +264,6 @@ export const createComment = (comment) => {
 }
 
 export function createCommentFetch(comment) {
-  console.log('ented createCommentFetch with comment: ', comment)
   return (dispatch) => {
     dispatch(createCommentErrored(false));
     if (comment.body.length === 0 || comment.parentId.length === 0) {
@@ -288,7 +286,6 @@ export function createCommentFetch(comment) {
       })
       .then((response) => response.json())
       .then((data) => {
-        console.log('executed createCommentFetch with comment: ', comment)
         dispatch(createComment(comment));
       })
       .catch(() => dispatch(createCommentErrored(true)));

@@ -22,7 +22,6 @@ class CatSet extends React.Component {
   }
   
   render () {
-    console.log('this.props.postCat: ', this.props.postCat)
     const { cats, postCat, setPostCat } = this.props;
     return (
       <span>

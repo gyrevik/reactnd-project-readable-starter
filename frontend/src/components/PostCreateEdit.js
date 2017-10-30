@@ -23,13 +23,7 @@ class PostCreateEdit extends React.Component {
   
   handleFormInput() {
     const edit = this.edit();
-    console.log('entered handleFormInput')
-    console.log('this.title.input.value: ', this.title.input.value)
-    //console.log('this.body.input.value: ', this.body.input.value)
-    console.log('this.body.getValue(): ', this.body.getValue())
     if (this.title.input.value === '' || this.body.getValue() === '') {
-      //console.log('this.title.input.value: ', this.title.input.value)
-      //console.log('this.body.input.value: ', this.body.input.value)
       edit ? this.props.editPostErrored(true) : this.props.createPostErrored(true);
       return;
     }
@@ -46,7 +40,6 @@ class PostCreateEdit extends React.Component {
       deleted:    false
     }
 
-    console.log('postObj: ', postObj)
     edit ? this.props.editPostFetch( postObj ) : this.props.createPostFetch( postObj );
 
     if (edit) this.props.history.push('/post');
@@ -90,10 +83,10 @@ class PostCreateEdit extends React.Component {
                     rowsMax={4}
                   />
                 </div>
-                <button onClick={ this.handleFormInput }
+                <RaisedButton onClick={ this.handleFormInput }
                   type="button" id="submit" name="submit">
                   { edit ? "Edit Post" : "Add Post" }
-                </button>
+                </RaisedButton>
                 <span style={ jsxStyles.error }>{ ' ' } { this.props.postError ? 'error in post, please check' : '' }</span>
               </form>
             </div>
