@@ -59,20 +59,6 @@ class PostList extends React.Component {
               </span>
             </a>
           </li>
-          {posts.filter(post => post.category === viewCat || viewCat === 'all')
-                .map((post, i) =>
-            <li key={i.toString()}>
-              Category: { post.category } {' - '} 
-              Title: <Link to="/post" onClick={() => setPostCurrent(post)}>{ post.title }</Link> {' - '} 
-              Vote Score: { post.voteScore } {' - '} 
-                <a href="javascript:void(0)" onClick={() => votePostFetch(post.id, 'upVote', sortPostsField)}>upVote</a>
-                {' - '}
-                <a href="javascript:void(0)" onClick={() => votePostFetch(post.id, 'downVote', sortPostsField)}>downVote</a><br/>
-              Time: { niceDate(post.timestamp) } <br/>
-              Body: { post.body }<br/>
-              Number of comments: <NumComments postId={post.id} />
-            </li>
-          )}
         </ul>
         
 
@@ -93,7 +79,12 @@ class PostList extends React.Component {
                 <ListItem
                   //leftAvatar={<Avatar src="images/ok-128.jpg" />}
                   key={i.toString()}
-                  rightIconButton={rightIconMenu}
+                  rightIconButton={
+                    <IconMenu iconButtonElement={iconButtonElement}>
+                      <MenuItem onClick={() => votePostFetch(post.id, 'upVote', sortPostsField)}>upVote</MenuItem>
+                      <MenuItem onClick={() => votePostFetch(post.id, 'downVote', sortPostsField)}>downVote</MenuItem>
+                    </IconMenu>
+                  }
                   primaryText={<Link to="/post" onClick={() => setPostCurrent(post)}>{ post.title }</Link>} 
                   secondaryText={
                     <p>
