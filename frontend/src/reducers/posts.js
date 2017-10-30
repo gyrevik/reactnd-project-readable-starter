@@ -1,4 +1,4 @@
-import { GET_POSTS, SORT_POSTS_FIELD, CREATE_POST, EDIT_POST, DELETE_POST, VOTE_POST, SET_VIEW_CAT } from '../actions/types';
+import { GET_POSTS, SORT_POSTS_FIELD, CREATE_POST, EDIT_POST, DELETE_POST, VOTE_POST } from '../actions/types';
 
 export default function posts (state = [], action) {
   switch (action.type) {
@@ -12,14 +12,13 @@ export default function posts (state = [], action) {
       return postList.sort(sortByKey(action.field));
     }
     case CREATE_POST: {
-      const { type, post } = action;
       let newPosts;
       if (typeof(state) === 'object')
         newPosts = state.slice();
       else
         newPosts = JSON.parse(state);
       
-      newPosts.push(post);
+      newPosts.push(action.post);
       return newPosts;
     }
     case EDIT_POST: {

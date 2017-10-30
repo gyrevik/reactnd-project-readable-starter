@@ -97,7 +97,7 @@ class PostView extends React.Component {
                 <a href="javascript:void(0)" 
                   onClick={() => this.setState({openModal:true, edit:true, comment})}>edit</a>
                 {' - '}
-                <a href="javascript:void(0)" onClick={() => deleteCommentFetch(comment.id)}>delete</a>
+                <a onClick={() => deleteCommentFetch(comment.id)}>delete</a>
                 <br/>
             </li>
           )}
@@ -110,7 +110,7 @@ class PostView extends React.Component {
         >
           <h1>{this.state.edit ? "Edit" : "Add"} Comment</h1>
           <div>
-            <form role="form">
+            <form>
               <div>
                 <textarea ref={(input) => { this.body = input; }} id="body" placeholder="Body" 
                   defaultValue={ this.state.edit ? this.state.comment.body : '' }

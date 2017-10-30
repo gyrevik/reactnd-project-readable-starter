@@ -10,14 +10,13 @@ export default function comments (state = [], action) {
       return newArray;
     }
     case CREATE_COMMENT: {
-      const { type, comment } = action;
       let newComments;
       if (typeof(state) === 'object')
         newComments = state.slice();
       else
         newComments = JSON.parse(state);
       
-      newComments.push(comment);
+      newComments.push(action.comment);
       
       return newComments;
     }

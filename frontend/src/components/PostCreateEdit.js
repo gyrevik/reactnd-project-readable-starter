@@ -1,10 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import createHistory from 'history/createBrowserHistory';
-import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom'
+
 import RaisedButton from 'material-ui/RaisedButton';
+//import DropDownMenu from 'material-ui/DropDownMenu';
+//import MenuItem from 'material-ui/MenuItem';
+
 import * as actions from '../actions/actions';
 import CatSet from '../components/CatSet.js';
 import * as jsxStyles from '../jsxStyles';
@@ -61,7 +63,7 @@ class PostCreateEdit extends React.Component {
         <div>
           <div align="center">
             <div>
-              <form role="form">
+              <form>
                 <br />
                 <div>
                   <input type="text" 

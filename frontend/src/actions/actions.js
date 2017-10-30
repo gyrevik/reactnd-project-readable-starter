@@ -54,7 +54,7 @@ export const sortPostsDirection = (direction) => {
 
 // thunk createPost
 export const createPost = (post) => {
-  let { id, title, body, author, category, voteScore, deleted } = post;
+  let { id, title, body, category } = post;
   return {
     type: CREATE_POST,
     post: { id, timestamp:Date.now(), title, body, author:'alex', category, voteScore:1, deleted:false },
@@ -256,10 +256,10 @@ export const createCommentErrored = (bool) => {
 }
 
 export const createComment = (comment) => {
-  let { id, parentId, timestamp, body, author, voteScore, deleted, parentDeleted } = comment;
+  let { id, parentId, timestamp, body } = comment;
   return {
     type: CREATE_COMMENT,
-    comment: { id, parentId, timestamp, body, author:'alex', voteScore:1, deleted:false, parentDelted:false },
+    comment: { id, parentId, timestamp, body, author:'alex', voteScore:1, deleted:false, parentDeleted:false },
   }
 }
 
