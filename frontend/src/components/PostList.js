@@ -20,7 +20,7 @@ import * as jsxStyles from '../jsxStyles';
 const iconButtonElement = (
   <IconButton
     touch={true}
-    tooltip="more"
+    tooltip="vote"
     tooltipPosition="bottom-left"
   >
     <MoreVertIcon color={grey400} />
@@ -29,9 +29,8 @@ const iconButtonElement = (
 
 const rightIconMenu = (
   <IconMenu iconButtonElement={iconButtonElement}>
-    <MenuItem>Reply</MenuItem>
-    <MenuItem>Forward</MenuItem>
-    <MenuItem>Delete</MenuItem>
+    <MenuItem>upVote</MenuItem>
+    <MenuItem>downVote</MenuItem>
   </IconMenu>
 );
 
@@ -96,21 +95,28 @@ class PostList extends React.Component {
         </ul>
 
         <MuiThemeProvider>
-        <List>
-          <Subheader>Today</Subheader>
-          <ListItem
-            //leftAvatar={<Avatar src="images/ok-128.jpg" />}
-            primaryText="Brunch this weekend?"
-            secondaryText={
-              <p>
-                <span style={{color: darkBlack}}>Brendan Lim</span> --
-                I&apos;ll be in your neighborhood doing errands this weekend. Do you want to grab brunch?
-              </p>
-            }
-            secondaryTextLines={2}
-          />
-          <Divider inset={true} />
-        </List>
+          <List>
+            {posts.filter(post => post.category === viewCat || viewCat === 'all')
+                  .map((post, i) =>
+              <span key={Math.random()}>
+                <Subheader key={Math.random()}>Today</Subheader>
+                <ListItem
+                  //leftAvatar={<Avatar src="images/ok-128.jpg" />}
+                  key={i.toString()}
+                  rightIconButton={rightIconMenu}
+                  primaryText={<Link to="/post" onClick={() => setPostCurrent(post)}>{ post.title }</Link>} 
+                  secondaryText={
+                    <p>
+                      <span style={{color: darkBlack}}>Category: {post.category}</span> --
+                      I&apos;ll be in your neighborhood doing errands this weekend. Do you want to grab brunch?
+                    </p>
+                  }
+                  secondaryTextLines={2}
+                />
+                <Divider inset={true} key={Math.random()} />
+              </span>
+            )}
+          </List>
         </MuiThemeProvider>
 
 
