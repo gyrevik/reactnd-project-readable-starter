@@ -77,29 +77,19 @@ class PostList extends React.Component {
         
 
 
-        <ul>
-        {posts.filter(post => post.category === viewCat || viewCat === 'all')
-              .map((post, i) =>
-          <li key={i.toString()}>
-            Category: { post.category } {' - '} 
-            Title: <Link to="/post" onClick={() => setPostCurrent(post)}>{ post.title }</Link> {' - '} 
-            Vote Score: { post.voteScore } {' - '} 
-              <a href="javascript:void(0)" onClick={() => votePostFetch(post.id, 'upVote', sortPostsField)}>upVote</a>
-              {' - '}
-              <a href="javascript:void(0)" onClick={() => votePostFetch(post.id, 'downVote', sortPostsField)}>downVote</a><br/>
-            Time: { niceDate(post.timestamp) } <br/>
-            Body: { post.body }<br/>
-            Number of comments: <NumComments postId={post.id} />
-          </li>
-        )}
-        </ul>
+        
+
+
+
+
+
 
         <MuiThemeProvider>
           <List>
             {posts.filter(post => post.category === viewCat || viewCat === 'all')
                   .map((post, i) =>
               <span key={Math.random()}>
-                <Subheader key={Math.random()}>Today</Subheader>
+                <Subheader key={Math.random()}>{ niceDate(post.timestamp) }</Subheader>
                 <ListItem
                   //leftAvatar={<Avatar src="images/ok-128.jpg" />}
                   key={i.toString()}
@@ -107,8 +97,11 @@ class PostList extends React.Component {
                   primaryText={<Link to="/post" onClick={() => setPostCurrent(post)}>{ post.title }</Link>} 
                   secondaryText={
                     <p>
-                      <span style={{color: darkBlack}}>Category: {post.category}</span> --
-                      I&apos;ll be in your neighborhood doing errands this weekend. Do you want to grab brunch?
+                      <span style={{color: darkBlack}}>Category: { post.category } {' '}
+                        (<NumComments postId={post.id} /> Comment(s), Vote Score: {post.voteScore})
+                      </span>
+                      <br/>
+                      { post.body } 
                     </p>
                   }
                   secondaryTextLines={2}
