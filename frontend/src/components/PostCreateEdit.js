@@ -88,6 +88,7 @@ class PostCreateEdit extends React.Component {
                 </RaisedButton>
                 <span style={ jsxStyles.error }>{ ' ' } { this.props.postError ? 'error in post, please check' : '' }</span>
               </form>
+              <br/>
             </div>
           </div>
         </div>

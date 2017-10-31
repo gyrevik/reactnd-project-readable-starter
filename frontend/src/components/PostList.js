@@ -47,7 +47,7 @@ class PostList extends React.Component {
     return (
       <div>
         <MuiThemeProvider>
-          <Toolbar style={{}}>
+          <Toolbar>
             <ToolbarGroup firstChild={true}>
               <RaisedButton label="Sort by Vote Score" primary={sortPostsField==='voteScore' ? true : false} 
                 onClick={() => setSortPostsField('voteScore')}
