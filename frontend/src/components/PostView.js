@@ -2,7 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Modal from 'react-modal';
+
 import RaisedButton from 'material-ui/RaisedButton';
+import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
 
 import * as actions from '../actions/actions';
 import CatSet from '../components/CatSet.js';
@@ -70,17 +72,34 @@ class PostView extends React.Component {
         <div>Vote Score: { post.voteScore }</div>
         <div>Category: { post.category }</div>
         <br/>
-        <RaisedButton onClick={ this.handleModalOpen } id="openCommentModal" name="openCommentModal">
-          Comment
-        </RaisedButton>
+        
         <br/><br/>
-        <Link to="/" onClick={() => deletePostFetch(post.id)}>
-          Delete Post
-        </Link>
-        {' - '} <Link to="/postCreateEdit" onClick={() => setMode('edit')}>Edit Post</Link>
+
+
+
+        <Toolbar>
+          <ToolbarGroup firstChild={true}>
+            <RaisedButton onClick={ this.handleModalOpen } 
+              id="openCommentModal" name="openCommentModal" label="Comment" />
+              
+
+            <Link to="/" onClick={() => deletePostFetch(post.id)}>
+              Delete Post
+            </Link>
+
+            <Link to="/postCreateEdit" onClick={() => setMode('edit')}>Edit Post</Link>
+
+            <Link to="/">Home</Link>
+            <RaisedButton label="Home" containerElement={<Link to="/" />} />
+
+          </ToolbarGroup>
+        </Toolbar>
+
+
         <br/><br/>
-        <Link to="/">Home</Link>
-        <br/><br/>
+
+        
+       
         Comments: (<NumComments postId={post.id} />)<br/>
         <ul>
           {comments.filter(comment => comment.deleted === false && comment.parentId === post.id)
