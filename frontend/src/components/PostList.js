@@ -11,6 +11,8 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
+import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
+import RaisedButton from 'material-ui/RaisedButton';
 
 import * as actions from '../actions/actions';
 import NumComments from '../components/NumComments.js';
@@ -44,31 +46,18 @@ class PostList extends React.Component {
     const { posts, sortPostsField, setSortPostsField, setPostCurrent, votePostFetch, viewCat } = this.props;
     return (
       <div>
-        <ul>
-          <li key={Math.random()}>
-            Sort by {' '}
-            <a href="javascript:void(0)" onClick={() => setSortPostsField('voteScore')}>
-              <span style={sortPostsField==="voteScore" ? jsxStyles.spanBold : jsxStyles.spanNormal}>
-                Vote Score
-              </span>
-            </a>
-            {' - '} 
-            <a href="javascript:void(0)" onClick={() => setSortPostsField('timestamp')}>
-              <span style={sortPostsField==='timestamp' ? jsxStyles.spanBold : jsxStyles.spanNormal}>
-                Time
-              </span>
-            </a>
-          </li>
-        </ul>
-        
-
-
-        
-
-
-
-
-
+        <MuiThemeProvider>
+          <Toolbar style={{}}>
+            <ToolbarGroup firstChild={true}>
+              <RaisedButton label="Sort by Vote Score" primary={sortPostsField==='voteScore' ? true : false} 
+                onClick={() => setSortPostsField('voteScore')}
+              />
+              <RaisedButton label="Sort by Time" primary={sortPostsField==='timestamp' ? true : false} 
+                onClick={() => setSortPostsField('timestamp')}
+              />
+            </ToolbarGroup>
+          </Toolbar>
+        </MuiThemeProvider>
 
         <MuiThemeProvider>
           <List>
@@ -77,7 +66,6 @@ class PostList extends React.Component {
               <span key={Math.random()}>
                 <Subheader key={Math.random()}>{ niceDate(post.timestamp) }</Subheader>
                 <ListItem
-                  //leftAvatar={<Avatar src="images/ok-128.jpg" />}
                   key={i.toString()}
                   rightIconButton={
                     <IconMenu iconButtonElement={iconButtonElement}>
