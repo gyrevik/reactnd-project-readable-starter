@@ -5,6 +5,14 @@ import Modal from 'react-modal';
 
 import RaisedButton from 'material-ui/RaisedButton';
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
+import {
+  Table,
+  TableBody,
+  TableHeader,
+  TableHeaderColumn,
+  TableRow,
+  TableRowColumn,
+} from 'material-ui/Table';
 
 import * as actions from '../actions/actions';
 import CatSet from '../components/CatSet.js';
@@ -64,15 +72,29 @@ class PostView extends React.Component {
     const { comments, commentError, post, deletePostFetch, voteCommentFetch, setMode, deleteCommentFetch } = this.props;
     return (
       <div>
-        <br />
-        <div>Title: { post.title }</div>
-        <div>Body: { post.body }</div>
-        <div>Author: { post.author }</div>
-        <div>Time: { niceDate(post.timestamp) }</div>
-        <div>Vote Score: { post.voteScore }</div>
-        <div>Category: { post.category }</div>
-        <br/>
-        <br/><br/>
+        <Table>
+          <TableBody displayRowCheckbox={false}>
+            <TableRow>
+              <TableRowColumn>Title: { post.title }</TableRowColumn>
+            </TableRow>
+            <TableRow>
+              <TableRowColumn>Body: { post.body }</TableRowColumn>
+            </TableRow>
+            <TableRow>
+              <TableRowColumn>Author: { post.author }</TableRowColumn>
+            </TableRow>
+            <TableRow>
+              <TableRowColumn>Time: { niceDate(post.timestamp) }</TableRowColumn>
+            </TableRow>
+            <TableRow>
+            <TableRowColumn>Vote Score: { post.voteScore }</TableRowColumn>
+          </TableRow>
+          <TableRow>
+            <TableRowColumn>Category: { post.category }</TableRowColumn>
+          </TableRow>
+          </TableBody>
+        </Table>
+        <br/><br/><br/>
 
         <Toolbar>
           <ToolbarGroup firstChild={true}>
