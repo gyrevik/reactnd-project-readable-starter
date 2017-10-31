@@ -29,13 +29,6 @@ const iconButtonElement = (
   </IconButton>
 );
 
-const rightIconMenu = (
-  <IconMenu iconButtonElement={iconButtonElement}>
-    <MenuItem>upVote</MenuItem>
-    <MenuItem>downVote</MenuItem>
-  </IconMenu>
-);
-
 class PostList extends React.Component {
   componentDidMount() {
     const { sortPostsField, viewCat } = this.props;

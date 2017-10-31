@@ -13,12 +13,30 @@ import {
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
+import {List, ListItem} from 'material-ui/List';
+import IconButton from 'material-ui/IconButton';
+import {grey400, darkBlack, lightBlack} from 'material-ui/styles/colors';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import IconMenu from 'material-ui/IconMenu';
+import MenuItem from 'material-ui/MenuItem';
+import Divider from 'material-ui/Divider';
+import Subheader from 'material-ui/Subheader';
 
 import * as actions from '../actions/actions';
 import CatSet from '../components/CatSet.js';
 import NumComments from '../components/NumComments.js';
 import { niceDate } from '../helper';
 import * as jsxStyles from '../jsxStyles';
+
+const iconButtonElement = (
+  <IconButton
+    touch={true}
+    tooltip="vote"
+    tooltipPosition="bottom-left"
+  >
+    <MoreVertIcon color={grey400} />
+  </IconButton>
+);
 
 class PostView extends React.Component {
   constructor(props) {
@@ -94,7 +112,6 @@ class PostView extends React.Component {
           </TableRow>
           </TableBody>
         </Table>
-        <br/><br/><br/>
 
         <Toolbar>
           <ToolbarGroup firstChild={true}>
@@ -133,6 +150,45 @@ class PostView extends React.Component {
             </li>
           )}
         </ul>
+
+
+
+
+
+
+        <List>
+          {comments.filter(comment => comment.deleted === false && comment.parentId === post.id)
+                   .sort(sortByKey('voteScore'))
+                   .map((comment, i) => 
+            <span key={Math.random()}>
+              <Subheader key={Math.random()}>{ niceDate(comment.timestamp) }</Subheader>
+              <ListItem
+                key={i.toString()}
+                rightIconButton={
+                  <IconMenu iconButtonElement={iconButtonElement}>
+                    <MenuItem onClick={() => voteCommentFetch(comment.id, 'upVote')}>upVote</MenuItem>
+                    <MenuItem onClick={() => voteCommentFetch(comment.id, 'downVote')}>downVote</MenuItem>
+                  </IconMenu>
+                }
+                primaryText={comment.body} 
+                secondaryText={
+                  <p>
+                    <span style={{color: darkBlack}}>
+                      Vote Score: {comment.voteScore}
+                    </span>
+                  </p>
+                }
+                secondaryTextLines={2}
+              />
+              <Divider inset={true} key={Math.random()} />
+            </span>
+          )}
+        </List>
+
+
+
+
+
 
         <Modal
           isOpen={this.state.openModal}
