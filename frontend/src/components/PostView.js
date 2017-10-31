@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Modal from 'react-modal';
-//import { setMode, voteCommentFetch, commentsFetch, createCommentFetch, createCommentErrored, editCommentFetch, 
-//  deletePostFetch, deleteCommentFetch } from '../actions/actions.js';
+import RaisedButton from 'material-ui/RaisedButton';
+
 import * as actions from '../actions/actions';
 import CatSet from '../components/CatSet.js';
 import NumComments from '../components/NumComments.js';
@@ -70,10 +70,9 @@ class PostView extends React.Component {
         <div>Vote Score: { post.voteScore }</div>
         <div>Category: { post.category }</div>
         <br/>
-        <button onClick={ this.handleModalOpen } 
-          type="button" id="openCommentModal" name="openCommentModal">
-            Add Comment
-        </button>
+        <RaisedButton onClick={ this.handleModalOpen } id="openCommentModal" name="openCommentModal">
+          Comment
+        </RaisedButton>
         <br/><br/>
         <Link to="/" onClick={() => deletePostFetch(post.id)}>
           Delete Post

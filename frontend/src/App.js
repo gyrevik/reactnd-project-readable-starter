@@ -58,7 +58,7 @@ class App extends Component {
         <Route exact path="/post" render={() => (
           <div>
             <MuiThemeProvider><Header appIntro="Readable Post Detail View" /></MuiThemeProvider>
-            <div><PostView /></div>
+            <div><MuiThemeProvider><PostView /></MuiThemeProvider></div>
           </div>
         )}/>
         <Route exact path="/postCreateEdit" render={() => (
