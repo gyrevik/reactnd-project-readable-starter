@@ -1,17 +1,12 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import { withRouter } from 'react-router';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import CatSet from './components/CatSet.js';
 import CatViewLinks from './components/CatViewLinks.js';
 import Header from './components/Header.js';
 import PostList from './components/PostList.js';
 import PostCreateEdit from './components/PostCreateEdit.js';
 import PostView from './components/PostView.js';
-
-import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {

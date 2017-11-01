@@ -55,7 +55,7 @@ class PostCreateEdit extends React.Component {
   
   render() {
     const edit = this.edit();
-    const mode = edit ? "Mode: edit" : "Mode: add";
+    //const mode = edit ? "Mode: edit" : "Mode: add";
     return (
       <div>
         <div><CatSet /></div>

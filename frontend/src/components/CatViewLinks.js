@@ -5,12 +5,9 @@ import createHistory from 'history/createBrowserHistory';
 
 import RaisedButton from 'material-ui/RaisedButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
+import {Toolbar, ToolbarGroup} from 'material-ui/Toolbar';
 
 import { setViewCat, catsFetch } from '../actions/actions';
-import { cats } from '../reducers/cats';
-import { viewCat } from '../reducers/viewCat';
-import * as jsxStyles from '../jsxStyles';
 
 class CatViewLinks extends React.Component {
   render () {

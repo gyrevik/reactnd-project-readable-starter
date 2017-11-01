@@ -5,18 +5,16 @@ import { Link } from 'react-router-dom';
 import Dialog from 'material-ui/Dialog';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
-import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
+import {Toolbar, ToolbarGroup} from 'material-ui/Toolbar';
 import {
   Table,
   TableBody,
-  TableHeader,
-  TableHeaderColumn,
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
 import {List, ListItem} from 'material-ui/List';
 import IconButton from 'material-ui/IconButton';
-import {grey400, darkBlack, lightBlack} from 'material-ui/styles/colors';
+import {grey400, darkBlack} from 'material-ui/styles/colors';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
@@ -24,15 +22,13 @@ import Divider from 'material-ui/Divider';
 import Subheader from 'material-ui/Subheader';
 
 import * as actions from '../actions/actions';
-import CatSet from '../components/CatSet.js';
 import NumComments from '../components/NumComments.js';
 import { niceDate } from '../helper';
-import * as jsxStyles from '../jsxStyles';
 
 const iconButtonElement = (
   <IconButton
     touch={true}
-    tooltip="vote"
+    tooltip=""
     tooltipPosition="bottom-left"
   >
     <MoreVertIcon color={grey400} />
@@ -105,7 +101,7 @@ class PostView extends React.Component {
     ];
 
     const sortByKey = key => (a, b) => a['voteScore'] < b['voteScore'];	// desc (number)
-    const { comments, commentError, post, deletePostFetch, voteCommentFetch, setMode, deleteCommentFetch } = this.props;
+    const { comments, post, deletePostFetch, voteCommentFetch, setMode, deleteCommentFetch } = this.props;
     return (
       <div>
         <Table>

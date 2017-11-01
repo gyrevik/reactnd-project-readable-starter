@@ -1,13 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import RaisedButton from 'material-ui/RaisedButton';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import { setPostCat, catsFetch } from '../actions/actions';
-import cats from '../reducers/cats';
-import postCat from '../reducers/postCat';
-import * as jsxStyles from '../jsxStyles';
 
 class CatSet extends React.Component {
   constructor(props) {
@@ -22,7 +17,7 @@ class CatSet extends React.Component {
   }
   
   render () {
-    const { cats, postCat, setPostCat } = this.props;
+    const { cats, postCat } = this.props;
     return (
       <span>
         <SelectField value={postCat==='all' ? 'react': postCat} 
