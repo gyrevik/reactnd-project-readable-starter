@@ -131,25 +131,7 @@ class PostView extends React.Component {
         <br/><br/>
 
         Comments: (<NumComments postId={post.id} />)<br/>
-        <ul>
-          {comments.filter(comment => comment.deleted === false && comment.parentId === post.id)
-                              .sort(sortByKey('voteScore'))
-                              .map((comment, i) => 
-            <li key={i.toString()}>
-              {comment.body}<br/>
-              Vote Score: {comment.voteScore} {' - '} 
-                <a href="javascript:void(0)" onClick={() => voteCommentFetch(comment.id, 'upVote')}>upVote</a>
-                {' - '}
-                <a href="javascript:void(0)" onClick={() => voteCommentFetch(comment.id, 'downVote')}>downVote</a>
-                {' - '}
-                <a href="javascript:void(0)" 
-                  onClick={() => this.setState({openModal:true, edit:true, comment})}>edit</a>
-                {' - '}
-                <a href="javascript:void(0)" onClick={() => deleteCommentFetch(comment.id)}>delete</a>
-                <br/>
-            </li>
-          )}
-        </ul>
+    
 
 
 
@@ -168,6 +150,8 @@ class PostView extends React.Component {
                   <IconMenu iconButtonElement={iconButtonElement}>
                     <MenuItem onClick={() => voteCommentFetch(comment.id, 'upVote')}>upVote</MenuItem>
                     <MenuItem onClick={() => voteCommentFetch(comment.id, 'downVote')}>downVote</MenuItem>
+                    <MenuItem onClick={() => this.setState({openModal:true, edit:true, comment})}>edit</MenuItem>
+                    <MenuItem onClick={() => deleteCommentFetch(comment.id)}>delete</MenuItem>
                   </IconMenu>
                 }
                 primaryText={comment.body} 
@@ -178,7 +162,7 @@ class PostView extends React.Component {
                     </span>
                   </p>
                 }
-                secondaryTextLines={2}
+                
               />
               <Divider inset={true} key={Math.random()} />
             </span>
