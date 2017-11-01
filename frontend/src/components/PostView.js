@@ -5,6 +5,7 @@ import Modal from 'react-modal';
 
 import Dialog from 'material-ui/Dialog';
 import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
 import {
   Table,
@@ -49,6 +50,7 @@ class PostView extends React.Component {
     super(props);
     
     this.handleComment = this.handleComment.bind(this);
+    this.handleComment2 = this.handleComment2.bind(this);
     this.handleModalSubmit = this.handleModalSubmit.bind(this);
     this.handleModalOpen = this.handleModalOpen.bind(this);
     this.handleOpen = this.handleOpen.bind(this);
@@ -69,7 +71,7 @@ class PostView extends React.Component {
 
   handleClose() {
     this.props.createCommentErrored(false);
-    this.setState({ open: false })
+    this.setState({ open: false }) 
   }
 
   handleModalSubmit() {
@@ -99,6 +101,28 @@ class PostView extends React.Component {
     this.setState({ openModal: false });
   }
 
+  handleComment2() {
+    console.log('this.body2.getValue: ', this.body2.getValue())
+    const commentObj = {
+      body: this.body2.getValue(), 
+      id: this.state.edit ? this.state.comment.id : Math.random().toString(),
+      parentId:this.props.post.id.toString(),
+      timestamp: this.state.edit ? this.state.comment.timestamp : Date.now(),
+      voteScore:this.state.edit ? this.state.comment.voteScore : 1,
+      author:'alex',
+      deleted:false,
+      parentDeleted:false
+    };
+    
+    if (!commentObj.body) {
+      this.props.createCommentError(true);
+      return;
+    }
+
+    this.state.edit ? this.props.editCommentFetch(commentObj) : this.props.createCommentFetch(commentObj);
+    this.setState({ openModal: false, open: false });
+  }
+
   componentDidMount() {
     this.props.commentsFetch(this.props.post.id);
   }
@@ -107,13 +131,13 @@ class PostView extends React.Component {
     const actions = [
       <RaisedButton
         label="Cancel"
-        primary={true}
+        primary={false}
         onClick={this.handleClose}
       />,
       <RaisedButton
-        label="Submit"
-        primary={true}
-        onClick={this.handleClose}
+        label={this.state.edit ? 'Edit' : 'Submit'}
+        primary={false}
+        onClick={this.handleComment2}
       />,
     ];
 
@@ -232,7 +256,16 @@ class PostView extends React.Component {
           contentStyle={customContentStyle}
           open={this.state.open}
         >
-          This dialog spans the entire width of the screen.
+          This dialog spans the entire width of the screen.<br/><br/>
+          <TextField 
+            ref={(TextField) => { this.body2 = TextField; }} 
+            id="body2"
+            defaultValue={ this.state.edit ? this.props.post.body : "" } 
+            name="body2" hintText="Body" required 
+            multiLine={true}
+            rows={2}
+            rowsMax={4}
+          />
         </Dialog>
 
 
