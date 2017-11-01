@@ -83,8 +83,6 @@ class PostView extends React.Component {
   }
 
   render() {
-    console.log('this.props.commentError: ', this.props.commentError)
-
     const actions = [
       <RaisedButton
         label="Cancel"
