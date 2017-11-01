@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import Modal from 'react-modal';
 
 import Dialog from 'material-ui/Dialog';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -50,39 +49,25 @@ class PostView extends React.Component {
     super(props);
     
     this.handleComment = this.handleComment.bind(this);
-    this.handleComment2 = this.handleComment2.bind(this);
-    this.handleModalSubmit = this.handleModalSubmit.bind(this);
     this.handleModalOpen = this.handleModalOpen.bind(this);
-    this.handleOpen = this.handleOpen.bind(this);
-    this.handleClose = this.handleClose.bind(this);
+    this.handleModalClose = this.handleModalClose.bind(this);
 
-    this.state = { openModal: false, edit: false, open: false };
+    this.state = { openModal: false, edit: false };
   }
-
+  
   handleModalOpen() {
     this.props.createCommentErrored(false);
     this.setState({ openModal: true })
   }
-  
-  handleOpen() {
-    this.props.createCommentErrored(false);
-    this.setState({ open: true })
-  }
 
-  handleClose() {
+  handleModalClose() {
     this.props.createCommentErrored(false);
-    this.setState({ open: false }) 
-  }
-
-  handleModalSubmit() {
-    if (!this.props.commentError) {
-      this.setState({ openModal: false })
-    }
+    this.setState({ openModal: false }) 
   }
 
   handleComment() {
     const commentObj = {
-      body: this.body.value, 
+      body: this.body.getValue(), 
       id: this.state.edit ? this.state.comment.id : Math.random().toString(),
       parentId:this.props.post.id.toString(),
       timestamp: this.state.edit ? this.state.comment.timestamp : Date.now(),
@@ -101,28 +86,6 @@ class PostView extends React.Component {
     this.setState({ openModal: false });
   }
 
-  handleComment2() {
-    console.log('this.body2.getValue: ', this.body2.getValue())
-    const commentObj = {
-      body: this.body2.getValue(), 
-      id: this.state.edit ? this.state.comment.id : Math.random().toString(),
-      parentId:this.props.post.id.toString(),
-      timestamp: this.state.edit ? this.state.comment.timestamp : Date.now(),
-      voteScore:this.state.edit ? this.state.comment.voteScore : 1,
-      author:'alex',
-      deleted:false,
-      parentDeleted:false
-    };
-    
-    if (!commentObj.body) {
-      this.props.createCommentError(true);
-      return;
-    }
-
-    this.state.edit ? this.props.editCommentFetch(commentObj) : this.props.createCommentFetch(commentObj);
-    this.setState({ openModal: false, open: false });
-  }
-
   componentDidMount() {
     this.props.commentsFetch(this.props.post.id);
   }
@@ -132,12 +95,12 @@ class PostView extends React.Component {
       <RaisedButton
         label="Cancel"
         primary={false}
-        onClick={this.handleClose}
+        onClick={this.handleModalClose}
       />,
       <RaisedButton
         label={this.state.edit ? 'Edit' : 'Submit'}
         primary={false}
-        onClick={this.handleComment2}
+        onClick={this.handleComment}
       />,
     ];
 
@@ -172,9 +135,6 @@ class PostView extends React.Component {
           <ToolbarGroup firstChild={true}>
             <RaisedButton onClick={ this.handleModalOpen } 
               id="openCommentModal" name="openCommentModal" label="Comment" />
-
-            <RaisedButton onClick={ this.handleOpen } 
-              id="openCommentModal" name="openCommentModal" label="Comment 2" />
             
             <RaisedButton label="Delete Post" onClick={() => deletePostFetch(post.id)}
               containerElement={<Link to="/" />} />
@@ -221,58 +181,24 @@ class PostView extends React.Component {
           )}
         </List>
 
-        <Modal
-          isOpen={this.state.openModal}
-          closeTimeoutMS={1}
-          contentLabel="Modal"
-        >
-          <h1>{this.state.edit ? "Edit" : "Add"} Comment</h1>
-          <div>
-            <form>
-              <div>
-                <textarea ref={(input) => { this.body = input; }} id="body" placeholder="Body" 
-                  defaultValue={ this.state.edit ? this.state.comment.body : '' }
-                  maxLength="140" rows="7" />
-              </div>
-              
-              <button onClick={ this.handleComment } type="button" id="submit" name="submit">
-                {this.state.edit ? "Edit" : "Submit"} Comment
-              </button>
-              <button onClick={() => this.setState({openModal:false})} 
-                type="button" id="closeCommentModal" name="closeCommentModal">
-                  Close
-              </button> 
-              {' '}
-              <Link to="/">Home</Link>
-              <span style={ jsxStyles.error }>{ ' ' } { commentError ? 'error in comment, please check' : '' }</span>
-            </form>
-          </div>
-        </Modal>
-
         <Dialog
           title="Dialog With Custom Width"
           actions={actions}
           modal={true}
           contentStyle={customContentStyle}
-          open={this.state.open}
+          open={this.state.openModal}
         >
           This dialog spans the entire width of the screen.<br/><br/>
           <TextField 
-            ref={(TextField) => { this.body2 = TextField; }} 
-            id="body2"
+            ref={(TextField) => { this.body = TextField; }} 
+            id="body"
             defaultValue={ this.state.edit ? this.props.post.body : "" } 
-            name="body2" hintText="Body" required 
+            name="body" hintText="Body" required 
             multiLine={true}
             rows={2}
             rowsMax={4}
           />
         </Dialog>
-
-
-
-
-
-
       </div>
     )
   }
