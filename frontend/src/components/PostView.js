@@ -5,16 +5,11 @@ import { Link } from 'react-router-dom';
 import Dialog from 'material-ui/Dialog';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
-import {Toolbar, ToolbarGroup} from 'material-ui/Toolbar';
-import {
-  Table,
-  TableBody,
-  TableRow,
-  TableRowColumn,
-} from 'material-ui/Table';
-import {List, ListItem} from 'material-ui/List';
+import { Toolbar, ToolbarGroup } from 'material-ui/Toolbar';
+import { Table, TableBody, TableRow, TableRowColumn } from 'material-ui/Table';
+import { List, ListItem } from 'material-ui/List';
 import IconButton from 'material-ui/IconButton';
-import {grey400, darkBlack} from 'material-ui/styles/colors';
+import { grey400, darkBlack } from 'material-ui/styles/colors';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
@@ -24,6 +19,7 @@ import Subheader from 'material-ui/Subheader';
 import * as actions from '../actions/actions';
 import NumComments from '../components/NumComments.js';
 import { niceDate } from '../helper';
+import * as jsxStyles from '../jsxStyles';
 
 const iconButtonElement = (
   <IconButton
@@ -74,7 +70,7 @@ class PostView extends React.Component {
     };
     
     if (!commentObj.body) {
-      this.props.createCommentError(true);
+      this.props.createCommentErrored(true);
       return;
     }
 
@@ -87,6 +83,8 @@ class PostView extends React.Component {
   }
 
   render() {
+    console.log('this.props.commentError: ', this.props.commentError)
+
     const actions = [
       <RaisedButton
         label="Cancel"
@@ -194,6 +192,7 @@ class PostView extends React.Component {
             rows={2}
             rowsMax={4}
           />
+          <span style={jsxStyles.error}>{this.props.commentError ? 'please submit with text or cancel' : ''}</span>
         </Dialog>
       </div>
     )
