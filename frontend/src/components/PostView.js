@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Modal from 'react-modal';
 
+import Dialog from 'material-ui/Dialog';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
 import {
@@ -38,6 +39,11 @@ const iconButtonElement = (
   </IconButton>
 );
 
+const customContentStyle = {
+  width: '100%',
+  maxWidth: 'none',
+};
+
 class PostView extends React.Component {
   constructor(props) {
     super(props);
@@ -45,13 +51,25 @@ class PostView extends React.Component {
     this.handleComment = this.handleComment.bind(this);
     this.handleModalSubmit = this.handleModalSubmit.bind(this);
     this.handleModalOpen = this.handleModalOpen.bind(this);
+    this.handleOpen = this.handleOpen.bind(this);
+    this.handleClose = this.handleClose.bind(this);
 
-    this.state = { openModal: false, edit: false };
+    this.state = { openModal: false, edit: false, open: false };
   }
 
   handleModalOpen() {
     this.props.createCommentErrored(false);
     this.setState({ openModal: true })
+  }
+  
+  handleOpen() {
+    this.props.createCommentErrored(false);
+    this.setState({ open: true })
+  }
+
+  handleClose() {
+    this.props.createCommentErrored(false);
+    this.setState({ open: false })
   }
 
   handleModalSubmit() {
@@ -86,6 +104,19 @@ class PostView extends React.Component {
   }
 
   render() {
+    const actions = [
+      <RaisedButton
+        label="Cancel"
+        primary={true}
+        onClick={this.handleClose}
+      />,
+      <RaisedButton
+        label="Submit"
+        primary={true}
+        onClick={this.handleClose}
+      />,
+    ];
+
     const sortByKey = key => (a, b) => a['voteScore'] < b['voteScore'];	// desc (number)
     const { comments, commentError, post, deletePostFetch, voteCommentFetch, setMode, deleteCommentFetch } = this.props;
     return (
@@ -117,6 +148,9 @@ class PostView extends React.Component {
           <ToolbarGroup firstChild={true}>
             <RaisedButton onClick={ this.handleModalOpen } 
               id="openCommentModal" name="openCommentModal" label="Comment" />
+
+            <RaisedButton onClick={ this.handleOpen } 
+              id="openCommentModal" name="openCommentModal" label="Comment 2" />
             
             <RaisedButton label="Delete Post" onClick={() => deletePostFetch(post.id)}
               containerElement={<Link to="/" />} />
@@ -131,12 +165,6 @@ class PostView extends React.Component {
         <br/><br/>
 
         Comments: (<NumComments postId={post.id} />)<br/>
-    
-
-
-
-
-
 
         <List>
           {comments.filter(comment => comment.deleted === false && comment.parentId === post.id)
@@ -169,11 +197,6 @@ class PostView extends React.Component {
           )}
         </List>
 
-
-
-
-
-
         <Modal
           isOpen={this.state.openModal}
           closeTimeoutMS={1}
@@ -201,6 +224,22 @@ class PostView extends React.Component {
             </form>
           </div>
         </Modal>
+
+        <Dialog
+          title="Dialog With Custom Width"
+          actions={actions}
+          modal={true}
+          contentStyle={customContentStyle}
+          open={this.state.open}
+        >
+          This dialog spans the entire width of the screen.
+        </Dialog>
+
+
+
+
+
+
       </div>
     )
   }
