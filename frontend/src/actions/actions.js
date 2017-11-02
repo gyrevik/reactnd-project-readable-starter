@@ -418,8 +418,8 @@ export function deletePostFetch(id) {
         if (!response.ok) {
           throw Error(response.statusText);
         }
-        else
-          console.log(`deletePostFetch(${id}) response.ok is true`);
+        //else
+        //console.log(`deletePostFetch(${id}) response.ok is true`);
         //dispatch(itemsIsLoading(false));
         return response;
       })

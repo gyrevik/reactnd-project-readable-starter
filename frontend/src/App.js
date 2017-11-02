@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
+import { Router, Route } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Category from './components/Category';
@@ -19,18 +19,10 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Route exact path="/" render={() => (
-          <Root />
-        )}/>
-        <Route exact path="/category" render={() =>(
-          <Category />
-        )}/>
-        <Route exact path="/post" render={() => (
-          <Post />
-        )}/>
-        <Route exact path="/postCreateEdit" render={() => (
-          <PostCE />
-        )} />
+        <Route exact path="/" component={Root}/>
+        <Route exact path="/category" component={Category}/>
+        <Route exact path="/post" component={Post}/>
+        <Route exact path="/postCreateEdit" component={PostCE} />
       </div>
     );
   }
