@@ -13,6 +13,7 @@ class CatViewLinks extends React.Component {
   render () {
     const { setViewCat, viewCat, cats } = this.props;
     const path = createHistory().location.pathname;
+    console.log('path: ', path)
     return (
       <div>
         <MuiThemeProvider>
@@ -27,9 +28,9 @@ class CatViewLinks extends React.Component {
                   containerElement={<Link to={`/${cat.path}`} key={i.toString()} />}
                 />
               )}
-              <RaisedButton label="all" primary={viewCat==='all' && path !== '/' ? true : false} onClick={() => setViewCat('all')} 
+              <RaisedButton label="all" primary={viewCat==='all' && path === '/all' ? true : false} onClick={() => setViewCat('all')} 
                 containerElement={<Link to="/all" />} />
-              <RaisedButton label="home" primary={path === '/' ? true : false} onClick={() => setViewCat('all')} 
+              <RaisedButton label="home" primary={path === '/' ? true : false} onClick={() => setViewCat('home')} 
                 containerElement={<Link to="/" />} />
             </ToolbarGroup>
           </Toolbar>
