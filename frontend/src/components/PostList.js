@@ -65,7 +65,9 @@ class PostList extends React.Component {
                       <MenuItem onClick={() => votePostFetch(post.id, 'upVote', sortPostsField)}>upVote</MenuItem>
                       <MenuItem onClick={() => votePostFetch(post.id, 'downVote', sortPostsField)}>downVote</MenuItem>
                       <MenuItem onClick={() => deletePostFetch(post.id)}>delete</MenuItem>
-                      <MenuItem onClick={() => votePostFetch(post.id, 'downVote', sortPostsField)}>edit</MenuItem>
+                      <MenuItem 
+                        onClick={() => setPostCurrent(post)}
+                        containerElement={<Link to="/postCreateEdit" />}>edit</MenuItem>
                     </IconMenu>
                   }
                   primaryText={<Link to="/post" onClick={() => setPostCurrent(post)}>{ post.title }</Link>} 
