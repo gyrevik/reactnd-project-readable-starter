@@ -10,17 +10,7 @@ import PostCE from './components/PostCE';
 import './App.css';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      backend: 'backend-data'
-    }
-  }
-  
   render() {
-    const {cats} = this.props;
-    console.log('cats: ', cats)
-
     return (
       <div className="App">
         <Switch>
@@ -34,10 +24,4 @@ class App extends Component {
   }
 }
 
-//export default withRouter(App)
-
-const mapStateToProps = ({ cats }) => {
-  return { cats };
-}
-
-export default connect(mapStateToProps)(App)
+export default withRouter(App)
