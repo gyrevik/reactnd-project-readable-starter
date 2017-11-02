@@ -27,14 +27,11 @@ export default function posts (state = [], action) {
       )
     }
     case DELETE_POST: {
-      console.log('in posts reducer DELETE_POST case with action.id: ', action.id)
-      console.log('posts array before: ', state)
       const newState = state.map((post) => {
         if (action.id === post.id) 
           post.deleted = true;
         return post;
       });
-      console.log('posts array after: ', newState)
       return newState;
     }
     case VOTE_POST: {

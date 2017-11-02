@@ -399,7 +399,6 @@ export const deletePostErrored = (bool) => {
 }
 
 export const deletePost = (id) => {
-  console.log('entered deletePost with id: ', id)
   return {
     type: DELETE_POST,
     id
@@ -407,7 +406,6 @@ export const deletePost = (id) => {
 }
 
 export function deletePostFetch(id) {
-  console.log('entered deletePostFetch with id: ', id)
   return (dispatch) => {
     fetch(`${url}/posts/${id}`, { 
       method: 'DELETE',
