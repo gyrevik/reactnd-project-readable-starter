@@ -21,7 +21,7 @@ import { niceDate } from '../helper';
 const iconButtonElement = (
   <IconButton
     touch={true}
-    tooltip="vote"
+    tooltip=""
     tooltipPosition="bottom-left"
   >
     <MoreVertIcon color={grey400} />
@@ -35,7 +35,8 @@ class PostList extends React.Component {
   }
   
   render () {
-    const { posts, sortPostsField, setSortPostsField, setPostCurrent, votePostFetch, viewCat } = this.props;
+    const { posts, sortPostsField, setSortPostsField, setPostCurrent, 
+      votePostFetch, deletePostFetch, viewCat } = this.props;
     return (
       <div>
         <MuiThemeProvider>
@@ -53,7 +54,7 @@ class PostList extends React.Component {
 
         <MuiThemeProvider>
           <List>
-            {posts.filter(post => post.category === viewCat || viewCat === 'all')
+            {posts.filter(post => post.category === viewCat || viewCat === 'all' && post.deleted !== true)
                   .map((post, i) =>
               <span key={Math.random()}>
                 <Subheader key={Math.random()}>{ niceDate(post.timestamp) }</Subheader>
@@ -63,6 +64,8 @@ class PostList extends React.Component {
                     <IconMenu iconButtonElement={iconButtonElement}>
                       <MenuItem onClick={() => votePostFetch(post.id, 'upVote', sortPostsField)}>upVote</MenuItem>
                       <MenuItem onClick={() => votePostFetch(post.id, 'downVote', sortPostsField)}>downVote</MenuItem>
+                      <MenuItem onClick={() => deletePostFetch(post.id)}>delete</MenuItem>
+                      <MenuItem onClick={() => votePostFetch(post.id, 'downVote', sortPostsField)}>edit</MenuItem>
                     </IconMenu>
                   }
                   primaryText={<Link to="/post" onClick={() => setPostCurrent(post)}>{ post.title }</Link>} 
