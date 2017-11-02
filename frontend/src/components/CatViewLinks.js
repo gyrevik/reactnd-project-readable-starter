@@ -7,7 +7,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {Toolbar, ToolbarGroup} from 'material-ui/Toolbar';
 
-import { setViewCat, catsFetch } from '../actions/actions';
+import { setViewCat } from '../actions/actions';
 
 class CatViewLinks extends React.Component {
   render () {
@@ -43,4 +43,4 @@ const mapStateToProps = ({ cats, viewCat }) => {
   return { cats, viewCat };
 }
 
-export default connect(mapStateToProps, { setViewCat, catsFetch })(CatViewLinks)
+export default connect(mapStateToProps, { setViewCat })(CatViewLinks)

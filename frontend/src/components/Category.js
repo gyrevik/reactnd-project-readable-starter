@@ -5,20 +5,26 @@ import CatViewLinks from '../components/CatViewLinks';
 import PostCreateEdit from '../components/PostCreateEdit';
 import PostList from '../components/PostList';
 
-const Category = () => (
-  <div>
-    <MuiThemeProvider><Header appIntro="Readable Category View" /></MuiThemeProvider>
-    <div>
-      <MuiThemeProvider><CatViewLinks /></MuiThemeProvider>
-    </div>
-    <div>
-      <br />
-      <MuiThemeProvider><PostCreateEdit /></MuiThemeProvider>
-    </div>
-    <div>
-      <PostList />
-    </div>
-  </div>
-);
+class Category extends React.Component {
+  render () {
+    console.log('this.props.params: ', this.props.params)
+    //console.log('this.props.params.category: ', this.props.params.category)
+    return (
+      <div>
+        <MuiThemeProvider><Header appIntro="Readable Category View" /></MuiThemeProvider>
+        <div>
+          <MuiThemeProvider><CatViewLinks /></MuiThemeProvider>
+        </div>
+        <div>
+          <br />
+          <MuiThemeProvider><PostCreateEdit /></MuiThemeProvider>
+        </div>
+        <div>
+          <PostList />
+        </div>
+      </div>
+    )
+  }
+}
 
 export default Category
