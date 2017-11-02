@@ -24,11 +24,11 @@ class CatViewLinks extends React.Component {
                   label={cat.name} 
                   primary={viewCat===cat.name && path !== '/' ? true : false} 
                   onClick={() => setViewCat(cat.name)} 
-                  containerElement={<Link to="/category" key={i.toString()} />}
+                  containerElement={<Link to={`/${cat.path}`} key={i.toString()} />}
                 />
               )}
               <RaisedButton label="all" primary={viewCat==='all' && path !== '/' ? true : false} onClick={() => setViewCat('all')} 
-                containerElement={<Link to="/category" />} />
+                containerElement={<Link to="/all" />} />
               <RaisedButton label="home" primary={path === '/' ? true : false} onClick={() => setViewCat('all')} 
                 containerElement={<Link to="/" />} />
             </ToolbarGroup>

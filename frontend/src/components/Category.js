@@ -8,6 +8,7 @@ import PostList from '../components/PostList';
 class Category extends React.Component {
   render () {
     console.log('this.props.params: ', this.props.params)
+    console.log('this.props.route: ', this.props.route)
     //console.log('this.props.params.category: ', this.props.params.category)
     return (
       <div>
