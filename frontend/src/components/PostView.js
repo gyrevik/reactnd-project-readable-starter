@@ -17,7 +17,7 @@ import Divider from 'material-ui/Divider';
 import Subheader from 'material-ui/Subheader';
 
 import * as actions from '../actions/actions';
-import NumComments from '../components/NumComments.js';
+import NumComments from '../components/NumComments';
 import { niceDate } from '../helper';
 import * as jsxStyles from '../jsxStyles';
 

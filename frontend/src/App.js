@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import CatViewLinks from './components/CatViewLinks.js';
-import Header from './components/Header.js';
-import PostList from './components/PostList.js';
-import PostCreateEdit from './components/PostCreateEdit.js';
-import PostView from './components/PostView.js';
+import Category from './components/Category';
+import Root from './components/Root';
+import Post from './components/Post';
+import PostCE from './components/PostCE';
 import './App.css';
 
 class App extends Component {
@@ -21,46 +20,16 @@ class App extends Component {
     return (
       <div className="App">
         <Route exact path="/" render={() => (
-          <div>
-            <MuiThemeProvider><Header appIntro="Readable Home" /></MuiThemeProvider>
-      		<div>
-          <MuiThemeProvider><CatViewLinks /></MuiThemeProvider>
-      		</div>
-            <div>
-              <br />
-              <MuiThemeProvider><PostCreateEdit /></MuiThemeProvider>
-            </div>
-            <div>
-              <PostList />
-            </div>
-          </div>
+          <Root />
         )}/>
         <Route exact path="/category" render={() =>(
-          <div>
-            <MuiThemeProvider><Header appIntro="Readable Category View" /></MuiThemeProvider>
-            <div>
-            <MuiThemeProvider><CatViewLinks /></MuiThemeProvider>
-            </div>
-            <div>
-              <br />
-              <MuiThemeProvider><PostCreateEdit /></MuiThemeProvider>
-            </div>
-            <div>
-              <PostList />
-            </div>
-          </div>
+          <Category />
         )}/>
         <Route exact path="/post" render={() => (
-          <div>
-            <MuiThemeProvider><Header appIntro="Readable Post Detail View" /></MuiThemeProvider>
-            <div><MuiThemeProvider><PostView /></MuiThemeProvider></div>
-          </div>
+          <Post />
         )}/>
         <Route exact path="/postCreateEdit" render={() => (
-          <div>
-            <MuiThemeProvider><Header appIntro="Readable Post Create/Edit View" /></MuiThemeProvider>
-            <MuiThemeProvider><PostCreateEdit /></MuiThemeProvider>
-          </div>
+          <PostCE />
         )} />
       </div>
     );
