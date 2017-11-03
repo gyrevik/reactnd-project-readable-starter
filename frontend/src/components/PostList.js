@@ -88,8 +88,6 @@ class PostList extends React.Component {
             )}
           </List>
         </MuiThemeProvider>
-
-
       </div>
     )
   }
