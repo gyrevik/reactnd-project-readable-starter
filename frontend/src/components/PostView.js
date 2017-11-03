@@ -79,7 +79,9 @@ class PostView extends React.Component {
   }
 
   componentDidMount() {
-    this.props.commentsFetch(this.props.post.id);
+    console.log('componentDidMount')
+    console.log('this.props.post_id: ', this.props.post_id)
+    this.props.commentsFetch(this.props.post_id);
   }
 
   render() {
@@ -98,6 +100,10 @@ class PostView extends React.Component {
 
     const sortByKey = key => (a, b) => a['voteScore'] < b['voteScore'];	// desc (number)
     const { comments, post, deletePostFetch, voteCommentFetch, setMode, deleteCommentFetch } = this.props;
+    
+    console.log('this.props.category: ', this.props.category)
+    console.log('this.props.post_id: ', this.props.post_id)
+    console.log('comments: ', comments)
     return (
       <div>
         <Table>
@@ -143,7 +149,7 @@ class PostView extends React.Component {
         Comments: (<NumComments postId={post.id} />)<br/>
 
         <List>
-          {comments.filter(comment => comment.deleted === false && comment.parentId === post.id)
+          {comments.filter(comment => comment.deleted === false && comment.parentId === this.props.post_id)
                    .sort(sortByKey('voteScore'))
                    .map((comment, i) => 
             <span key={Math.random()}>

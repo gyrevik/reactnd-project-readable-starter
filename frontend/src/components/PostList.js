@@ -71,7 +71,7 @@ class PostList extends React.Component {
                         containerElement={<Link to="/postCreateEdit" />}>edit</MenuItem>
                     </IconMenu>
                   }
-                  primaryText={<Link to="/post" onClick={() => setPostCurrent(post)}>{ post.title }</Link>} 
+                  primaryText={<Link to={`/${post.category}/${post.id}`} onClick={() => setPostCurrent(post)}>{ post.title }</Link>} 
                   secondaryText={
                     <p>
                       <span style={{color: darkBlack}}>Category: { post.category } {' '}
