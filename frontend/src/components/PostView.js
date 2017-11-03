@@ -79,8 +79,6 @@ class PostView extends React.Component {
   }
 
   componentDidMount() {
-    console.log('componentDidMount')
-    console.log('this.props.post_id: ', this.props.post_id)
     this.props.commentsFetch(this.props.post_id);
     this.props.postFetch(this.props.post_id);
   }
@@ -102,9 +100,6 @@ class PostView extends React.Component {
     const sortByKey = key => (a, b) => a['voteScore'] < b['voteScore'];	// desc (number)
     const { comments, post, deletePostFetch, voteCommentFetch, setMode, deleteCommentFetch } = this.props;
     
-    console.log('this.props.category: ', this.props.category)
-    console.log('this.props.post_id: ', this.props.post_id)
-    console.log('comments: ', comments)
     return (
       <div>
         <Table>
@@ -140,9 +135,6 @@ class PostView extends React.Component {
             
             <RaisedButton label="Edit Post" onClick={() => setMode('edit')}
               containerElement={<Link to="/postCreateEdit" />} />
-            
-            <RaisedButton label="Home" containerElement={<Link to="/" />} />
-
           </ToolbarGroup>
         </Toolbar>
         <br/><br/>

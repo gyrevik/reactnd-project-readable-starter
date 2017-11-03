@@ -8,9 +8,7 @@ import PostList from '../components/PostList';
 const Root = () => (
   <div>
     <MuiThemeProvider><Header appIntro="Readable Home" /></MuiThemeProvider>
-    <div>
-    <MuiThemeProvider><CatViewLinks /></MuiThemeProvider>
-    </div>
+    <div><MuiThemeProvider><CatViewLinks /></MuiThemeProvider></div>
     <div>
       <br />
       <MuiThemeProvider><PostCreateEdit /></MuiThemeProvider>

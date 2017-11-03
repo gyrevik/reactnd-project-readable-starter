@@ -7,13 +7,16 @@ import RaisedButton from 'material-ui/RaisedButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {Toolbar, ToolbarGroup} from 'material-ui/Toolbar';
 
-import { setViewCat } from '../actions/actions';
+import { setViewCat, catsFetch } from '../actions/actions';
 
 class CatViewLinks extends React.Component {
+  componentDidMount() {
+    this.props.catsFetch();
+  }
+
   render () {
     const { setViewCat, viewCat, cats } = this.props;
     const path = createHistory().location.pathname;
-    console.log('path: ', path)
     return (
       <div>
         <MuiThemeProvider>
@@ -44,4 +47,4 @@ const mapStateToProps = ({ cats, viewCat }) => {
   return { cats, viewCat };
 }
 
-export default connect(mapStateToProps, { setViewCat })(CatViewLinks)
+export default connect(mapStateToProps, { setViewCat, catsFetch })(CatViewLinks)
