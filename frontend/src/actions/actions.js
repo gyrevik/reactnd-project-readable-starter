@@ -3,7 +3,7 @@ import {
   CREATE_POST, ERROR_CREATE_POST, ERROR_EDIT_POST, EDIT_POST, DELETE_POST, SORT_POSTS_FIELD,
   CREATE_COMMENT, EDIT_COMMENT, DELETE_COMMENT, GET_COMMENTS, SORT_POSTS_DIRECTION, ERROR_EDIT_COMMENT,
   ERROR_CREATE_COMMENT, VOTE_COMMENT, VOTE_POST, GET_POSTS, GET_CATS, ERROR_COMMENTS, ERROR_DELETE_POST,
-  ERROR_VOTE_POST, ERROR_DELETE_COMMENT
+  ERROR_VOTE_POST, ERROR_DELETE_COMMENT, ERROR_GET_POST, GET_POST
 } from '../actions/types';
 
 import { url, headers } from '../helper';
@@ -136,6 +136,40 @@ export function commentsFetch(postId) {
       .catch(() => dispatch(commentsErrored(true)));
   };
 }
+
+// thunk for getting one post
+// | `GET /posts/:id` | Get the details of a single post. | |
+export const postErrored = (bool) => {
+  return {
+    type: ERROR_GET_POST,
+    error: bool
+  }
+}
+
+export const getPost = (post) => {
+  return {
+    type: GET_POST,
+    post
+  }
+}
+
+export function postFetch(id) {
+  return (dispatch) => {
+    fetch(`${url}/posts/${id}`, { headers })
+      .then((response) => {
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+        return response;
+      })
+      .then((response) => response.json())
+      .then((post) => {
+        dispatch(getPost(post));
+      })
+      .catch(() => dispatch(postErrored(true)));
+  };
+}
+// end thunk for getting one post
 
 // thunk for getting posts
 export const postsErrored = (bool) => {

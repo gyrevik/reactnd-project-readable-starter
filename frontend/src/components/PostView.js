@@ -82,6 +82,7 @@ class PostView extends React.Component {
     console.log('componentDidMount')
     console.log('this.props.post_id: ', this.props.post_id)
     this.props.commentsFetch(this.props.post_id);
+    this.props.postFetch(this.props.post_id);
   }
 
   render() {
