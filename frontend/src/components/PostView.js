@@ -134,7 +134,7 @@ class PostView extends React.Component {
               containerElement={<Link to="/" />} />
             
             <RaisedButton label="Edit Post" onClick={() => setMode('edit')}
-              containerElement={<Link to="/postCreateEdit" />} />
+              containerElement={<Link to={`/${this.props.category}/edit/${this.props.post_id}`} />} />
           </ToolbarGroup>
         </Toolbar>
         <br/><br/>

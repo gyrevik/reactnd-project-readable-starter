@@ -2,7 +2,7 @@ import React from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Header from '../components/Header';
 import CatViewLinks from '../components/CatViewLinks';
-import PostCreateEdit from '../components/PostCreateEdit';
+import PostCEContainer from '../components/PostCEContainer';
 import PostList from '../components/PostList';
 
 class Category extends React.Component {
@@ -13,7 +13,7 @@ class Category extends React.Component {
         <div><MuiThemeProvider><CatViewLinks /></MuiThemeProvider></div>
         <div>
           <br />
-          <MuiThemeProvider><PostCreateEdit /></MuiThemeProvider>
+          <MuiThemeProvider><PostCEContainer /></MuiThemeProvider>
         </div>
         <div>
           <PostList />

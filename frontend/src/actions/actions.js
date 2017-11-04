@@ -147,6 +147,7 @@ export const postErrored = (bool) => {
 }
 
 export const getPost = (post) => {
+  console.log('post from server: ', post)
   return {
     type: GET_POST,
     post
