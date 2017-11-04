@@ -147,7 +147,6 @@ export const postErrored = (bool) => {
 }
 
 export const getPost = (post) => {
-  console.log('post from server: ', post)
   return {
     type: GET_POST,
     post
@@ -347,14 +346,12 @@ export const editPost = (post) => {
 // params:  title - [String] 
 //          body  - [String]
 export function editPostFetch(post) {
-  console.log('entered editPostFetch with post: ', post)
   return (dispatch) => {
     //dispatch(itemsIsLoading(true));
     // initialize postError to false so that it does not say true after a previous error
     dispatch(editPostErrored(false));
     if (!post.title || !post.body) {
       //throw new Error('invalid post: category, title and body required');
-      console.log('editPostFetch dispatching error')
       dispatch(editPostErrored(true));
       return;
     }
@@ -370,10 +367,8 @@ export function editPostFetch(post) {
     })
     .then((response) => {
       if (!response.ok) {
-        console.log('editPostFetch response.ok: ', response.ok)
         throw Error(response.statusText);
       }
-      console.log('editPostFetch response.ok: ', response.ok)
       //dispatch(itemsIsLoading(false));
       return response;
     })

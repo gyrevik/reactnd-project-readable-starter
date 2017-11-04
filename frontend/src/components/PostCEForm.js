@@ -9,11 +9,9 @@ import * as jsxStyles from '../jsxStyles';
  * A simple example of `AppBar` with an icon on the right.
  * By default, the left icon is a navigation-menu.
  */
-class PostCEForm extends React.Component {  //= ({ post, postError, edit }) => (
+class PostCEForm extends React.Component {
   constructor(props, context) {
     super(props, context);
-    console.log('props.post in constructor: ', props.post)
-    console.log('this.props.post in constructor: ', this.props.post)
     this.state = {
       title: '',
       body: ''
@@ -24,20 +22,8 @@ class PostCEForm extends React.Component {  //= ({ post, postError, edit }) => (
     this.handleBodyChange = this.handleBodyChange.bind(this);
   }
 
-  componentDidMount () {
-    console.log('componentDidMount this.props.post: ', this.props.post)
-  }
-
   componentWillReceiveProps (nextProps) {
-    console.log('componentWillReceiveProps this.props.post: ', this.props.post)
-    console.log('componentWillReceiveProps nextProps.post: ', nextProps.post)
-    console.log('componentWillReceiveProps nextProps.post.title: ', nextProps.post.title)
-    console.log('componentWillReceiveProps nextProps.post.body: ', nextProps.post.body)
-
-    console.log(typeof(nextProps.post.title === undefined))
-    console.log(nextProps.post.title === undefined)
-    
-    if (nextProps.post.title !== undefined && nextProps.post.body !== undefined)
+    if (nextProps.post.title !== undefined && nextProps.post.body !== undefined && this.props.edit)  //this.props.match.path !== '/')
       this.setState({title: nextProps.post.title, body: nextProps.post.body});
   }
 
@@ -68,19 +54,12 @@ class PostCEForm extends React.Component {  //= ({ post, postError, edit }) => (
       deleted:    false
     }
 
-    console.log('edit: ', edit)
-    console.log('postObj: ', postObj)
     edit ? this.props.editPostFetch( postObj ) : this.props.createPostFetch( postObj );
 
     if (edit) this.props.history.push(`/${this.props.post.category}/${this.props.post.id}`);
   }
   
   render() {
-    //const edit = this.edit();
-    console.log('this.state.title: ', this.state.title)
-    console.log('this.state.body: ', this.state.body)
-    console.log('render() this.props.post: ', this.props.post)
-
     return (
       <div>
         <div align="center">

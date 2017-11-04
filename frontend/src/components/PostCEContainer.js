@@ -13,18 +13,12 @@ import PostCEForm from '../components/PostCEForm';
 class PostCEContainer extends React.Component {
   componentDidMount() {
     this.props.editPostErrored(false);
-    console.log('this.props.match: ', this.props.match)
+    console.log('PostCEContainer this.props.match: ', this.props.match)
 
     this.props.edit && this.props.postFetch(this.props.match.params.post_id);
   }
 
-  componentWillReceiveProps (nextProps) {
-    console.log('componentWillReceiveProps this.props.post: ', this.props.post)
-    console.log('componentWillReceiveProps nextProps.post: ', nextProps.post)
-  }
-
   render() {
-    console.log('render this.props.post: ', this.props.post)
     return (
       <MuiThemeProvider>
         <div>
@@ -35,16 +29,15 @@ class PostCEContainer extends React.Component {
             postError={this.props.postError}
             editPostFetch={this.props.editPostFetch}
             createPostFetch={this.props.createPostFetch}
-            history={this.props.history} />
+            history={this.props.history}
+            match={this.props.match} />
         </div>
       </MuiThemeProvider>
     )
   }
 }
 
-const mapStateToProps = ({ cats, postError, post, posts, postCat }) => { 
-  console.log('mapStateToProps.post: ', post)
-
+const mapStateToProps = ({ cats, postError, post, posts, postCat }) => {
   return { postError, post, posts, cats, postCat };
 }
 
