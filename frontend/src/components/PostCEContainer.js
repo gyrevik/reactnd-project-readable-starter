@@ -14,16 +14,13 @@ class PostCEContainer extends React.Component {
   componentDidMount() {
     this.props.editPostErrored(false);
     console.log('this.props.match: ', this.props.match)
-    this.props.postFetch(this.props.match.params.post_id);
+
+    this.props.edit && this.props.postFetch(this.props.match.params.post_id);
   }
 
   componentWillReceiveProps (nextProps) {
     console.log('componentWillReceiveProps this.props.post: ', this.props.post)
     console.log('componentWillReceiveProps nextProps.post: ', nextProps.post)
-  }
-
-  edit = () => {
-    return this.props.match.path === '/:category/edit/:post_id';
   }
 
   render() {
@@ -34,7 +31,7 @@ class PostCEContainer extends React.Component {
           <CatSet />
           <PostCEForm 
             post={this.props.post} 
-            edit={this.edit()} 
+            edit={this.props.edit} 
             postError={this.props.postError}
             editPostFetch={this.props.editPostFetch}
             createPostFetch={this.props.createPostFetch}

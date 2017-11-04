@@ -11,7 +11,7 @@ const Root = () => (
     <div><MuiThemeProvider><CatViewLinks /></MuiThemeProvider></div>
     <div>
       <br />
-      <MuiThemeProvider><PostCEContainer /></MuiThemeProvider>
+      <MuiThemeProvider><PostCEContainer edit={false} /></MuiThemeProvider>
     </div>
     <div>
       <PostList />
