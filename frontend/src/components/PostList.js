@@ -68,7 +68,7 @@ class PostList extends React.Component {
                       <MenuItem onClick={() => deletePostFetch(post.id)}>delete</MenuItem>
                       <MenuItem 
                         onClick={() => setPostCurrent(post)}
-                        containerElement={<Link to="/postCreateEdit" />}>edit</MenuItem>
+                        containerElement={<Link to={`/${post.category}/edit/${post.id}`} />}>edit</MenuItem>
                     </IconMenu>
                   }
                   primaryText={<Link to={`/${post.category}/${post.id}`} onClick={() => setPostCurrent(post)}>{ post.title }</Link>} 

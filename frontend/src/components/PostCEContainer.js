@@ -13,8 +13,6 @@ import PostCEForm from '../components/PostCEForm';
 class PostCEContainer extends React.Component {
   componentDidMount() {
     this.props.editPostErrored(false);
-    console.log('PostCEContainer this.props.match: ', this.props.match)
-
     this.props.edit && this.props.postFetch(this.props.match.params.post_id);
   }
 
