@@ -42,6 +42,7 @@ class PostCEForm extends React.Component {
       return;
     }
 
+    console.log('this.props.postCat: ', this.props.postCat)
     const category = this.props.postCat === 'all' ? 'react' : this.props.postCat;
     const postObj = {
       id:         edit ? this.props.post.id : Math.random().toString(), 
