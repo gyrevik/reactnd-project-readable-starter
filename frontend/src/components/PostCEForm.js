@@ -10,8 +10,8 @@ import * as jsxStyles from '../jsxStyles';
  * By default, the left icon is a navigation-menu.
  */
 class PostCEForm extends React.Component {
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
     this.state = {
       title: '',
       body: ''

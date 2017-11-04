@@ -26,7 +26,9 @@ class PostCEContainer extends React.Component {
             edit={this.props.edit} 
             postError={this.props.postError}
             editPostFetch={this.props.editPostFetch}
+            editPostErrored={this.props.editPostErrored}
             createPostFetch={this.props.createPostFetch}
+            createPostErrored={this.props.createPostErrored}
             history={this.props.history}
             match={this.props.match} />
         </div>
