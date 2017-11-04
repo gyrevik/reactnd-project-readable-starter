@@ -1,4 +1,5 @@
 import React from 'react';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 
 /**
@@ -6,11 +7,13 @@ import AppBar from 'material-ui/AppBar';
  * By default, the left icon is a navigation-menu.
  */
 const Header = ({ appIntro }) => (
-  <AppBar
-    title={ appIntro }
-    iconClassNameRight="muidocs-icon-navigation-expand-more"
-    showMenuIconButton={ false }
-  />
+  <MuiThemeProvider>
+    <AppBar
+      title={ appIntro }
+      iconClassNameRight="muidocs-icon-navigation-expand-more"
+      showMenuIconButton={ false }
+    />
+  </MuiThemeProvider>
 );
 
 export default Header;

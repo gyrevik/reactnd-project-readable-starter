@@ -31,15 +31,14 @@ class PostCEContainer extends React.Component {
     return (
       <MuiThemeProvider>
         <div>
-          <Header appIntro="Readable Post Create/Edit View" />
-          <div><CatSet /></div>
-            <PostCEForm 
-              post={this.props.post} 
-              edit={this.edit()} 
-              postError={this.props.postError}
-              editPostFetch={this.props.editPostFetch}
-              createPostFetch={this.props.createPostFetch}
-              history={this.props.history} />
+          <CatSet />
+          <PostCEForm 
+            post={this.props.post} 
+            edit={this.edit()} 
+            postError={this.props.postError}
+            editPostFetch={this.props.editPostFetch}
+            createPostFetch={this.props.createPostFetch}
+            history={this.props.history} />
         </div>
       </MuiThemeProvider>
     )
