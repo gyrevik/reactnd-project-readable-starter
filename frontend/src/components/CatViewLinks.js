@@ -17,6 +17,7 @@ class CatViewLinks extends React.Component {
   render () {
     const { setViewCat, viewCat, cats } = this.props;
     const path = createHistory().location.pathname;
+    console.log('this.props.match: ', this.props.match)
     return (
       <div>
         <MuiThemeProvider>
@@ -26,7 +27,7 @@ class CatViewLinks extends React.Component {
                 <RaisedButton 
                   key={Math.random()}
                   label={cat.name} 
-                  primary={viewCat===cat.name && path !== '/' ? true : false} 
+                  primary={this.props.match.params.category===cat.name && path !== '/' ? true : false} 
                   onClick={() => setViewCat(cat.name)} 
                   containerElement={<Link to={`/${cat.path}`} key={i.toString()} />}
                 />

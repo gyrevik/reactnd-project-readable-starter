@@ -7,7 +7,7 @@ import PostView from '../components/PostView';
 const Post = ({match}) => (
   <div>
     <MuiThemeProvider><Header appIntro="Readable Post Detail View" /></MuiThemeProvider>
-    <div><MuiThemeProvider><CatViewLinks /></MuiThemeProvider></div>
+    <div><MuiThemeProvider><CatViewLinks match={match} /></MuiThemeProvider></div>
     <div><MuiThemeProvider><PostView category={match.params.category} post_id={match.params.post_id}/></MuiThemeProvider></div>
   </div>
 )

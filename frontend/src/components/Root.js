@@ -5,13 +5,13 @@ import CatViewLinks from '../components/CatViewLinks';
 import PostCEContainer from '../components/PostCEContainer';
 import PostList from '../components/PostList';
 
-const Root = () => (
+const Root = ({match}) => (
   <div>
     <MuiThemeProvider><Header appIntro="Readable Home" /></MuiThemeProvider>
-    <div><MuiThemeProvider><CatViewLinks /></MuiThemeProvider></div>
+    <div><MuiThemeProvider><CatViewLinks match={match} /></MuiThemeProvider></div>
     <div>
       <br />
-      <MuiThemeProvider><PostCEContainer edit={false} /></MuiThemeProvider>
+      <MuiThemeProvider><PostCEContainer edit={false} match={match} /></MuiThemeProvider>
     </div>
     <div>
       <PostList />
