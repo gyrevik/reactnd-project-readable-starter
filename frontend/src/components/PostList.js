@@ -18,8 +18,6 @@ class PostList extends React.Component {
     const { posts, sortPostsField, setSortPostsField, setPostCurrent, 
       votePostFetch, deletePostFetch, viewCat } = this.props;
 
-    //debugger;
-
     return (
       <div>
         <MuiThemeProvider>
