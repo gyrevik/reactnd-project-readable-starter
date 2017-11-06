@@ -6,27 +6,17 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {List, ListItem} from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import Subheader from 'material-ui/Subheader';
-import {grey400, darkBlack} from 'material-ui/styles/colors';
+import {darkBlack, grey400} from 'material-ui/styles/colors';
+import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
-import IconButton from 'material-ui/IconButton';
 import {Toolbar, ToolbarGroup} from 'material-ui/Toolbar';
 import RaisedButton from 'material-ui/RaisedButton';
 
 import * as actions from '../actions/actions';
 import NumComments from '../components/NumComments.js';
 import { niceDate } from '../helper';
-
-const iconButtonElement = (
-  <IconButton
-    touch={true}
-    tooltip=""
-    tooltipPosition="bottom-left"
-  >
-    <MoreVertIcon color={grey400} />
-  </IconButton>
-);
 
 class PostList extends React.Component {
   componentDidMount() {
@@ -62,7 +52,13 @@ class PostList extends React.Component {
                 <ListItem
                   key={i.toString()}
                   rightIconButton={
-                    <IconMenu iconButtonElement={iconButtonElement}>
+                    <IconMenu iconButtonElement={
+                      <IconButton
+                        touch={true}
+                        tooltip=""
+                        tooltipPosition="bottom-left">
+                        <MoreVertIcon color={grey400} />
+                      </IconButton>}>
                       <MenuItem onClick={() => votePostFetch(post.id, 'upVote', sortPostsField)}>upVote</MenuItem>
                       <MenuItem onClick={() => votePostFetch(post.id, 'downVote', sortPostsField)}>downVote</MenuItem>
                       <MenuItem onClick={() => deletePostFetch(post.id)}>delete</MenuItem>
