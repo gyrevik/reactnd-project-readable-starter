@@ -102,7 +102,6 @@ class PostView extends React.Component {
     
     return (
       <div>
-        <div>this.props.post_id: {this.props.post_id}</div>
         <Table>
           <TableBody displayRowCheckbox={false}>
             <TableRow>
