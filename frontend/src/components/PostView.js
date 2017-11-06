@@ -22,16 +22,6 @@ import NumComments from '../components/NumComments';
 import { niceDate } from '../helper';
 import * as jsxStyles from '../jsxStyles';
 
-const iconButtonElement = (
-  <IconButton
-    touch={true}
-    tooltip=""
-    tooltipPosition="bottom-left"
-  >
-    <MoreVertIcon color={grey400} />
-  </IconButton>
-);
-
 const customContentStyle = {
   width: '100%',
   maxWidth: 'none',
@@ -156,7 +146,13 @@ class PostView extends React.Component {
               <ListItem
                 key={i.toString()}
                 rightIconButton={
-                  <IconMenu iconButtonElement={iconButtonElement}>
+                  <IconMenu iconButtonElement={
+                    <IconButton
+                      touch={true}
+                      tooltip=""
+                      tooltipPosition="bottom-left">
+                      <MoreVertIcon color={grey400} />
+                    </IconButton>}>
                     <MenuItem onClick={() => voteCommentFetch(comment.id, 'upVote')}>upVote</MenuItem>
                     <MenuItem onClick={() => voteCommentFetch(comment.id, 'downVote')}>downVote</MenuItem>
                     <MenuItem onClick={() => this.setState({openModal:true, edit:true, comment})}>edit</MenuItem>
