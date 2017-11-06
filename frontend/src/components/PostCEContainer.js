@@ -1,12 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import createHistory from 'history/createBrowserHistory';
 import { withRouter } from 'react-router-dom'
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import * as actions from '../actions/actions';
-import Header from '../components/Header';
 import CatSet from '../components/CatSet';
 import PostCEForm from '../components/PostCEForm';
 

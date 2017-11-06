@@ -17,7 +17,6 @@ class CatViewLinks extends React.Component {
   render () {
     const { setViewCat, viewCat, cats } = this.props;
     const path = createHistory().location.pathname;
-    console.log('this.props.match: ', this.props.match)
     return (
       <div>
         <MuiThemeProvider>

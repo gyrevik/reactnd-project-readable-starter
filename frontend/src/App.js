@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Router, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { withRouter } from 'react-router';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import Header from './components/Header';
 import Category from './components/Category';
 import Root from './components/Root';
 import Post from './components/Post';

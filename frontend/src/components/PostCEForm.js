@@ -1,5 +1,4 @@
 import React from 'react';
-import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 

@@ -98,10 +98,11 @@ class PostView extends React.Component {
     ];
 
     const sortByKey = key => (a, b) => a['voteScore'] < b['voteScore'];	// desc (number)
-    const { comments, post, deletePostFetch, voteCommentFetch, setMode, deleteCommentFetch } = this.props;
+    const { comments, post, deletePostFetch, votePostFetch, voteCommentFetch, setMode, deleteCommentFetch } = this.props;
     
     return (
       <div>
+        <div>this.props.post_id: {this.props.post_id}</div>
         <Table>
           <TableBody displayRowCheckbox={false}>
             <TableRow>
@@ -130,16 +131,19 @@ class PostView extends React.Component {
             <RaisedButton onClick={ this.handleModalOpen } 
               id="openCommentModal" name="openCommentModal" label="Comment" />
             
-            <RaisedButton label="Delete Post" onClick={() => deletePostFetch(post.id)}
+            <RaisedButton label="Delete Post" onClick={() => deletePostFetch(this.props.post_id)}
               containerElement={<Link to="/" />} />
             
             <RaisedButton label="Edit Post" onClick={() => setMode('edit')}
               containerElement={<Link to={`/${this.props.category}/edit/${this.props.post_id}`} />} />
+
+            <RaisedButton label="UP VOTE" onClick={() => votePostFetch(this.props.post_id, 'upVote', 'voteScore')} />
+            <RaisedButton label="DOWN VOTE" onClick={() => votePostFetch(this.props.post_id, 'downVote', 'voteScore')} />
           </ToolbarGroup>
         </Toolbar>
         <br/><br/>
 
-        Comments: (<NumComments postId={post.id} />)<br/>
+        Comments: (<NumComments postId={this.props.post_id} />)<br/>
 
         <List>
           {comments.filter(comment => comment.deleted === false && comment.parentId === this.props.post_id)

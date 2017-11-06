@@ -54,8 +54,8 @@ class PostList extends React.Component {
 
         <MuiThemeProvider>
           <List>
-            {posts.filter(post => post.category === viewCat 
-                    || viewCat === 'all' || viewCat === 'home' && post.deleted !== true)
+            {posts.filter(post => (post.category === viewCat 
+                    || viewCat === 'all' || viewCat === 'home') && post.deleted !== true)
                   .map((post, i) =>
               <span key={Math.random()}>
                 <Subheader key={Math.random()}>{ niceDate(post.timestamp) }</Subheader>
