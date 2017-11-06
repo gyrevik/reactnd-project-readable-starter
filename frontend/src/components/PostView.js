@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import {withRouter} from "react-router-dom";
 
 import Dialog from 'material-ui/Dialog';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -81,6 +82,9 @@ class PostView extends React.Component {
   componentDidMount() {
     this.props.commentsFetch(this.props.post_id);
     this.props.postFetch(this.props.post_id);
+
+    console.log('this.props: ', this.props)
+    this.props.post.title === undefined && this.props.history.push('/NotFound');
   }
 
   render() {
@@ -98,8 +102,10 @@ class PostView extends React.Component {
     ];
 
     const sortByKey = key => (a, b) => a['voteScore'] < b['voteScore'];	// desc (number)
-    const { comments, post, deletePostFetch, votePostFetch, voteCommentFetch, setMode, deleteCommentFetch } = this.props;
-    
+    const { history, comments, post, deletePostFetch, votePostFetch, voteCommentFetch, setMode, deleteCommentFetch } = this.props;
+    console.log('post: ', post)
+    console.log('post.title: ', post.title)
+
     return (
       <div>
         <Table>
@@ -203,4 +209,4 @@ const mapStateToProps = ({ commentError, posts, post, comment, comments }) => {
   return { commentError, posts, post, comment, comments };
 }
 
-export default connect(mapStateToProps, actions)(PostView)
+export default withRouter(connect(mapStateToProps, actions)(PostView))
