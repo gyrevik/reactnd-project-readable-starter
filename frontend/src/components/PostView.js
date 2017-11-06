@@ -83,7 +83,6 @@ class PostView extends React.Component {
     this.props.commentsFetch(this.props.post_id);
     this.props.postFetch(this.props.post_id);
 
-    console.log('this.props: ', this.props)
     this.props.post.title === undefined && this.props.history.push('/NotFound');
   }
 
@@ -103,8 +102,6 @@ class PostView extends React.Component {
 
     const sortByKey = key => (a, b) => a['voteScore'] < b['voteScore'];	// desc (number)
     const { history, comments, post, deletePostFetch, votePostFetch, voteCommentFetch, setMode, deleteCommentFetch } = this.props;
-    console.log('post: ', post)
-    console.log('post.title: ', post.title)
 
     return (
       <div>

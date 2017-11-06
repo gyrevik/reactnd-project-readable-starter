@@ -16,16 +16,11 @@ class CatViewLinks extends React.Component {
   }
 
   componentDidUpdate() {
-    console.log('this.props.cats: ', this.props.cats)
-    console.log('this.props.match: ', this.props.match)
-    console.log('this.props.match.params.category: ', this.props.match.params.category)
-
     if (this.props.match.path === '/')
       return;
 
     let found = false;
     for (let cat of this.props.cats) {
-      console.log('cat.path: ', cat.path)
       if (this.props.match.params.category === cat.path) {
         found = true;
         return;
@@ -65,8 +60,6 @@ class CatViewLinks extends React.Component {
 }
 
 const mapStateToProps = ({ cats, viewCat }) => {
-  console.log('cats: ', cats)
-  //console.log('this.props.match: ', this.props.match)
   return { cats, viewCat };
 }
 
