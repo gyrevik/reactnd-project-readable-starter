@@ -1,22 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import {List, ListItem} from 'material-ui/List';
-import Divider from 'material-ui/Divider';
-import Subheader from 'material-ui/Subheader';
-import {darkBlack, grey400} from 'material-ui/styles/colors';
-import IconButton from 'material-ui/IconButton';
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import IconMenu from 'material-ui/IconMenu';
-import MenuItem from 'material-ui/MenuItem';
 import {Toolbar, ToolbarGroup} from 'material-ui/Toolbar';
 import RaisedButton from 'material-ui/RaisedButton';
 
 import * as actions from '../actions/actions';
-import NumComments from '../components/NumComments.js';
-import { niceDate } from '../helper';
+import ShowList from '../components/ShowList';
 
 class PostList extends React.Component {
   componentDidMount() {
@@ -27,6 +17,9 @@ class PostList extends React.Component {
   render () {
     const { posts, sortPostsField, setSortPostsField, setPostCurrent, 
       votePostFetch, deletePostFetch, viewCat } = this.props;
+
+    //debugger;
+
     return (
       <div>
         <MuiThemeProvider>
@@ -43,50 +36,13 @@ class PostList extends React.Component {
         </MuiThemeProvider>
 
         <MuiThemeProvider>
-          <List>
-            {posts.filter(post => (post.category === viewCat 
-                    || viewCat === 'all' || viewCat === 'home') && post.deleted !== true)
-                  .map((post, i) =>
-              <span key={Math.random()}>
-                <Subheader key={Math.random()}>{ niceDate(post.timestamp) }</Subheader>
-                <ListItem
-                  key={i.toString()}
-                  rightIconButton={
-                    <IconMenu iconButtonElement={
-                      <IconButton
-                        touch={true}
-                        tooltip=""
-                        tooltipPosition="bottom-left">
-                        <MoreVertIcon color={grey400} />
-                      </IconButton>}>
-                      <MenuItem onClick={() => votePostFetch(post.id, 'upVote', sortPostsField)}>upVote</MenuItem>
-                      <MenuItem onClick={() => votePostFetch(post.id, 'downVote', sortPostsField)}>downVote</MenuItem>
-                      <MenuItem onClick={() => deletePostFetch(post.id)}>delete</MenuItem>
-                      <MenuItem 
-                        onClick={() => setPostCurrent(post)}
-                        containerElement={<Link to={`/${post.category}/edit/${post.id}`} />}>edit</MenuItem>
-                    </IconMenu>
-                  }
-                  primaryText={<Link to={`/${post.category}/${post.id}`} onClick={() => setPostCurrent(post)}>{ post.title }</Link>} 
-                  secondaryText={
-                    <p>
-                      <span style={{color: darkBlack}}>Category: { post.category } {' '}
-                        (<NumComments postId={post.id} /> Comment(s), Vote Score: {post.voteScore})
-                      </span>
-                      <br/>
-                      { post.body } 
-                    </p>
-                  }
-                  secondaryTextLines={2}
-                />
-                <Divider inset={true} key={Math.random()} />
-              </span>
-            )}
-          </List>
+          <ShowList posts={posts} viewCat={viewCat} votePostFetch={votePostFetch} sortPostsField={sortPostsField} deletePostFetch={deletePostFetch} setPostCurrent={setPostCurrent} />
         </MuiThemeProvider>
       </div>
     )
   }
+
+  
 }
 
 const mapStateToProps = ({ posts, sortPostsField, viewCat }) => {
